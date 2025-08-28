@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% block title %}4ª COECEX - Proc. Nº {{ proc.processo }}{% endblock %}
+
+{% block extra_js %}
+
+
+<script>
+(function () {
+  const btn = document.getElementById('btnAcreprev');
+  const statusEl = document.getElementById('acreprev-status');
+
+  function setStatus(msg, isError=false) {
+    if (!statusEl) return;
+    statusEl.textContent = msg || '';
+    statusEl.className = 'form-text' + (isError ? ' text-danger' : ' text-muted');
+  }
+
+  function setVal(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.value = (val ?? '');
+  }
+
+  function normalizarCpf(cpf) {
+    return (cpf || '').replace(/\D/g, '');
+  }
+
+  btn?.addEventListener('click', async function () {
+    const cpfInput = document.getElementById('cpf');
+    const cpf = normalizarCpf(cpfInput?.value || '');
+    if (!cpf || cpf.length !== 11) {
+      setStatus('Informe um CPF válido (11 dígitos).', true);
+      return;
+    }
+
+    setStatus('Nossa IA está tabalhando nos dados do Acreprevidência...');
+    btn.disabled = true;
+
+    try {
+      const url = `{{ url_for('main.api_acreprev') }}?cpf=${cpf}`;
+      const resp = await fetch(url, { method: 'GET' });
+      const payload = await resp.json();
+
+      if (!resp.ok || !payload.ok) {
+        throw new Error(payload.msg || 'Falha ao consultar a API.');
+      }
+
+      const d = payload.data || {};
+
+      // preenche os campos do formulário
+      setVal('{{ form.servidor.id }}', d.servidor);
+      setVal('{{ form.matricula.id }}', d.matricula);
+      setVal('{{ form.cargo.id }}', d.cargo);
+      setVal('{{ form.orgao.id }}', d.orgao);
+      setVal('{{ form.proventos.id }}', d.proventos);
+      setVal('{{ form.data_publicacao.id }}', d.data_concessao);
+      setVal('{{ form.fundamento_legal.id }}', d.fundamento_legal);
+      setVal('{{ form.anos_tempo_de_contribuicao.id }}', d.tempo_anos)
+      setVal('{{ form.dias_tempo_de_contribuicao.id }}', d.tempo_dias)
+      setStatus('Dados importados com sucesso.');
+    } catch (err) {
+      setStatus(err.message || 'Erro ao consultar a API.', true);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+
+<script>
+// Confirmação após salvar e geração de download sem redirecionar
+document.addEventListener('DOMContentLoaded', function() {
+  var success = document.querySelector('.alert-success');
+  if (success && confirm('Registro atualizado com sucesso!\nDeseja gerar a certidão agora?')) {
+    var overlay = document.getElementById('loading-overlay');
+    if (overlay) overlay.style.display = 'flex';
+
+    // Cria link para disparar download sem troca de página
+    var url = "{{ url_for('main.gerar_certidao', numero=proc.processo) }}";
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = '';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // Oculta overlay após 5 segundos
+    setTimeout(function() {
+      if (overlay) overlay.style.display = 'none';
+    }, 5000);
+  }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var cpfField = document.getElementById('cpf');
+  if (!cpfField) return;
+
+  cpfField.addEventListener('input', function(e) {
+    // só dígitos, máximo 11
+    var v = e.target.value.replace(/\D/g, '').slice(0,11);
+
+    // aplica as partes da máscara conforme o tamanho
+    if (v.length <= 3) {
+      e.target.value = v;
+    } else if (v.length <= 6) {
+      e.target.value = v.replace(/(\d{3})(\d+)/, '$1.$2');
+    } else if (v.length <= 9) {
+      e.target.value = v.replace(/(\d{3})(\d{3})(\d+)/, '$1.$2.$3');
+    } else {
+      e.target.value = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+    }
+  });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-10">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title text-center text-primary mb-4">
+          Editar Registro do Processo nº {{ proc.processo }}
+        </h4>
+        <form method="post">
+          {{ form.hidden_tag() }}
+          <!-- Campos... -->
+          {% for field in [
+              form.autuacao_processo, form.classe, form.servidor, form.matricula, 
+              form.cpf, form.cargo, form.orgao,
+              form.orgao_previdencia, form.proventos, form.folha_ato_fixacao,
+              form.ato_concessorio, form.data_ato_concessorio, form.folha_ato_concessorio,
+              form.data_inicio_concessao,
+              form.publicacao, form.data_publicacao, form.fundamento_legal,
+            ] %}
+            <div class="mb-3">
+            {% if field.name == 'cpf' %}
+              <label class="form-label">{{ field.label.text }}</label>
+              <div class="input-group">
+                {{ field(class="form-control", id="cpf", placeholder="000.000.000-00") }}
+                <button class="btn btn-outline-primary" type="button" id="btnAcreprev"
+                        title="Procurar informações">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+              <div id="acreprev-status" class="form-text"></div>
+            {% else %}
+              {{ field.label(class="form-label") }}
+              {{ field(class="form-control", id=field.id) }}
+            {% endif %}
+          </div>
+          {% endfor %}
+          <div class="mb-3">
+            <label class="form-label">Tempo de contribuição</label>
+            <div class="d-flex gap-2">
+              {{ form.anos_tempo_de_contribuicao(class="form-control w-auto") }} anos
+              {{ form.dias_tempo_de_contribuicao(class="form-control w-auto") }} dias
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-success">Salvar</button>
+          </div>
+        </form>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('main.analise_inatividade', numero=proc.processo) }}" class="btn btn-warning me-2">Analisar</a>
+            <a href="{{ url_for('main.gerar_certidao', numero=proc.processo) }}" class="btn btn-danger me-2">Gerar Certidão</a>
+            <a href="{{ url_for('main.index') }}" class="btn btn-primary">Nova busca</a>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay de carregamento -->
+<div id="loading-overlay" style="
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;">
+  <div style="
+    background: white;
+    padding: 2em;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);">
+    <p>Aguarde o download do documento...</p>
+  </div>
+</div>
+{% endblock %}

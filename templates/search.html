@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}4ª COECEX - Buscar Registro{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title text-center text-primary mb-4">Buscar Registro</h4>
+        <form method="post">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            <strong>{{ form.numero.label(class="form-label") }}</strong> (sem o ponto):
+            {{ form.numero(
+                class="form-control",
+                placeholder="123456",
+                pattern="^\d{6}$",
+                title="Use o formato 123456"
+            ) }}
+            {% for error in form.numero.errors %}
+              <div class="text-danger mt-1">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="text-center">
+            {{ form.submit(class="btn btn-primary") }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
