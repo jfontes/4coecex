@@ -1,26 +1,144 @@
 {% extends 'base.html' %}
 {% block title %}Análise de inatividade – Processo {{ proc.processo }}{% endblock %}
 
+{% block extra_js %}
+<script>
+(function(){
+  const chk   = document.getElementById('chkAnaliseAdm');
+  const bloco = document.getElementById('blocoAnalise');
+  const files = document.getElementById('inputPDFs');
+  const btn   = document.getElementById('btnAnalisar');
+  const btn2   = document.getElementById('btnAdicionar');
+  const out   = document.getElementById('txtResultado');
+  const stat  = document.getElementById('analiseStatus');
+
+  function setEnabled(enabled) {
+    bloco.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+    files.disabled = !enabled;
+    btn.disabled   = !enabled;
+    out.disabled   = !enabled;
+    if (!enabled) {
+      stat.textContent = '';
+    }
+  }
+
+  chk.addEventListener('change', function(){
+    setEnabled(chk.checked);
+  });
+
+  function setStatus(msg, isError=false) {
+    stat.textContent = msg || '';
+    stat.className = 'small ' + (isError ? 'text-danger' : 'text-muted');
+  }
+
+  btn.addEventListener('click', async function(){
+    if (!files.files || files.files.length === 0) {
+      setStatus('Selecione ao menos um PDF.', true);
+      return;
+    }
+    setStatus('Processando arquivo(s), aguarde…');
+    btn.disabled = true;
+
+    try {
+      const fd = new FormData();
+      // nome dos campos para múltiplos arquivos
+      for (const f of files.files) {
+        fd.append('pdfs[]', f, f.name);
+      }
+      const url = "{{ url_for('main.processar_analise_inatividade', numero=proc.processo) }}";
+      const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin'});
+      const data = await resp.json();
+
+      if (!resp.ok || !data.ok) {
+        throw new Error(data.msg || 'Falha ao processar arquivos.');
+      }
+
+      out.value = data.texto || '';
+      setStatus('Análise concluída.');
+      btn2.disabled = false;
+    } catch (e) {
+      setStatus(e.message || 'Erro ao analisar PDFs.', true);
+    } finally {
+      btn.disabled = false;
+      btn2.disabled = false;
+    }
+  });
+
+  // inicia desabilitado
+  setEnabled(false);
+})();
+</script>
+
+<script>
+document.getElementById('btnAdicionar').addEventListener('click', async function(){
+  try {
+    const url = "{{ url_for('main.adicionar_no_relatorio') }}";
+    const texto = document.getElementById('txtResultado').value;
+    const fd = new FormData();
+    fd.append('admissao', texto);
+
+    const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin' });
+    const data = await resp.json();
+    if (data.ok && data.doc_html) {
+      document.querySelector('.docx-page').innerHTML = data.doc_html;
+    } else {
+      alert(data.msg || "Erro ao atualizar o documento.");
+    }
+  } catch(e){
+    alert("Erro ao adicionar no relatório: " + e.message);
+  }
+});
+</script>
+{% endblock %}
+
 {% block content %}
+
 <div class="row g-4 mt-4">
   <!-- Lado esquerdo: área de análise (você detalha depois) -->
   <div class="col-lg-6">
-    <div class="card shadow-sm h-100">
-      <div class="card-body">
-        <h5 class="card-title mb-3 text-primary">Análise de inatividade</h5>
-        <!-- Coloque aqui os componentes/inputs/anotações que desejar -->
-        <p class="text-muted">Espaço reservado para os critérios e notas da análise. Em seguida completamos conforme sua especificação.</p>
-        <textarea class="form-control" rows="16" placeholder="Escreva aqui seus apontamentos..."></textarea>
+  <div class="card shadow-sm h-100">
+    <div class="card-body">
+      <!-- Checkbox que habilita o bloco -->
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" value="1" id="chkAnaliseAdm">
+        <label class="form-check-label fw-semibold" for="chkAnaliseAdm">
+          Incluir análise da admissão?
+        </label>
+      </div>
+
+      <!-- Bloco que será habilitado ao marcar o checkbox -->
+      <div id="blocoAnalise" aria-disabled="true">
+        <div class="mb-3">
+          <label class="form-label">Anexar PDF(s)</label>
+          <input id="inputPDFs" class="form-control" type="file" accept="application/pdf" multiple disabled>
+          <div class="form-text">Você pode selecionar mais de um arquivo PDF.</div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <button id="btnAnalisar" class="btn btn-primary" type="button" disabled>
+            Analisar
+          </button>
+          <button id="btnAdicionar" class="btn btn-warning me-2" type="button" disabled>
+            Adicionar
+          </button>
+          <span id="analiseStatus" class="text-muted small"></span>
+        </div>
+
+        <label for="txtResultado" class="form-label">Resultado da análise</label>
+        <textarea id="txtResultado" class="form-control" rows="14" placeholder="O resultado da análise aparecerá aqui..." disabled></textarea>
       </div>
     </div>
   </div>
+</div>
 
   <!-- Lado direito: exibição do DOCX como página somente leitura -->
   <div class="col-lg-6">
     <div class="card shadow-sm h-100">
       <div class="card-body">
         <h6 class="mb-3">Documento (visualização somente leitura)</h6>
-        
+        <a id="btnBaixarDocx" href="{{ url_for('main.baixar_docx', numero=proc.processo) }}" class="btn btn-outline-secondary btn-sm ms-2" download>
+          Baixar
+        </a>
         <div class="docx-page mx-auto">
           {{ doc_html|safe }}
         </div>
