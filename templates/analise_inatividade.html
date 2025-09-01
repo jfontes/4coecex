@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Análise de inatividade – Processo {{ proc.processo }}{% endblock %}
+{% block title %}Análise de inatividade – Processo {{ proc }}{% endblock %}
 
 {% block extra_js %}
 <script>
@@ -36,7 +36,7 @@
       setStatus('Selecione ao menos um PDF.', true);
       return;
     }
-    setStatus('Processando arquivo(s), aguarde…');
+    setStatus('Nossa IA está analisando o(s) arquivo(s), aguarde…');
     btn.disabled = true;
 
     try {
@@ -45,7 +45,7 @@
       for (const f of files.files) {
         fd.append('pdfs[]', f, f.name);
       }
-      const url = "{{ url_for('main.processar_analise_inatividade', numero=proc.processo) }}";
+      const url = "{{ url_for('main.processar_analise_inatividade', numero=proc) }}";
       const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin'});
       const data = await resp.json();
 

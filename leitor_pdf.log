@@ -735,3 +735,271 @@
 2025-09-01 09:01:46,659 - INFO - 127.0.0.1 - - [01/Sep/2025 09:01:46] "GET /api/acreprev?cpf=19720653272 HTTP/1.1" 200 -
 2025-09-01 09:02:13,581 - INFO - 127.0.0.1 - - [01/Sep/2025 09:02:13] "GET /processo/130827/analise HTTP/1.1" 200 -
 2025-09-01 09:02:13,640 - INFO - 127.0.0.1 - - [01/Sep/2025 09:02:13] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:04:54,215 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:04:57,520 - INFO -  * Restarting with stat
+2025-09-01 09:05:05,814 - WARNING -  * Debugger is active!
+2025-09-01 09:05:05,829 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:05:11,032 - INFO - 127.0.0.1 - - [01/Sep/2025 09:05:11] "GET / HTTP/1.1" 200 -
+2025-09-01 09:05:11,413 - INFO - 127.0.0.1 - - [01/Sep/2025 09:05:11] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:05:14,279 - INFO - 127.0.0.1 - - [01/Sep/2025 09:05:14] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:05:14,511 - INFO - 127.0.0.1 - - [01/Sep/2025 09:05:14] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:05:14,570 - INFO - 127.0.0.1 - - [01/Sep/2025 09:05:14] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:05:19,287 - INFO - 127.0.0.1 - - [01/Sep/2025 09:05:19] "GET /api/acreprev?cpf=19720653272 HTTP/1.1" 200 -
+2025-09-01 09:06:52,208 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:06:55,462 - INFO -  * Restarting with stat
+2025-09-01 09:07:03,715 - WARNING -  * Debugger is active!
+2025-09-01 09:07:03,727 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:07:05,001 - INFO - 127.0.0.1 - - [01/Sep/2025 09:07:05] "GET / HTTP/1.1" 200 -
+2025-09-01 09:07:05,072 - INFO - 127.0.0.1 - - [01/Sep/2025 09:07:05] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:07:08,277 - INFO - 127.0.0.1 - - [01/Sep/2025 09:07:08] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:07:08,544 - INFO - 127.0.0.1 - - [01/Sep/2025 09:07:08] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:07:08,587 - INFO - 127.0.0.1 - - [01/Sep/2025 09:07:08] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:07:22,577 - INFO - 127.0.0.1 - - [01/Sep/2025 09:07:22] "GET /processo/130827/gerar-certidao HTTP/1.1" 200 -
+2025-09-01 09:09:21,395 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:09:22,752 - INFO -  * Restarting with stat
+2025-09-01 09:09:32,023 - WARNING -  * Debugger is active!
+2025-09-01 09:09:32,036 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:09:57,014 - INFO - 127.0.0.1 - - [01/Sep/2025 09:09:57] "[35m[1mGET /processo/130827/analise HTTP/1.1[0m" 500 -
+2025-09-01 09:10:27,067 - INFO - 127.0.0.1 - - [01/Sep/2025 09:10:27] "[35m[1mGET /processo/130827/analise HTTP/1.1[0m" 500 -
+2025-09-01 09:10:57,931 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:10:59,349 - INFO -  * Restarting with stat
+2025-09-01 09:11:08,763 - WARNING -  * Debugger is active!
+2025-09-01 09:11:08,776 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:11:43,084 - INFO - 127.0.0.1 - - [01/Sep/2025 09:11:43] "GET / HTTP/1.1" 200 -
+2025-09-01 09:11:43,612 - INFO - 127.0.0.1 - - [01/Sep/2025 09:11:43] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:11:46,324 - INFO - 127.0.0.1 - - [01/Sep/2025 09:11:46] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:11:46,685 - INFO - 127.0.0.1 - - [01/Sep/2025 09:11:46] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:11:46,742 - INFO - 127.0.0.1 - - [01/Sep/2025 09:11:46] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:11:49,809 - INFO - 127.0.0.1 - - [01/Sep/2025 09:11:49] "[35m[1mGET /processo/130827/analise HTTP/1.1[0m" 500 -
+2025-09-01 09:12:19,971 - INFO - 127.0.0.1 - - [01/Sep/2025 09:12:19] "[35m[1mGET /processo/130827/analise HTTP/1.1[0m" 500 -
+2025-09-01 09:13:55,026 - INFO - 127.0.0.1 - - [01/Sep/2025 09:13:55] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:13:57,767 - INFO - 127.0.0.1 - - [01/Sep/2025 09:13:57] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:13:57,814 - INFO - 127.0.0.1 - - [01/Sep/2025 09:13:57] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:14:14,594 - INFO - 127.0.0.1 - - [01/Sep/2025 09:14:14] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:14:14,648 - INFO - 127.0.0.1 - - [01/Sep/2025 09:14:14] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:14:23,520 - INFO - 127.0.0.1 - - [01/Sep/2025 09:14:23] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:14:23,583 - INFO - 127.0.0.1 - - [01/Sep/2025 09:14:23] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:15:40,137 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:15:41,402 - INFO -  * Restarting with stat
+2025-09-01 09:15:50,489 - WARNING -  * Debugger is active!
+2025-09-01 09:15:50,506 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:16:02,705 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:02] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:16:02,785 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:02] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:16:08,727 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:08] "GET / HTTP/1.1" 200 -
+2025-09-01 09:16:08,781 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:08] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:16:11,106 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:11] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:16:11,392 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:11] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:16:11,460 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:11] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:16:14,675 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:14] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:16:14,727 - INFO - 127.0.0.1 - - [01/Sep/2025 09:16:14] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:19:58,886 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:20:00,250 - INFO -  * Restarting with stat
+2025-09-01 09:20:13,493 - WARNING -  * Debugger is active!
+2025-09-01 09:20:13,510 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:20:19,193 - INFO - 127.0.0.1 - - [01/Sep/2025 09:20:19] "GET / HTTP/1.1" 200 -
+2025-09-01 09:20:19,247 - INFO - 127.0.0.1 - - [01/Sep/2025 09:20:19] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:20:21,721 - INFO - 127.0.0.1 - - [01/Sep/2025 09:20:21] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:20:21,976 - INFO - 127.0.0.1 - - [01/Sep/2025 09:20:21] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:20:22,017 - INFO - 127.0.0.1 - - [01/Sep/2025 09:20:22] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:20:25,069 - INFO - 127.0.0.1 - - [01/Sep/2025 09:20:25] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:20:25,128 - INFO - 127.0.0.1 - - [01/Sep/2025 09:20:25] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:20:41,918 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:20:43,308 - INFO -  * Restarting with stat
+2025-09-01 09:20:54,606 - WARNING -  * Debugger is active!
+2025-09-01 09:20:54,623 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:20:56,113 - INFO - 127.0.0.1 - - [01/Sep/2025 09:20:56] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:21:01,103 - INFO - 127.0.0.1 - - [01/Sep/2025 09:21:01] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:21:01,162 - INFO - 127.0.0.1 - - [01/Sep/2025 09:21:01] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:21:15,386 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:21:16,635 - INFO -  * Restarting with stat
+2025-09-01 09:21:25,205 - WARNING -  * Debugger is active!
+2025-09-01 09:21:25,227 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:21:26,685 - INFO - 127.0.0.1 - - [01/Sep/2025 09:21:26] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:21:27,922 - INFO - 127.0.0.1 - - [01/Sep/2025 09:21:27] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:21:27,964 - INFO - 127.0.0.1 - - [01/Sep/2025 09:21:27] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:21:56,159 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:21:57,486 - INFO -  * Restarting with stat
+2025-09-01 09:22:05,893 - WARNING -  * Debugger is active!
+2025-09-01 09:22:05,918 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:22:11,182 - INFO - 127.0.0.1 - - [01/Sep/2025 09:22:11] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:22:13,238 - INFO - 127.0.0.1 - - [01/Sep/2025 09:22:13] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:22:13,312 - INFO - 127.0.0.1 - - [01/Sep/2025 09:22:13] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:22:45,703 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:22:47,088 - INFO -  * Restarting with stat
+2025-09-01 09:22:55,016 - WARNING -  * Debugger is active!
+2025-09-01 09:22:55,032 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:23:00,814 - INFO - 127.0.0.1 - - [01/Sep/2025 09:23:00] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:23:04,151 - INFO - 127.0.0.1 - - [01/Sep/2025 09:23:04] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:23:04,193 - INFO - 127.0.0.1 - - [01/Sep/2025 09:23:04] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:23:20,094 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:23:21,331 - INFO -  * Restarting with stat
+2025-09-01 09:23:30,475 - WARNING -  * Debugger is active!
+2025-09-01 09:23:30,498 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:23:32,157 - INFO - 127.0.0.1 - - [01/Sep/2025 09:23:32] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:23:35,047 - INFO - 127.0.0.1 - - [01/Sep/2025 09:23:35] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:23:35,098 - INFO - 127.0.0.1 - - [01/Sep/2025 09:23:35] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:27:47,062 - INFO - 127.0.0.1 - - [01/Sep/2025 09:27:47] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:27:49,748 - INFO - 127.0.0.1 - - [01/Sep/2025 09:27:49] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:27:49,788 - INFO - 127.0.0.1 - - [01/Sep/2025 09:27:49] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:28:03,226 - INFO - 127.0.0.1 - - [01/Sep/2025 09:28:03] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:28:06,393 - INFO - 127.0.0.1 - - [01/Sep/2025 09:28:06] "GET / HTTP/1.1" 200 -
+2025-09-01 09:28:06,472 - INFO - 127.0.0.1 - - [01/Sep/2025 09:28:06] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:28:09,854 - INFO - 127.0.0.1 - - [01/Sep/2025 09:28:09] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:28:09,876 - INFO - 127.0.0.1 - - [01/Sep/2025 09:28:09] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:28:09,932 - INFO - 127.0.0.1 - - [01/Sep/2025 09:28:09] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:28:14,259 - INFO - 127.0.0.1 - - [01/Sep/2025 09:28:14] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:28:14,315 - INFO - 127.0.0.1 - - [01/Sep/2025 09:28:14] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:28:59,752 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:29:01,241 - INFO -  * Restarting with stat
+2025-09-01 09:29:13,158 - WARNING -  * Debugger is active!
+2025-09-01 09:29:13,182 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:29:17,436 - INFO - 127.0.0.1 - - [01/Sep/2025 09:29:17] "GET / HTTP/1.1" 200 -
+2025-09-01 09:29:17,489 - INFO - 127.0.0.1 - - [01/Sep/2025 09:29:17] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:29:20,225 - INFO - 127.0.0.1 - - [01/Sep/2025 09:29:20] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:29:20,515 - INFO - 127.0.0.1 - - [01/Sep/2025 09:29:20] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:29:20,566 - INFO - 127.0.0.1 - - [01/Sep/2025 09:29:20] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:29:25,081 - INFO - 127.0.0.1 - - [01/Sep/2025 09:29:25] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:29:25,158 - INFO - 127.0.0.1 - - [01/Sep/2025 09:29:25] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:32:55,011 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:32:56,416 - INFO -  * Restarting with stat
+2025-09-01 09:33:08,681 - WARNING -  * Debugger is active!
+2025-09-01 09:33:08,699 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:33:20,259 - INFO - 127.0.0.1 - - [01/Sep/2025 09:33:20] "GET / HTTP/1.1" 200 -
+2025-09-01 09:33:20,319 - INFO - 127.0.0.1 - - [01/Sep/2025 09:33:20] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:33:23,819 - INFO - 127.0.0.1 - - [01/Sep/2025 09:33:23] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:33:24,081 - INFO - 127.0.0.1 - - [01/Sep/2025 09:33:24] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:33:24,121 - INFO - 127.0.0.1 - - [01/Sep/2025 09:33:24] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:33:28,462 - INFO - 127.0.0.1 - - [01/Sep/2025 09:33:28] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:33:28,513 - INFO - 127.0.0.1 - - [01/Sep/2025 09:33:28] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:33:37,875 - INFO - Inicializando LeitorPDF
+2025-09-01 09:33:39,953 - INFO - PDF digital detectado.
+2025-09-01 09:33:41,737 - INFO - Extração de texto digital concluída.
+2025-09-01 09:33:44,329 - INFO - 127.0.0.1 - - [01/Sep/2025 09:33:44] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 09:38:20,161 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:38:25,487 - INFO -  * Restarting with stat
+2025-09-01 09:38:44,445 - WARNING -  * Debugger is active!
+2025-09-01 09:38:44,453 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:38:58,680 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 09:38:59,892 - INFO -  * Restarting with stat
+2025-09-01 09:39:08,118 - WARNING -  * Debugger is active!
+2025-09-01 09:39:08,133 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:39:10,863 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:10] "GET / HTTP/1.1" 200 -
+2025-09-01 09:39:11,095 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:11] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:39:14,144 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:14] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:39:14,463 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:14] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:39:14,606 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:14] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:39:17,590 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:17] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:39:17,639 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:17] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:39:40,422 - INFO - Inicializando LeitorPDF
+2025-09-01 09:39:42,323 - INFO - PDF digital detectado.
+2025-09-01 09:39:44,006 - INFO - Extração de texto digital concluída.
+2025-09-01 09:39:46,082 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:46] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 09:39:53,921 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:53] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:39:55,648 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:55] "GET / HTTP/1.1" 200 -
+2025-09-01 09:39:55,698 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:55] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:39:58,979 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:58] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:39:59,042 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:59] "GET /processo/134576 HTTP/1.1" 200 -
+2025-09-01 09:39:59,095 - INFO - 127.0.0.1 - - [01/Sep/2025 09:39:59] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:40:13,415 - INFO - 127.0.0.1 - - [01/Sep/2025 09:40:13] "GET / HTTP/1.1" 200 -
+2025-09-01 09:40:13,462 - INFO - 127.0.0.1 - - [01/Sep/2025 09:40:13] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:41:40,844 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:40] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:41:40,879 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:40] "GET /processo/136865 HTTP/1.1" 200 -
+2025-09-01 09:41:40,926 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:40] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:41:44,754 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:44] "GET / HTTP/1.1" 200 -
+2025-09-01 09:41:44,824 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:44] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:41:47,892 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:47] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:41:47,919 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:47] "GET /processo/136834 HTTP/1.1" 200 -
+2025-09-01 09:41:47,987 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:47] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:41:51,068 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:51] "GET / HTTP/1.1" 200 -
+2025-09-01 09:41:51,116 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:51] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:41:55,045 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:55] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:41:55,072 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:55] "GET /processo/136822 HTTP/1.1" 200 -
+2025-09-01 09:41:55,113 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:55] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:41:58,078 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:58] "GET /processo/136822/analise HTTP/1.1" 200 -
+2025-09-01 09:41:58,124 - INFO - 127.0.0.1 - - [01/Sep/2025 09:41:58] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:45:58,980 - INFO - Inicializando LeitorPDF
+2025-09-01 09:45:59,339 - INFO - PDF digital detectado.
+2025-09-01 09:45:59,613 - INFO - Extração de texto digital concluída.
+2025-09-01 09:46:01,741 - INFO - 127.0.0.1 - - [01/Sep/2025 09:46:01] "POST /processo/136822/analise/processar HTTP/1.1" 200 -
+2025-09-01 09:47:56,154 - INFO - 127.0.0.1 - - [01/Sep/2025 09:47:56] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 09:48:14,161 - INFO - 127.0.0.1 - - [01/Sep/2025 09:48:14] "GET /processo/136822/baixar-docx HTTP/1.1" 200 -
+2025-09-01 09:49:23,712 - INFO - 127.0.0.1 - - [01/Sep/2025 09:49:23] "GET /processo/136822/baixar-docx HTTP/1.1" 200 -
+2025-09-01 09:53:42,663 - INFO - 127.0.0.1 - - [01/Sep/2025 09:53:42] "GET /processo/136822 HTTP/1.1" 200 -
+2025-09-01 09:53:49,101 - INFO - 127.0.0.1 - - [01/Sep/2025 09:53:49] "GET /processo/136822/analise HTTP/1.1" 200 -
+2025-09-01 09:53:49,142 - INFO - 127.0.0.1 - - [01/Sep/2025 09:53:49] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:55:05,420 - INFO - 127.0.0.1 - - [01/Sep/2025 09:55:05] "GET /processo/136822/analise HTTP/1.1" 200 -
+2025-09-01 09:55:05,494 - INFO - 127.0.0.1 - - [01/Sep/2025 09:55:05] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:56:39,476 - INFO - 127.0.0.1 - - [01/Sep/2025 09:56:39] "GET /processo/136822/analise HTTP/1.1" 200 -
+2025-09-01 09:56:39,532 - INFO - 127.0.0.1 - - [01/Sep/2025 09:56:39] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:57:44,956 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:80
+2025-09-01 09:57:44,956 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-01 09:57:44,963 - INFO -  * Restarting with stat
+2025-09-01 09:57:53,055 - WARNING -  * Debugger is active!
+2025-09-01 09:57:53,070 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 09:58:07,010 - INFO - 127.0.0.1 - - [01/Sep/2025 09:58:07] "GET / HTTP/1.1" 200 -
+2025-09-01 09:58:07,127 - INFO - 127.0.0.1 - - [01/Sep/2025 09:58:07] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:58:09,634 - INFO - 127.0.0.1 - - [01/Sep/2025 09:58:09] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 09:58:09,921 - INFO - 127.0.0.1 - - [01/Sep/2025 09:58:09] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 09:58:09,965 - INFO - 127.0.0.1 - - [01/Sep/2025 09:58:09] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 09:58:16,153 - INFO - 127.0.0.1 - - [01/Sep/2025 09:58:16] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 09:58:16,197 - INFO - 127.0.0.1 - - [01/Sep/2025 09:58:16] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:02:57,257 - INFO - 127.0.0.1 - - [01/Sep/2025 10:02:57] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:02:57,313 - INFO - 127.0.0.1 - - [01/Sep/2025 10:02:57] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:03:53,094 - INFO - 127.0.0.1 - - [01/Sep/2025 10:03:53] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:03:53,145 - INFO - 127.0.0.1 - - [01/Sep/2025 10:03:53] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:04:01,520 - INFO - 127.0.0.1 - - [01/Sep/2025 10:04:01] "[33mPOST /processo//analise/processar HTTP/1.1[0m" 404 -
+2025-09-01 10:04:47,665 - INFO - 127.0.0.1 - - [01/Sep/2025 10:04:47] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:04:47,716 - INFO - 127.0.0.1 - - [01/Sep/2025 10:04:47] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:04:54,904 - INFO - 127.0.0.1 - - [01/Sep/2025 10:04:54] "[33mPOST /processo//analise/processar HTTP/1.1[0m" 404 -
+2025-09-01 10:05:31,267 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:31] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:05:31,343 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:31] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:05:36,208 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:36] "GET / HTTP/1.1" 200 -
+2025-09-01 10:05:36,261 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:36] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:05:38,761 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:38] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 10:05:38,786 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:38] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 10:05:38,841 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:38] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:05:41,854 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:41] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:05:41,919 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:41] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:05:48,256 - INFO - 127.0.0.1 - - [01/Sep/2025 10:05:48] "[33mPOST /processo//analise/processar HTTP/1.1[0m" 404 -
+2025-09-01 10:08:23,174 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:80
+2025-09-01 10:08:23,175 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-01 10:08:23,183 - INFO -  * Restarting with stat
+2025-09-01 10:08:31,202 - WARNING -  * Debugger is active!
+2025-09-01 10:08:31,214 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 10:08:47,262 - INFO - 127.0.0.1 - - [01/Sep/2025 10:08:47] "GET / HTTP/1.1" 200 -
+2025-09-01 10:08:47,296 - INFO - 127.0.0.1 - - [01/Sep/2025 10:08:47] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:09:31,201 - INFO - 127.0.0.1 - - [01/Sep/2025 10:09:31] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 10:10:17,680 - INFO - 127.0.0.1 - - [01/Sep/2025 10:10:17] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 10:10:18,204 - INFO - 127.0.0.1 - - [01/Sep/2025 10:10:18] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 10:10:18,262 - INFO - 127.0.0.1 - - [01/Sep/2025 10:10:18] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:10:21,063 - INFO - 127.0.0.1 - - [01/Sep/2025 10:10:21] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:10:21,114 - INFO - 127.0.0.1 - - [01/Sep/2025 10:10:21] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:10:29,347 - INFO - 127.0.0.1 - - [01/Sep/2025 10:10:29] "[33mPOST /processo//analise/processar HTTP/1.1[0m" 404 -
+2025-09-01 10:12:06,117 - INFO - 127.0.0.1 - - [01/Sep/2025 10:12:06] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:12:06,176 - INFO - 127.0.0.1 - - [01/Sep/2025 10:12:06] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:13:19,036 - INFO - 127.0.0.1 - - [01/Sep/2025 10:13:19] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:13:19,110 - INFO - 127.0.0.1 - - [01/Sep/2025 10:13:19] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:17:36,063 - INFO - 127.0.0.1 - - [01/Sep/2025 10:17:36] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:17:36,126 - INFO - 127.0.0.1 - - [01/Sep/2025 10:17:36] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:17:42,460 - INFO - Inicializando LeitorPDF
+2025-09-01 10:17:44,592 - INFO - PDF digital detectado.
+2025-09-01 10:17:46,367 - INFO - Extração de texto digital concluída.
+2025-09-01 10:17:48,675 - INFO - 127.0.0.1 - - [01/Sep/2025 10:17:48] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 10:19:01,050 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:01] "GET /processo/130827/analise?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-09-01 10:19:03,176 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:03] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:19:03,238 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:03] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:19:30,813 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:30] "GET / HTTP/1.1" 200 -
+2025-09-01 10:19:30,927 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:30] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:19:34,178 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:34] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 10:19:34,202 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:34] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 10:19:34,274 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:34] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:19:37,086 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:37] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:19:37,148 - INFO - 127.0.0.1 - - [01/Sep/2025 10:19:37] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:20:08,342 - INFO - 127.0.0.1 - - [01/Sep/2025 10:20:08] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 10:20:08,382 - INFO - 127.0.0.1 - - [01/Sep/2025 10:20:08] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 10:20:14,430 - INFO - Inicializando LeitorPDF
+2025-09-01 10:20:16,146 - INFO - PDF digital detectado.
+2025-09-01 10:20:18,109 - INFO - Extração de texto digital concluída.
+2025-09-01 10:20:19,568 - INFO - 127.0.0.1 - - [01/Sep/2025 10:20:19] "POST /processo/130827/analise/processar HTTP/1.1" 200 -

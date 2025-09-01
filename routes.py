@@ -73,6 +73,7 @@ def api_acreprev():
         dados["Data_nascimento"] = registro.get("Nascimento")
         dados["Data_ingresso_cargo"] = registro.get("Data_ingresso_cargo")
         dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico")
+        dados["Observacoes"] = registro.get("Descricao") + registro.get("Fundamentacao")
         session['dados'] = dados
         print(dados)
 
@@ -82,10 +83,7 @@ def api_acreprev():
 
 @main_bp.route('/processo/<numero>/gerar-certidao')
 def gerar_certidao(numero):
-    proc = Processo.query.filter_by(processo=numero).first_or_404()
-    session['dados'] = Tools.PreencherDados(proc)
     caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_base.docx')    
-    
     doc = PreencheDocumentoWord(caminho_modelo)
     doc.substituir_campos(session.get('dados', {}))
 
@@ -111,18 +109,15 @@ def gerar_certidao(numero):
 @main_bp.route('/processo/<numero>/analise')
 def analise_inatividade(numero):
     try:
-        proc = Processo.query.filter_by(processo=numero).first_or_404()
-        session['dados'] = Tools.PreencherDados(proc)
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
-
         doc = PreencheDocumentoWord(caminho_modelo)
         doc.substituir_campos(session.get('dados', {}))
         docx_bytes = doc.gerar_bytes()
         
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
-        html_doc = result.value  # string HTML
+        html_doc = result.value[result.value.find("RELATÓRIO CONCLUSIVO")-8:]  # string HTML
 
-        return render_template('analise_inatividade.html', proc=proc, doc_html=html_doc)
+        return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc)
     except Exception as e:
         return f"Erro interno: {e}", 500
 
@@ -138,6 +133,8 @@ def processar_analise_inatividade(numero):
     except Exception as e:
         return f"Erro interno: {e}", 500
     
+    dados = session.get('dados', {}) 
+    texto += f"\n\n{str(dados)}"
     prompt = """[PERSONA: Você é Auditor de Controle Externo do Tribunal de Contas do Estado do Acre (TCE-AC), especialista na análise de atos de inatividade (aposentadoria, reforma, reserva, pensão e etc). Fundamente suas avaliações na Constituição Federal, na Constituição Estadual, na legislação complementar aplicável (LCE nº 164/2006, LCE nº 197/2009, LCE nº 324/2016, LCE nº 349/2018, EC nº 103/2019) e em precedentes do STF e dos Tribunais de Contas.]
     [TONE: formal]
     [STYLE]
@@ -153,13 +150,12 @@ def processar_analise_inatividade(numero):
     [OBJETIVO]
     Redigir parágrafo simples, formal e técnico, contendo uma análise sobre a admissão do servidor.
     [INSTRUCTIONS]
-    Não acrescente texto nenhum além daquele previsto em SAÍDA.
+    Não acrescente texto nenhum além daquele previsto em SAÍDA. 
     [SAÍDA]
     Produza um único parágrafo contendo uma análise com base no seguinte modelo:
-    O (A) servidor(a) foi admitido(a) pela [órgão que admitiu o servidor], [com ou sem aprovação em concurso público], através de [documento de admissão do servidor, exemplo: contrato, carteira de trabalho e outros], para exercer o cargo de [cargo no qual o servidor foi admitido], na data de [data de admissão], conforme [documento analisado, por exemplo: relatório ou ficha de assentamento funcional]."""
+    [Artigo definido "O" ou "A" conforme sexo do seridor] ["servidor" ou "servidora" conforme sexo do seridor] foi ["admitido" ou "admitida" conforme sexo do servidor] pela [órgão que admitiu o servidor], [com ou sem aprovação em concurso público], através de [documento de admissão do servidor, exemplo: contrato, carteira de trabalho e outros], para exercer o cargo de [cargo no qual o servidor foi admitido], na data de [data de admissão], conforme [documento analisado, por exemplo: relatório ou ficha de assentamento funcional]."""
 
     analise = str(GeminiClient().get(texto, prompt))
-    dados = session.get('dados', {}) 
     dados["admissao"] = analise 
     session['dados'] = dados    
     
