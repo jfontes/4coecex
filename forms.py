@@ -45,3 +45,9 @@ class ProcessoForm(FlaskForm):
     anos_tempo_de_contribuicao = IntegerField('Anos de Contribuição', validators=[Optional(), NumberRange(min=0)])
     dias_tempo_de_contribuicao = IntegerField('Dias de Contribuição', validators=[Optional(), NumberRange(min=0, max=364)])
     submit = SubmitField('Salvar Alterações')
+
+class AnaliseForm(FlaskForm):
+    nome = StringField("Nome", validators=[DataRequired()])
+    criterio = TextAreaField("Critério", validators=[DataRequired()])
+    tag = StringField("Tag", validators=[DataRequired()])
+    submit = SubmitField("Salvar")

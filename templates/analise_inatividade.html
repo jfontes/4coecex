@@ -4,27 +4,13 @@
 {% block extra_js %}
 <script>
 (function(){
-  const chk   = document.getElementById('chkAnaliseAdm');
+  const select = document.getElementById('selectAnalise');
   const bloco = document.getElementById('blocoAnalise');
   const files = document.getElementById('inputPDFs');
   const btn   = document.getElementById('btnAnalisar');
   const btn2   = document.getElementById('btnAdicionar');
   const out   = document.getElementById('txtResultado');
   const stat  = document.getElementById('analiseStatus');
-
-  function setEnabled(enabled) {
-    bloco.setAttribute('aria-disabled', enabled ? 'false' : 'true');
-    files.disabled = !enabled;
-    btn.disabled   = !enabled;
-    out.disabled   = !enabled;
-    if (!enabled) {
-      stat.textContent = '';
-    }
-  }
-
-  chk.addEventListener('change', function(){
-    setEnabled(chk.checked);
-  });
 
   function setStatus(msg, isError=false) {
     stat.textContent = msg || '';
@@ -45,6 +31,8 @@
       for (const f of files.files) {
         fd.append('pdfs[]', f, f.name);
       }
+      fd.append('analise_id', select.value);
+
       const url = "{{ url_for('main.processar_analise_inatividade', numero=proc) }}";
       const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin'});
       const data = await resp.json();
@@ -63,9 +51,6 @@
       btn2.disabled = false;
     }
   });
-
-  // inicia desabilitado
-  setEnabled(false);
 })();
 </script>
 
@@ -75,7 +60,8 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
     const url = "{{ url_for('main.adicionar_no_relatorio') }}";
     const texto = document.getElementById('txtResultado').value;
     const fd = new FormData();
-    fd.append('admissao', texto);
+    fd.append('analise_id', document.getElementById('selectAnalise').value);
+    fd.append('analiseInteligente', texto);
 
     const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin' });
     const data = await resp.json();
@@ -98,24 +84,26 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
   <div class="col-lg-6">
   <div class="card shadow-sm h-100">
     <div class="card-body">
-      <!-- Checkbox que habilita o bloco -->
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" value="1" id="chkAnaliseAdm">
-        <label class="form-check-label fw-semibold" for="chkAnaliseAdm">
-          Incluir análise da admissão?
+      <div class="mb-3">
+        <label class="form-label fw-semibold" for="selectAnalise">
+          Selecione um critério de análise:
         </label>
+        <select id="selectAnalise" class="form-select">
+          {% for analise in analises %}
+            <option value="{{ analise.id }}">{{ analise.nome }}</option>
+          {% endfor %}
+        </select>
       </div>
 
-      <!-- Bloco que será habilitado ao marcar o checkbox -->
-      <div id="blocoAnalise" aria-disabled="true">
+      <div id="blocoAnalise" aria-disabled="false">
         <div class="mb-3">
           <label class="form-label">Anexar PDF(s)</label>
-          <input id="inputPDFs" class="form-control" type="file" accept="application/pdf" multiple disabled>
+          <input id="inputPDFs" class="form-control" type="file" accept="application/pdf" multiple>
           <div class="form-text">Você pode selecionar mais de um arquivo PDF.</div>
         </div>
 
         <div class="d-flex align-items-center gap-2 mb-3">
-          <button id="btnAnalisar" class="btn btn-primary" type="button" disabled>
+          <button id="btnAnalisar" class="btn btn-primary" type="button">
             Analisar
           </button>
           <button id="btnAdicionar" class="btn btn-warning me-2" type="button" disabled>
@@ -125,7 +113,7 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
         </div>
 
         <label for="txtResultado" class="form-label">Resultado da análise</label>
-        <textarea id="txtResultado" class="form-control" rows="14" placeholder="O resultado da análise aparecerá aqui..." disabled></textarea>
+        <textarea id="txtResultado" class="form-control" rows="14" placeholder="O resultado da análise aparecerá aqui..."></textarea>
       </div>
     </div>
   </div>

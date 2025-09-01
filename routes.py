@@ -3,6 +3,7 @@ from sqlalchemy.exc         import ProgrammingError, DataError
 from extensions             import db
 from tools                  import Tools
 from models                 import Processo
+from models                 import Analise
 from documento_word         import PreencheDocumentoWord
 from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm
@@ -109,6 +110,8 @@ def gerar_certidao(numero):
 @main_bp.route('/processo/<numero>/analise')
 def analise_inatividade(numero):
     try:
+        analises = Analise.query.all()
+        
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
         doc.substituir_campos(session.get('dados', {}))
@@ -117,7 +120,7 @@ def analise_inatividade(numero):
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
         html_doc = result.value[result.value.find("RELATÓRIO CONCLUSIVO")-8:]  # string HTML
 
-        return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc)
+        return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc, analises=analises)
     except Exception as e:
         return f"Erro interno: {e}", 500
 
@@ -135,38 +138,27 @@ def processar_analise_inatividade(numero):
     
     dados = session.get('dados', {}) 
     texto += f"\n\n{str(dados)}"
-    prompt = """[PERSONA: Você é Auditor de Controle Externo do Tribunal de Contas do Estado do Acre (TCE-AC), especialista na análise de atos de inatividade (aposentadoria, reforma, reserva, pensão e etc). Fundamente suas avaliações na Constituição Federal, na Constituição Estadual, na legislação complementar aplicável (LCE nº 164/2006, LCE nº 197/2009, LCE nº 324/2016, LCE nº 349/2018, EC nº 103/2019) e em precedentes do STF e dos Tribunais de Contas.]
-    [TONE: formal]
-    [STYLE]
-    Redija em linguagem técnica e objetiva. Cite de forma explícita dispositivos legais e jurisprudência (informando artigo, inciso, número de acórdão ou decisão). Estruture o relatório de acordo com o padrão do TCE-AC demonstrado no modelo fornecido.  
-    [AUDIENCE: Procuradores e Juízes Conselheiros]
-    [CONTEXT]
-    Você recebeu para exame um processo de inatividade de militar, contendo os seguintes documentos o histórico funcional e, eventualmente, a certidão de contribuição previdenciária.
-    Hipóteses especiais a verificar no caso concreto:  
-    1. Quando o servidor foi admitido?
-    2. Em qual cargo e órgão se deu a admissão?
-    3. A admissão ocorreu com ou sem concurso público?
-    4. Qual documento materializou a admissão?
-    [OBJETIVO]
-    Redigir parágrafo simples, formal e técnico, contendo uma análise sobre a admissão do servidor.
-    [INSTRUCTIONS]
-    Não acrescente texto nenhum além daquele previsto em SAÍDA. 
-    [SAÍDA]
-    Produza um único parágrafo contendo uma análise com base no seguinte modelo:
-    [Artigo definido "O" ou "A" conforme sexo do seridor] ["servidor" ou "servidora" conforme sexo do seridor] foi ["admitido" ou "admitida" conforme sexo do servidor] pela [órgão que admitiu o servidor], [com ou sem aprovação em concurso público], através de [documento de admissão do servidor, exemplo: contrato, carteira de trabalho e outros], para exercer o cargo de [cargo no qual o servidor foi admitido], na data de [data de admissão], conforme [documento analisado, por exemplo: relatório ou ficha de assentamento funcional]."""
 
-    analise = str(GeminiClient().get(texto, prompt))
-    dados["admissao"] = analise 
+    analise_id = request.form.get('analise_id')
+    analise = Analise.query.get(analise_id)
+
+    prompt = analise.criterio
+
+    analiseInteligente = str(GeminiClient().get(texto, prompt))
+    dados[analise.tag] = analiseInteligente
     session['dados'] = dados    
     
-    return jsonify({"ok": True, "texto": analise})
+    return jsonify({"ok": True, "texto": analiseInteligente})
     
 @main_bp.post('/processo/adicionar_no_relatorio')
 def adicionar_no_relatorio():
     try:
         dados = session.get('dados', {})
-        admissao = request.form.get('admissao', '')
-        dados["admissao"] = admissao
+        analiseInteligente = request.form.get('analiseInteligente', '')
+        analise_id = request.form.get('analise_id')
+        analise = Analise.query.get(analise_id)
+
+        dados[analise.tag] = analiseInteligente
         
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
@@ -174,7 +166,7 @@ def adicionar_no_relatorio():
         docx_bytes = doc.gerar_bytes()
         
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
-        html_doc = result.value  # string HTML
+        html_doc = result.value[result.value.find("RELATÓRIO CONCLUSIVO")-8:]  # string HTML
 
         return jsonify({"ok": True, "doc_html": html_doc})
     except Exception as e:
