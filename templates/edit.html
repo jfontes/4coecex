@@ -7,10 +7,29 @@
   const btn = document.getElementById('btnAcreprev');
   const statusEl = document.getElementById('acreprev-status');
 
-  function setStatus(msg, isError=false) {
+  function setStatus(msg, tipo = 'info') {
     if (!statusEl) return;
     statusEl.textContent = msg || '';
-    statusEl.className = 'form-text' + (isError ? ' text-danger' : ' text-muted');
+
+    // Define a classe de cor com base no tipo
+    let corClasse = 'text-muted'; // padrão
+
+    switch (tipo) {
+      case 'erro':
+        corClasse = 'text-danger';
+        break;
+      case 'sucesso':
+        corClasse = 'text-success';
+        break;
+      case 'aviso':
+        corClasse = 'text-warning';
+        break;
+      case 'info':
+      default:
+        corClasse = 'text-muted';
+    }
+
+    statusEl.className = 'form-text ' + corClasse;
   }
 
   function setVal(id, val) {
@@ -26,11 +45,11 @@
     const cpfInput = document.getElementById('cpf');
     const cpf = normalizarCpf(cpfInput?.value || '');
     if (!cpf || cpf.length !== 11) {
-      setStatus('Informe um CPF válido (11 dígitos).', true);
+      setStatus('Informe um CPF válido (11 dígitos).', 'erro');
       return;
     }
 
-    setStatus('Nossa IA está tabalhando nos dados do Acreprevidência...');
+    setStatus('Nossa IA está tabalhando nos dados do Acreprevidência...', 'aviso');
     btn.disabled = true;
 
     try {
@@ -45,18 +64,31 @@
       const d = payload.data || {};
 
       // preenche os campos do formulário
-      setVal('{{ form.servidor.id }}', d.servidor);
-      setVal('{{ form.matricula.id }}', d.matricula);
-      setVal('{{ form.cargo.id }}', d.cargo);
-      setVal('{{ form.orgao.id }}', d.orgao);
-      setVal('{{ form.proventos.id }}', d.proventos);
-      setVal('{{ form.data_publicacao.id }}', d.data_concessao);
-      setVal('{{ form.fundamento_legal.id }}', d.fundamento_legal);
-      setVal('{{ form.anos_tempo_de_contribuicao.id }}', d.tempo_anos)
-      setVal('{{ form.dias_tempo_de_contribuicao.id }}', d.tempo_dias)
-      setStatus('Dados importados com sucesso.');
+            
+      const campos = {
+          '{{ form.servidor.id }}': d.servidor,
+          '{{ form.matricula.id }}': d.matricula,
+          '{{ form.cargo.id }}': d.cargo,
+          '{{ form.orgao.id }}': d.orgao,
+          '{{ form.proventos.id }}': d.proventos,
+          '{{ form.data_publicacao.id }}': d.data_concessao,
+          '{{ form.fundamento_legal.id }}': d.fundamento_legal,
+          '{{ form.anos_tempo_de_contribuicao.id }}': d.tempo_anos,
+          '{{ form.dias_tempo_de_contribuicao.id }}': d.tempo_dias
+        };
+
+        // Preenche apenas os campos que estão vazios
+        for (const [id, valor] of Object.entries(campos)) {
+          const el = document.getElementById(id);
+          if (el && !el.value) {
+            setVal(id, valor);
+          }
+        }
+
+        setStatus('Dados importados com sucesso.', 'sucesso');
+
     } catch (err) {
-      setStatus(err.message || 'Erro ao consultar a API.', true);
+      setStatus(err.message || 'Erro ao consultar a API.', 'erro');
     } finally {
       btn.disabled = false;
     }
