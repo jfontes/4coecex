@@ -39,7 +39,8 @@ def editar(numero):
             db.session.rollback()
             flash("Erro ao salvar. Verifique os dados informados.", "danger")
         return redirect(url_for('main.editar', numero=numero))
-
+    
+    session['dados'] = Tools.PreencherDados(proc)
     return render_template('edit.html', form=form, proc=proc)
 
 @main_bp.get("/api/acreprev")
@@ -50,7 +51,6 @@ def api_acreprev():
 
     try:
         registro = DadosAcreprevidencia().getRegistroPorCPF(cpf)
-        print(registro)
         if not registro:
             return jsonify({"ok": False, "msg": "Nenhum registro encontrado para este CPF."}), 404
 
@@ -66,6 +66,16 @@ def api_acreprev():
             "tempo_anos": registro.get("Tempo_Contribuicao_Ano") or "",
             "tempo_dias": registro.get("Tempo_Contribuicao_Dias") or "",
         }
+
+        dados = session.get('dados', {}) 
+        dados["sexo"] = registro.get("Sexo")
+        dados["Idade"] = registro.get("Idade")
+        dados["Data_nascimento"] = registro.get("Nascimento")
+        dados["Data_ingresso_cargo"] = registro.get("Data_ingresso_cargo")
+        dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico")
+        session['dados'] = dados
+        print(dados)
+
         return jsonify({"ok": True, "data": data})
     except Exception as e:
         return jsonify({"ok": False, "msg": str(e)}), 400
@@ -73,7 +83,7 @@ def api_acreprev():
 @main_bp.route('/processo/<numero>/gerar-certidao')
 def gerar_certidao(numero):
     proc = Processo.query.filter_by(processo=numero).first_or_404()
-    session['dados'] = Tools.PreencherCertidao(proc)
+    session['dados'] = Tools.PreencherDados(proc)
     caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_base.docx')    
     
     doc = PreencheDocumentoWord(caminho_modelo)
@@ -102,7 +112,7 @@ def gerar_certidao(numero):
 def analise_inatividade(numero):
     try:
         proc = Processo.query.filter_by(processo=numero).first_or_404()
-        session['dados'] = Tools.PreencherCertidao(proc)
+        session['dados'] = Tools.PreencherDados(proc)
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
 
         doc = PreencheDocumentoWord(caminho_modelo)

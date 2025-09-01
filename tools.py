@@ -21,7 +21,7 @@ class Tools:
     def FormatarData(dt):
         return dt.strftime('%d/%m/%Y') if dt else ''
 
-    def PreencherCertidao(proc):
+    def PreencherDados(proc):
         dados = {
             "servidor": proc.servidor or '',
             "cpf": proc.cpf or '',
