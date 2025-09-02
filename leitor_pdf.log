@@ -2216,3 +2216,43 @@
 2025-09-02 12:35:28,856 - INFO - Extração de texto digital concluída.
 2025-09-02 12:35:31,146 - INFO - 127.0.0.1 - - [02/Sep/2025 12:35:31] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
 2025-09-02 12:35:32,988 - INFO - 127.0.0.1 - - [02/Sep/2025 12:35:32] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 12:36:43,281 - INFO - 127.0.0.1 - - [02/Sep/2025 12:36:43] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-02 12:36:43,339 - INFO - 127.0.0.1 - - [02/Sep/2025 12:36:43] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:36:43,344 - INFO - 127.0.0.1 - - [02/Sep/2025 12:36:43] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-02 12:37:54,773 - INFO - 127.0.0.1 - - [02/Sep/2025 12:37:54] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-02 12:37:54,834 - INFO - 127.0.0.1 - - [02/Sep/2025 12:37:54] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:37:54,838 - INFO - 127.0.0.1 - - [02/Sep/2025 12:37:54] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-02 12:38:44,421 - INFO - 127.0.0.1 - - [02/Sep/2025 12:38:44] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-02 12:38:44,461 - INFO - 127.0.0.1 - - [02/Sep/2025 12:38:44] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:38:44,465 - INFO - 127.0.0.1 - - [02/Sep/2025 12:38:44] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-02 12:38:58,487 - INFO - Inicializando LeitorPDF
+2025-09-02 12:39:00,262 - INFO - PDF digital detectado.
+2025-09-02 12:39:02,203 - INFO - Extração de texto digital concluída.
+2025-09-02 12:39:06,758 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:06] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 12:39:08,631 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:08] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 12:39:26,456 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:26] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-02 12:39:26,547 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:26] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:39:26,552 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:26] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-02 12:39:33,102 - INFO - Inicializando LeitorPDF
+2025-09-02 12:39:34,866 - INFO - PDF digital detectado.
+2025-09-02 12:39:36,945 - INFO - Extração de texto digital concluída.
+2025-09-02 12:39:40,983 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:40] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 12:39:42,946 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:42] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 12:39:49,493 - INFO - Inicializando LeitorPDF
+2025-09-02 12:39:51,234 - INFO - PDF digital detectado.
+2025-09-02 12:39:53,259 - INFO - Extração de texto digital concluída.
+2025-09-02 12:39:55,889 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:55] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 12:39:57,599 - INFO - 127.0.0.1 - - [02/Sep/2025 12:39:57] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 12:40:32,996 - INFO - 127.0.0.1 - - [02/Sep/2025 12:40:32] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-02 12:40:33,099 - INFO - 127.0.0.1 - - [02/Sep/2025 12:40:33] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:40:33,102 - INFO - 127.0.0.1 - - [02/Sep/2025 12:40:33] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-02 12:40:41,517 - INFO - Inicializando LeitorPDF
+2025-09-02 12:40:43,497 - INFO - PDF digital detectado.
+2025-09-02 12:40:45,209 - INFO - Extração de texto digital concluída.
+2025-09-02 12:40:47,974 - INFO - 127.0.0.1 - - [02/Sep/2025 12:40:47] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 12:40:49,494 - INFO - 127.0.0.1 - - [02/Sep/2025 12:40:49] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 12:41:00,153 - INFO - Inicializando LeitorPDF
+2025-09-02 12:41:02,040 - INFO - PDF digital detectado.
+2025-09-02 12:41:03,474 - INFO - Extração de texto digital concluída.
+2025-09-02 12:41:06,617 - INFO - 127.0.0.1 - - [02/Sep/2025 12:41:06] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 12:41:08,268 - INFO - 127.0.0.1 - - [02/Sep/2025 12:41:08] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
