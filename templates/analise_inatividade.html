@@ -89,7 +89,7 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
 
 <div class="row g-4 mt-4">
   <!-- Lado esquerdo: área de análise (você detalha depois) -->
-  <div class="col-lg-6">
+  <div class="col-lg-4">
   <div class="card shadow-sm h-100">
     <div class="card-body">
       <div class="mb-3">
@@ -131,17 +131,16 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
 </div>
 
   <!-- Lado direito: exibição do DOCX como página somente leitura -->
-  <div class="col-lg-6">
+  <div class="col-lg-8" style="max-height: 80vh; overflow-y: auto;">
     <div class="card shadow-sm h-100">
       <div class="card-body">
-        <h6 class="mb-3">Documento (visualização somente leitura)</h6>
+        <h6 class="mb-3">Documento (visualização somente leitura)
         <a id="btnBaixarDocx" href="{{ url_for('main.baixar_docx', numero=proc) }}" class="btn btn-outline-secondary btn-sm ms-2" download>
           Baixar
-        </a>
+        </a></h6>
         <div class="docx-page mx-auto">
           {{ doc_html|safe }}
         </div>
-
       </div>
     </div>
   </div>
