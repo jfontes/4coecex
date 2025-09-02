@@ -75,6 +75,53 @@ def excluir_analise(analise_id):
     flash("Análise excluída com sucesso!", "success")
     return redirect(url_for("main.listar_analises"))
 
+@main_bp.route('/processo/novo', methods=['GET', 'POST'])
+def novo_processo():
+    form = ProcessoForm()
+
+    # garanta que o Select de órgão previdência está populado (se não fizer isso no __init__ do form)
+    try:
+        from models import OrgaoPrevidencia
+        form.orgao_previdencia.choices = [
+            (op.id, op.nome) for op in OrgaoPrevidencia.query.order_by(OrgaoPrevidencia.nome)
+        ]
+    except Exception:
+        pass
+
+    if form.validate_on_submit():
+        # valida número do processo obrigatoriamente na criação
+        numero = (form.processo.data or '').strip()
+        if not numero or len(numero) != 6 or not numero.isdigit():
+            flash('Informe o Número do Processo com 6 dígitos (ex.: 123456).', 'danger')
+            return render_template('edit.html', form=form, proc=None)
+
+        # checa duplicidade
+        existente = Processo.query.filter_by(processo=numero).first()
+        if existente:
+            flash('Já existe um processo com esse número.', 'danger')
+            return render_template('edit.html', form=form, proc=None)
+
+        # cria o objeto e popula
+        proc = Processo()
+        form.populate_obj(proc)
+
+        # mapeia o select para a FK corretamente (se seu campo no model for *_id)
+        try:
+            proc.orgao_previdencia_id = form.orgao_previdencia.data or None
+        except Exception:
+            pass
+
+        # garante que o número vai para o model (nome do campo no model é 'processo')
+        proc.processo = numero
+
+        db.session.add(proc)
+        db.session.commit()
+        flash('Processo criado com sucesso!', 'success')
+        return redirect(url_for('main.editar', numero=proc.processo))
+
+    # GET ou form com erros → renderiza usando o mesmo edit.html
+    return render_template('edit.html', form=form, proc=None)
+
 @main_bp.route('/processo/<numero>', methods=['GET','POST'])
 def editar(numero):
     proc = Processo.query.filter_by(processo=numero).first()

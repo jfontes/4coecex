@@ -15,6 +15,10 @@ class BuscaForm(FlaskForm):
     submit = SubmitField('Buscar')
 
 class ProcessoForm(FlaskForm):
+    processo = StringField(
+        'Número do Processo',
+        validators=[Optional(), Regexp(r'^\d{6}$', message='Use 6 dígitos, ex.: 123456')]
+    )
     autuacao_processo = DateField('Data de Autuação', format='%Y-%m-%d', validators=[Optional()])
     classe = QuerySelectField(
         'Classe',

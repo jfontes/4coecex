@@ -2256,3 +2256,67 @@
 2025-09-02 12:41:03,474 - INFO - Extração de texto digital concluída.
 2025-09-02 12:41:06,617 - INFO - 127.0.0.1 - - [02/Sep/2025 12:41:06] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
 2025-09-02 12:41:08,268 - INFO - 127.0.0.1 - - [02/Sep/2025 12:41:08] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 12:42:32,640 - INFO - Inicializando LeitorPDF
+2025-09-02 12:42:32,856 - INFO - PDF digital detectado.
+2025-09-02 12:42:33,386 - INFO - Extração de texto digital concluída.
+2025-09-02 12:42:55,128 - INFO - PDF digital detectado.
+2025-09-02 12:43:17,844 - INFO - Extração de texto digital concluída.
+2025-09-02 12:43:23,523 - INFO - 127.0.0.1 - - [02/Sep/2025 12:43:23] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 12:43:45,498 - INFO - 127.0.0.1 - - [02/Sep/2025 12:43:45] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 12:43:51,593 - INFO - 127.0.0.1 - - [02/Sep/2025 12:43:51] "GET /processo/130827/baixar-docx HTTP/1.1" 200 -
+2025-09-02 12:49:25,931 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-02 12:49:30,115 - INFO -  * Restarting with stat
+2025-09-02 12:49:42,010 - WARNING -  * Debugger is active!
+2025-09-02 12:49:42,026 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 12:49:46,617 - INFO - 127.0.0.1 - - [02/Sep/2025 12:49:46] "GET / HTTP/1.1" 200 -
+2025-09-02 12:49:46,922 - INFO - 127.0.0.1 - - [02/Sep/2025 12:49:46] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:49:50,950 - INFO - 127.0.0.1 - - [02/Sep/2025 12:49:50] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-02 12:49:51,237 - INFO - 127.0.0.1 - - [02/Sep/2025 12:49:51] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:49:51,297 - INFO - 127.0.0.1 - - [02/Sep/2025 12:49:51] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:50:28,406 - INFO - 127.0.0.1 - - [02/Sep/2025 12:50:28] "GET / HTTP/1.1" 200 -
+2025-09-02 12:50:28,464 - INFO - 127.0.0.1 - - [02/Sep/2025 12:50:28] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:50:30,438 - INFO - 127.0.0.1 - - [02/Sep/2025 12:50:30] "GET /processo/novo HTTP/1.1" 200 -
+2025-09-02 12:50:30,481 - INFO - 127.0.0.1 - - [02/Sep/2025 12:50:30] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:50:34,037 - INFO - 127.0.0.1 - - [02/Sep/2025 12:50:34] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-09-02 12:51:26,009 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:26] "GET /processo/novo HTTP/1.1" 200 -
+2025-09-02 12:51:26,064 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:26] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:51:38,200 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:38] "GET /analises HTTP/1.1" 200 -
+2025-09-02 12:51:38,243 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:38] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:51:39,314 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:39] "GET /processo/novo HTTP/1.1" 200 -
+2025-09-02 12:51:39,356 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:39] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:51:40,642 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:40] "GET / HTTP/1.1" 200 -
+2025-09-02 12:51:40,691 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:40] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:51:43,552 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:43] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-02 12:51:43,576 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:43] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:51:43,624 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:43] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:51:50,370 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:50] "GET / HTTP/1.1" 200 -
+2025-09-02 12:51:50,433 - INFO - 127.0.0.1 - - [02/Sep/2025 12:51:50] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:52:51,330 - INFO - 127.0.0.1 - - [02/Sep/2025 12:52:51] "GET / HTTP/1.1" 200 -
+2025-09-02 12:52:51,405 - INFO - 127.0.0.1 - - [02/Sep/2025 12:52:51] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:53:02,732 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:02] "GET / HTTP/1.1" 200 -
+2025-09-02 12:53:02,777 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:02] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:53:05,279 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:05] "GET /processo/novo HTTP/1.1" 200 -
+2025-09-02 12:53:05,328 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:05] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:53:33,787 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:33] "[33mGET /api/acreprev?cpf=21786720272 HTTP/1.1[0m" 404 -
+2025-09-02 12:53:41,791 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:41] "GET / HTTP/1.1" 200 -
+2025-09-02 12:53:41,856 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:41] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:53:44,682 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:44] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-02 12:53:44,711 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:44] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:53:44,752 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:44] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:53:52,481 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:52] "[33mGET /api/acreprev?cpf=21786720272 HTTP/1.1[0m" 404 -
+2025-09-02 12:53:58,329 - INFO - 127.0.0.1 - - [02/Sep/2025 12:53:58] "[33mGET /api/acreprev?cpf=82346992534 HTTP/1.1[0m" 404 -
+2025-09-02 12:54:00,339 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:00] "GET / HTTP/1.1" 200 -
+2025-09-02 12:54:00,396 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:00] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:54:02,536 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:02] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-02 12:54:02,555 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:02] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:54:02,602 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:02] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:54:14,122 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:14] "GET /api/acreprev?cpf=19720653272 HTTP/1.1" 200 -
+2025-09-02 12:54:28,331 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:28] "GET / HTTP/1.1" 200 -
+2025-09-02 12:54:28,378 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:28] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:54:30,593 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:30] "GET /processo/novo HTTP/1.1" 200 -
+2025-09-02 12:54:30,639 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:30] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:54:49,568 - INFO - 127.0.0.1 - - [02/Sep/2025 12:54:49] "[33mGET /api/acreprev?cpf=21786720272 HTTP/1.1[0m" 404 -
+2025-09-02 12:56:25,125 - INFO - 127.0.0.1 - - [02/Sep/2025 12:56:25] "GET /processo/novo HTTP/1.1" 200 -
+2025-09-02 12:56:25,170 - INFO - 127.0.0.1 - - [02/Sep/2025 12:56:25] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:56:29,643 - INFO - 127.0.0.1 - - [02/Sep/2025 12:56:29] "GET / HTTP/1.1" 200 -
+2025-09-02 12:56:29,700 - INFO - 127.0.0.1 - - [02/Sep/2025 12:56:29] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
