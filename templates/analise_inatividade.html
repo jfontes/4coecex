@@ -2,6 +2,7 @@
 {% block title %}Análise de inatividade – Processo {{ proc }}{% endblock %}
 
 {% block extra_js %}
+
 <script>
 (function(){
   const select = document.getElementById('selectAnalise');
@@ -138,7 +139,7 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
         <a id="btnBaixarDocx" href="{{ url_for('main.baixar_docx', numero=proc) }}" class="btn btn-outline-secondary btn-sm ms-2" download>
           Baixar
         </a></h6>
-        <div class="docx-page mx-auto">
+        <div id="editor" class="docx-page mx-auto">
           {{ doc_html|safe }}
         </div>
       </div>
