@@ -17,6 +17,7 @@ class Analise(db.Model):
     nome = db.Column(db.String(150), nullable=False)
     criterio = db.Column(db.Text, nullable=False)
     tag = db.Column(db.String(50), nullable=False)
+    sugestao_documento = db.Column(db.String(150), nullable=True)
 
     def __repr__(self):
         return f"<Analise {self.id} - {self.nome}>"

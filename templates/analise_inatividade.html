@@ -75,6 +75,14 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
   }
 });
 </script>
+
+<script>
+  document.getElementById('selectAnalise').addEventListener('change', function() {
+    const selected = this.options[this.selectedIndex];
+    document.getElementById('sugestaoDocumento').textContent = 
+      "Sugestão de documento: " + (selected.dataset.sugestao || "");
+  });
+</script>
 {% endblock %}
 
 {% block content %}
@@ -90,9 +98,12 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
         </label>
         <select id="selectAnalise" class="form-select">
           {% for analise in analises %}
-            <option value="{{ analise.id }}">{{ analise.nome }}</option>
+            <option value="{{ analise.id }}" data-sugestao="{{ analise.sugestao_documento }}">{{ analise.nome }}</option>
           {% endfor %}
         </select>
+        <div id="sugestaoDocumento" class="form-text mt-1">
+          Sugestão de documento: {{ analises[0].sugestao_documento if analises else '' }}
+        </div>
       </div>
 
       <div id="blocoAnalise" aria-disabled="false">
@@ -124,7 +135,7 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
     <div class="card shadow-sm h-100">
       <div class="card-body">
         <h6 class="mb-3">Documento (visualização somente leitura)</h6>
-        <a id="btnBaixarDocx" href="{{ url_for('main.baixar_docx', numero=proc.processo) }}" class="btn btn-outline-secondary btn-sm ms-2" download>
+        <a id="btnBaixarDocx" href="{{ url_for('main.baixar_docx', numero=proc) }}" class="btn btn-outline-secondary btn-sm ms-2" download>
           Baixar
         </a>
         <div class="docx-page mx-auto">

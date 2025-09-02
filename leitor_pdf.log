@@ -1229,3 +1229,175 @@
 2025-09-01 12:24:00,733 - INFO - Extração de texto digital concluída.
 2025-09-01 12:24:02,912 - INFO - 127.0.0.1 - - [01/Sep/2025 12:24:02] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
 2025-09-01 12:24:09,481 - INFO - 127.0.0.1 - - [01/Sep/2025 12:24:09] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 12:26:43,246 - INFO -  * Detected change in 'C:\\projetos\\certificador\\models.py', reloading
+2025-09-01 12:26:46,515 - INFO -  * Restarting with stat
+2025-09-01 12:26:58,241 - WARNING -  * Debugger is active!
+2025-09-01 12:26:58,260 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 12:31:32,602 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:32] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 12:31:32,652 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:32] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:31:35,767 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:35] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 12:31:36,845 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:36] "GET / HTTP/1.1" 200 -
+2025-09-01 12:31:36,897 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:36] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:31:39,394 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:39] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 12:31:39,414 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:39] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 12:31:39,465 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:39] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:31:41,936 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:41] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 12:31:41,994 - INFO - 127.0.0.1 - - [01/Sep/2025 12:31:41] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:36:30,953 - INFO - 127.0.0.1 - - [01/Sep/2025 12:36:30] "GET / HTTP/1.1" 200 -
+2025-09-01 12:36:31,009 - INFO - 127.0.0.1 - - [01/Sep/2025 12:36:31] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:36:33,667 - INFO - 127.0.0.1 - - [01/Sep/2025 12:36:33] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 12:36:33,724 - INFO - 127.0.0.1 - - [01/Sep/2025 12:36:33] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 12:36:33,771 - INFO - 127.0.0.1 - - [01/Sep/2025 12:36:33] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:36:35,904 - INFO - 127.0.0.1 - - [01/Sep/2025 12:36:35] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 12:36:35,949 - INFO - 127.0.0.1 - - [01/Sep/2025 12:36:35] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:36:59,972 - INFO - Inicializando LeitorPDF
+2025-09-01 12:37:02,354 - INFO - PDF digital detectado.
+2025-09-01 12:37:03,744 - INFO - Extração de texto digital concluída.
+2025-09-01 12:37:06,602 - INFO - 127.0.0.1 - - [01/Sep/2025 12:37:06] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 12:37:22,098 - INFO - 127.0.0.1 - - [01/Sep/2025 12:37:22] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 12:45:12,872 - INFO - 127.0.0.1 - - [01/Sep/2025 12:45:12] "GET / HTTP/1.1" 200 -
+2025-09-01 12:45:13,011 - INFO - 127.0.0.1 - - [01/Sep/2025 12:45:13] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:45:16,189 - INFO - 127.0.0.1 - - [01/Sep/2025 12:45:16] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 12:45:16,346 - INFO - 127.0.0.1 - - [01/Sep/2025 12:45:16] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 12:45:16,404 - INFO - 127.0.0.1 - - [01/Sep/2025 12:45:16] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:45:22,825 - INFO - 127.0.0.1 - - [01/Sep/2025 12:45:22] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 12:45:22,870 - INFO - 127.0.0.1 - - [01/Sep/2025 12:45:22] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:45:37,314 - INFO - Inicializando LeitorPDF
+2025-09-01 12:45:39,270 - INFO - PDF digital detectado.
+2025-09-01 12:45:41,399 - INFO - Extração de texto digital concluída.
+2025-09-01 12:45:47,539 - INFO - 127.0.0.1 - - [01/Sep/2025 12:45:47] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 12:46:59,258 - INFO - 127.0.0.1 - - [01/Sep/2025 12:46:59] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 12:47:01,685 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:01] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 12:47:01,748 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:01] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:47:26,990 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:26] "GET / HTTP/1.1" 200 -
+2025-09-01 12:47:27,075 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:27] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:47:29,809 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:29] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 12:47:29,836 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:29] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 12:47:29,881 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:29] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:47:34,127 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:34] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 12:47:34,179 - INFO - 127.0.0.1 - - [01/Sep/2025 12:47:34] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:47:52,842 - INFO - Inicializando LeitorPDF
+2025-09-01 12:47:54,589 - INFO - PDF digital detectado.
+2025-09-01 12:47:56,776 - INFO - Extração de texto digital concluída.
+2025-09-01 12:48:00,541 - INFO - 127.0.0.1 - - [01/Sep/2025 12:48:00] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 12:48:39,611 - INFO - Inicializando LeitorPDF
+2025-09-01 12:48:41,457 - INFO - PDF digital detectado.
+2025-09-01 12:48:43,544 - INFO - Extração de texto digital concluída.
+2025-09-01 12:48:46,103 - INFO - 127.0.0.1 - - [01/Sep/2025 12:48:46] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 12:58:34,862 - INFO - 127.0.0.1 - - [01/Sep/2025 12:58:34] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 12:58:34,941 - INFO - 127.0.0.1 - - [01/Sep/2025 12:58:34] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:59:20,589 - INFO - 127.0.0.1 - - [01/Sep/2025 12:59:20] "GET / HTTP/1.1" 200 -
+2025-09-01 12:59:20,654 - INFO - 127.0.0.1 - - [01/Sep/2025 12:59:20] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:59:34,499 - INFO - 127.0.0.1 - - [01/Sep/2025 12:59:34] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 12:59:34,534 - INFO - 127.0.0.1 - - [01/Sep/2025 12:59:34] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 12:59:34,579 - INFO - 127.0.0.1 - - [01/Sep/2025 12:59:34] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:59:37,109 - INFO - 127.0.0.1 - - [01/Sep/2025 12:59:37] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 12:59:37,160 - INFO - 127.0.0.1 - - [01/Sep/2025 12:59:37] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 12:59:45,794 - INFO - Inicializando LeitorPDF
+2025-09-01 12:59:47,984 - INFO - PDF digital detectado.
+2025-09-01 12:59:49,206 - INFO - Extração de texto digital concluída.
+2025-09-01 12:59:52,592 - INFO - 127.0.0.1 - - [01/Sep/2025 12:59:52] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 13:00:00,593 - INFO - 127.0.0.1 - - [01/Sep/2025 13:00:00] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 13:00:46,655 - INFO - Inicializando LeitorPDF
+2025-09-01 13:01:16,286 - WARNING - Cannot set gray stroke color because /'P16' is an invalid float value
+2025-09-01 13:01:16,290 - WARNING - Cannot set gray non-stroke color because /'P16' is an invalid float value
+2025-09-01 13:01:16,317 - WARNING - Cannot set gray stroke color because /'P20' is an invalid float value
+2025-09-01 13:01:16,321 - WARNING - Cannot set gray non-stroke color because /'P20' is an invalid float value
+2025-09-01 13:01:16,355 - WARNING - Cannot set gray stroke color because /'P21' is an invalid float value
+2025-09-01 13:01:16,368 - WARNING - Cannot set gray non-stroke color because /'P21' is an invalid float value
+2025-09-01 13:01:16,866 - WARNING - Cannot set gray stroke color because /'P28' is an invalid float value
+2025-09-01 13:01:16,868 - WARNING - Cannot set gray non-stroke color because /'P28' is an invalid float value
+2025-09-01 13:01:16,925 - WARNING - Cannot set gray stroke color because /'P29' is an invalid float value
+2025-09-01 13:01:16,926 - WARNING - Cannot set gray non-stroke color because /'P29' is an invalid float value
+2025-09-01 13:01:23,369 - INFO - PDF digital detectado.
+2025-09-01 13:01:55,141 - WARNING - Cannot set gray stroke color because /'P16' is an invalid float value
+2025-09-01 13:01:55,144 - WARNING - Cannot set gray non-stroke color because /'P16' is an invalid float value
+2025-09-01 13:01:55,173 - WARNING - Cannot set gray stroke color because /'P20' is an invalid float value
+2025-09-01 13:01:55,187 - WARNING - Cannot set gray non-stroke color because /'P20' is an invalid float value
+2025-09-01 13:01:55,220 - WARNING - Cannot set gray stroke color because /'P21' is an invalid float value
+2025-09-01 13:01:55,269 - WARNING - Cannot set gray non-stroke color because /'P21' is an invalid float value
+2025-09-01 13:01:55,769 - WARNING - Cannot set gray stroke color because /'P28' is an invalid float value
+2025-09-01 13:01:55,816 - WARNING - Cannot set gray non-stroke color because /'P28' is an invalid float value
+2025-09-01 13:01:55,844 - WARNING - Cannot set gray stroke color because /'P29' is an invalid float value
+2025-09-01 13:01:55,844 - WARNING - Cannot set gray non-stroke color because /'P29' is an invalid float value
+2025-09-01 13:02:01,882 - INFO - Extração de texto digital concluída.
+2025-09-01 13:02:14,169 - INFO - 127.0.0.1 - - [01/Sep/2025 13:02:14] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 13:03:33,994 - INFO - 127.0.0.1 - - [01/Sep/2025 13:03:33] "GET / HTTP/1.1" 200 -
+2025-09-01 13:03:34,064 - INFO - 127.0.0.1 - - [01/Sep/2025 13:03:34] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 13:03:37,290 - INFO - 127.0.0.1 - - [01/Sep/2025 13:03:37] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 13:03:37,316 - INFO - 127.0.0.1 - - [01/Sep/2025 13:03:37] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 13:03:37,372 - INFO - 127.0.0.1 - - [01/Sep/2025 13:03:37] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 13:03:39,742 - INFO - 127.0.0.1 - - [01/Sep/2025 13:03:39] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 13:03:39,791 - INFO - 127.0.0.1 - - [01/Sep/2025 13:03:39] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 13:03:44,659 - INFO - Inicializando LeitorPDF
+2025-09-01 13:03:47,566 - INFO - PDF digital detectado.
+2025-09-01 13:03:49,301 - INFO - Extração de texto digital concluída.
+2025-09-01 13:03:53,795 - INFO - 127.0.0.1 - - [01/Sep/2025 13:03:53] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 13:04:07,405 - INFO - 127.0.0.1 - - [01/Sep/2025 13:04:07] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 13:04:31,760 - INFO - 127.0.0.1 - - [01/Sep/2025 13:04:31] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 13:05:15,504 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:15] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 13:05:23,535 - INFO - Inicializando LeitorPDF
+2025-09-01 13:05:25,661 - INFO - PDF digital detectado.
+2025-09-01 13:05:27,375 - INFO - Extração de texto digital concluída.
+2025-09-01 13:05:29,945 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:29] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 13:05:34,923 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:34] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 13:05:39,501 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:39] "[32mGET /processo//baixar-docx HTTP/1.1[0m" 308 -
+2025-09-01 13:05:39,517 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:39] "[32mGET /processo/baixar-docx HTTP/1.1[0m" 302 -
+2025-09-01 13:05:39,524 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:39] "GET / HTTP/1.1" 200 -
+2025-09-01 13:05:44,076 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:44] "[32mGET /processo//baixar-docx HTTP/1.1[0m" 308 -
+2025-09-01 13:05:44,084 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:44] "[32mGET /processo/baixar-docx HTTP/1.1[0m" 302 -
+2025-09-01 13:05:44,103 - INFO - 127.0.0.1 - - [01/Sep/2025 13:05:44] "GET / HTTP/1.1" 200 -
+2025-09-01 13:06:33,257 - INFO - 127.0.0.1 - - [01/Sep/2025 13:06:33] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 13:06:33,300 - INFO - 127.0.0.1 - - [01/Sep/2025 13:06:33] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 13:06:36,092 - INFO - 127.0.0.1 - - [01/Sep/2025 13:06:36] "GET /processo/130827/baixar-docx HTTP/1.1" 200 -
+2025-09-01 13:07:47,827 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 13:07:51,895 - INFO -  * Restarting with stat
+2025-09-01 13:08:07,810 - WARNING -  * Debugger is active!
+2025-09-01 13:08:07,832 - INFO -  * Debugger PIN: 583-137-784
+2025-09-01 13:08:11,392 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:11] "GET / HTTP/1.1" 200 -
+2025-09-01 13:08:11,453 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:11] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 13:08:14,397 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:14] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-01 13:08:14,740 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:14] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-01 13:08:14,789 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:14] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 13:08:18,553 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:18] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-01 13:08:18,598 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:18] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-01 13:08:24,842 - INFO - Inicializando LeitorPDF
+2025-09-01 13:08:26,820 - INFO - PDF digital detectado.
+2025-09-01 13:08:28,545 - INFO - Extração de texto digital concluída.
+2025-09-01 13:08:31,001 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:31] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 13:08:35,452 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:35] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 13:08:40,528 - INFO - Inicializando LeitorPDF
+2025-09-01 13:08:42,590 - INFO - PDF digital detectado.
+2025-09-01 13:08:44,324 - INFO - Extração de texto digital concluída.
+2025-09-01 13:08:48,521 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:48] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-01 13:08:53,323 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:53] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-01 13:08:55,998 - INFO - 127.0.0.1 - - [01/Sep/2025 13:08:55] "GET /processo/130827/baixar-docx HTTP/1.1" 200 -
+2025-09-01 13:09:20,646 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-01 13:09:24,083 - INFO -  * Restarting with stat
+2025-09-01 13:09:32,250 - WARNING -  * Debugger is active!
+2025-09-01 13:09:32,267 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 07:12:07,678 - INFO - 127.0.0.1 - - [02/Sep/2025 07:12:07] "GET / HTTP/1.1" 200 -
+2025-09-02 07:12:07,736 - INFO - 127.0.0.1 - - [02/Sep/2025 07:12:07] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 07:12:10,889 - INFO - 127.0.0.1 - - [02/Sep/2025 07:12:10] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-02 07:12:11,333 - INFO - 127.0.0.1 - - [02/Sep/2025 07:12:11] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 07:12:11,403 - INFO - 127.0.0.1 - - [02/Sep/2025 07:12:11] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 07:12:17,723 - INFO - 127.0.0.1 - - [02/Sep/2025 07:12:17] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-02 07:12:17,768 - INFO - 127.0.0.1 - - [02/Sep/2025 07:12:17] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 07:12:39,358 - INFO - Inicializando LeitorPDF
+2025-09-02 07:12:41,512 - INFO - PDF digital detectado.
+2025-09-02 07:12:43,190 - INFO - Extração de texto digital concluída.
+2025-09-02 07:12:47,467 - INFO - 127.0.0.1 - - [02/Sep/2025 07:12:47] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 07:13:01,755 - INFO - 127.0.0.1 - - [02/Sep/2025 07:13:01] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 07:13:09,850 - INFO - Inicializando LeitorPDF
+2025-09-02 07:13:11,937 - INFO - PDF digital detectado.
+2025-09-02 07:13:13,719 - INFO - Extração de texto digital concluída.
+2025-09-02 07:13:16,347 - INFO - 127.0.0.1 - - [02/Sep/2025 07:13:16] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 07:13:35,957 - INFO - 127.0.0.1 - - [02/Sep/2025 07:13:35] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 07:14:27,288 - INFO - 127.0.0.1 - - [02/Sep/2025 07:14:27] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 07:14:37,644 - INFO - 127.0.0.1 - - [02/Sep/2025 07:14:37] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 07:14:47,630 - INFO - Inicializando LeitorPDF
+2025-09-02 07:14:49,371 - INFO - PDF digital detectado.
+2025-09-02 07:14:51,399 - INFO - Extração de texto digital concluída.
+2025-09-02 07:14:55,143 - INFO - 127.0.0.1 - - [02/Sep/2025 07:14:55] "POST /processo/130827/analise/processar HTTP/1.1" 200 -
+2025-09-02 07:14:58,021 - INFO - 127.0.0.1 - - [02/Sep/2025 07:14:58] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-02 07:15:17,339 - INFO - 127.0.0.1 - - [02/Sep/2025 07:15:17] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
