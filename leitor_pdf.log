@@ -2080,3 +2080,49 @@
 2025-09-02 11:51:17,469 - INFO - 127.0.0.1 - - [02/Sep/2025 11:51:17] "[32mPOST / HTTP/1.1[0m" 302 -
 2025-09-02 11:51:17,495 - INFO - 127.0.0.1 - - [02/Sep/2025 11:51:17] "GET /processo/130827 HTTP/1.1" 200 -
 2025-09-02 11:51:17,537 - INFO - 127.0.0.1 - - [02/Sep/2025 11:51:17] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:06:51,657 - INFO -  * Detected change in 'C:\\projetos\\certificador\\ExportadorPDF.py', reloading
+2025-09-02 12:06:59,308 - INFO -  * Restarting with stat
+2025-09-02 12:07:14,587 - WARNING -  * Debugger is active!
+2025-09-02 12:07:14,603 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 12:07:32,626 - INFO - 127.0.0.1 - - [02/Sep/2025 12:07:32] "GET / HTTP/1.1" 200 -
+2025-09-02 12:07:32,689 - INFO - 127.0.0.1 - - [02/Sep/2025 12:07:32] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:07:36,425 - INFO - 127.0.0.1 - - [02/Sep/2025 12:07:36] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-02 12:07:36,790 - INFO - 127.0.0.1 - - [02/Sep/2025 12:07:36] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:07:36,835 - INFO - 127.0.0.1 - - [02/Sep/2025 12:07:36] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:07:48,670 - INFO - 127.0.0.1 - - [02/Sep/2025 12:07:48] "GET /processo/130827/gerar-certidao HTTP/1.1" 200 -
+2025-09-02 12:08:03,123 - INFO - 127.0.0.1 - - [02/Sep/2025 12:08:03] "[35m[1mGET /processo/130827/gerar-certidao HTTP/1.1[0m" 500 -
+2025-09-02 12:08:03,156 - INFO - 127.0.0.1 - - [02/Sep/2025 12:08:03] "[36mGET /processo/130827/gerar-certidao?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-09-02 12:08:03,159 - INFO - 127.0.0.1 - - [02/Sep/2025 12:08:03] "[36mGET /processo/130827/gerar-certidao?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-09-02 12:08:03,168 - INFO - 127.0.0.1 - - [02/Sep/2025 12:08:03] "GET /processo/130827/gerar-certidao?__debugger__=yes&cmd=resource&f=console.png&s=xsvXgiaxOhcEXV0arVJq HTTP/1.1" 200 -
+2025-09-02 12:11:51,273 - INFO -  * Detected change in 'C:\\projetos\\certificador\\app.py', reloading
+2025-09-02 12:11:52,532 - INFO -  * Restarting with stat
+2025-09-02 12:13:18,788 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:80
+2025-09-02 12:13:18,789 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-02 12:13:18,795 - INFO -  * Restarting with stat
+2025-09-02 12:13:27,578 - WARNING -  * Debugger is active!
+2025-09-02 12:13:27,607 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 12:13:35,897 - INFO - 127.0.0.1 - - [02/Sep/2025 12:13:35] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:13:51,546 - INFO - 127.0.0.1 - - [02/Sep/2025 12:13:51] "GET /processo/130827/gerar-certidao HTTP/1.1" 200 -
+2025-09-02 12:13:54,516 - INFO - 127.0.0.1 - - [02/Sep/2025 12:13:54] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-02 12:13:54,559 - INFO - 127.0.0.1 - - [02/Sep/2025 12:13:54] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:13:54,566 - INFO - 127.0.0.1 - - [02/Sep/2025 12:13:54] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-02 12:13:58,553 - INFO - 127.0.0.1 - - [02/Sep/2025 12:13:58] "GET / HTTP/1.1" 200 -
+2025-09-02 12:13:58,614 - INFO - 127.0.0.1 - - [02/Sep/2025 12:13:58] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:14:03,729 - INFO - 127.0.0.1 - - [02/Sep/2025 12:14:03] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-02 12:14:03,816 - INFO - 127.0.0.1 - - [02/Sep/2025 12:14:03] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:14:03,876 - INFO - 127.0.0.1 - - [02/Sep/2025 12:14:03] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:14:13,824 - INFO - 127.0.0.1 - - [02/Sep/2025 12:14:13] "[35m[1mGET /processo/130827/gerar-certidao HTTP/1.1[0m" 500 -
+2025-09-02 12:14:13,848 - INFO - 127.0.0.1 - - [02/Sep/2025 12:14:13] "[36mGET /processo/130827/gerar-certidao?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-09-02 12:14:13,853 - INFO - 127.0.0.1 - - [02/Sep/2025 12:14:13] "[36mGET /processo/130827/gerar-certidao?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-09-02 12:14:13,867 - INFO - 127.0.0.1 - - [02/Sep/2025 12:14:13] "GET /processo/130827/gerar-certidao?__debugger__=yes&cmd=resource&f=console.png&s=BYqTM1oBbXTv0m15hvFV HTTP/1.1" 200 -
+2025-09-02 12:16:29,789 - INFO -  * Detected change in 'C:\\projetos\\certificador\\app.py', reloading
+2025-09-02 12:16:31,070 - INFO -  * Restarting with stat
+2025-09-02 12:16:43,474 - WARNING -  * Debugger is active!
+2025-09-02 12:16:43,487 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 12:16:52,043 - INFO - 127.0.0.1 - - [02/Sep/2025 12:16:52] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:16:55,351 - INFO - 127.0.0.1 - - [02/Sep/2025 12:16:55] "[35m[1mGET /processo/130827/gerar-certidao HTTP/1.1[0m" 500 -
+2025-09-02 12:17:07,655 - INFO - 127.0.0.1 - - [02/Sep/2025 12:17:07] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 12:18:51,643 - INFO - 127.0.0.1 - - [02/Sep/2025 12:18:51] "[35m[1mGET /processo/130827/gerar-certidao HTTP/1.1[0m" 500 -
+2025-09-02 12:18:51,679 - INFO - 127.0.0.1 - - [02/Sep/2025 12:18:51] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 12:18:58,174 - INFO - 127.0.0.1 - - [02/Sep/2025 12:18:58] "GET /processo/130827 HTTP/1.1" 200 -

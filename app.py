@@ -1,5 +1,5 @@
 import os
-from flask      import Flask
+from flask      import Flask, render_template
 from config     import *
 from extensions import db
 from routes     import main_bp
@@ -18,6 +18,18 @@ def create_app():
     return app
 
 app = create_app()
+
+@app.errorhandler(500)
+def internal_error(error):
+    return render_template('error.html', error_message=str(error)), 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('error.html', error_message="Página não encontrada."), 404
+
+@app.errorhandler(Exception)
+def generic_error(error):
+    return render_template('error.html', error_message=str(error)), 500
 
 if __name__ == '__main__':
     env = os.getenv('FLASK_ENV', 'development')
