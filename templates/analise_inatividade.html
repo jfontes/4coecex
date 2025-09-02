@@ -13,17 +13,18 @@
   const out   = document.getElementById('txtResultado');
   const stat  = document.getElementById('analiseStatus');
 
-  function setStatus(msg, isError=false) {
+  function setStatus(msg, isError=false, showGif=false) {
     stat.textContent = msg || '';
     stat.className = 'small ' + (isError ? 'text-danger' : 'text-muted');
+    document.getElementById('loadingGif').style.display = showGif ? 'inline-block' : 'none';
   }
 
   btn.addEventListener('click', async function(){
     if (!files.files || files.files.length === 0) {
-      setStatus('Selecione ao menos um PDF.', true);
+      setStatus('Selecione ao menos um PDF.', true, false);
       return;
     }
-    setStatus('Nossa IA está analisando o(s) arquivo(s), aguarde…');
+    setStatus('Nossa IA está analisando o(s) arquivo(s), aguarde…', false, true);
     btn.disabled = true;
 
     try {
@@ -43,10 +44,10 @@
       }
 
       out.value = data.texto || '';
-      setStatus('Análise concluída.');
+      setStatus('Análise concluída.', false, false);
       btn2.disabled = false;
     } catch (e) {
-      setStatus(e.message || 'Erro ao analisar PDFs.', true);
+      setStatus(e.message || 'Erro ao analisar PDFs.', true, false);
     } finally {
       btn.disabled = false;
       btn2.disabled = false;
@@ -87,7 +88,6 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
 {% endblock %}
 
 {% block content %}
-
 <div class="row g-4 mt-4">
   <!-- Lado esquerdo: área de análise (você detalha depois) -->
   <div class="col-lg-4">
@@ -123,7 +123,7 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
           </button>
           <span id="analiseStatus" class="text-muted small"></span>
         </div>
-
+        <a><img id="loadingGif" src="/static/ia2.gif" alt="Carregando..." style="float: right; z-index: 9999; width:67px; height:80px; display: none;"></a>
         <label for="txtResultado" class="form-label">Resultado da análise</label>
         <textarea id="txtResultado" class="form-control" rows="14" placeholder="O resultado da análise aparecerá aqui..."></textarea>
       </div>

@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}4ª COECEX - Buscar Registro{% endblock %}
-
+{% block extra_js %}
+  <script>
+  document.getElementById('btnAnalise').addEventListener('click', function(e) {
+    e.preventDefault();
+    const numero = document.getElementById('{{ form.numero.id }}').value;
+    if (numero.match(/^\d{6}$/)) {
+      window.location.href = "{{ url_for('main.analise_inatividade', numero='__NUM__') }}".replace('__NUM__', numero);
+    } else {
+      alert('Digite um número válido (formato 123456).');
+    }
+  });
+  </script>
+{% endblock %}
 {% block content %}
 <div class="row justify-content-center mt-5">
   <div class="col-md-6">
@@ -23,6 +35,7 @@
           </div>
           <div class="text-center">
             {{ form.submit(class="btn btn-primary") }}
+            <a href="#" id="btnAnalise" class="btn btn-warning me-2">Analisar</a>
           </div>
         </form>
       </div>

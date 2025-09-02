@@ -163,6 +163,12 @@ def gerar_certidao(numero):
 
 @main_bp.route('/processo/<numero>/analise')
 def analise_inatividade(numero):
+    proc = Processo.query.filter_by(processo=numero).first()
+    if not proc:
+        flash("Processo não encontrado.", "danger")
+        return redirect(url_for('main.index'))
+    session['dados'] = Tools.PreencherDados(proc)
+    
     try:
         analises = Analise.query.all()
         
