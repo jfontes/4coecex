@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Análises{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+  <h4 class="m-0">Análises</h4>
+  <a href="{{ url_for('main.nova_analise') }}" class="btn btn-primary">Nova análise</a>
+</div>
+
+<form class="row g-2 mb-3" method="get">
+  <div class="col-md-4">
+    <input type="text" name="q" value="{{ q or '' }}" class="form-control" placeholder="Buscar por nome ou tag...">
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-outline-secondary w-100" type="submit">Buscar</button>
+  </div>
+</form>
+
+<div class="card">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle m-0">
+      <thead class="table-light">
+        <tr>
+          <th style="width:80px;">ID</th>
+          <th>Nome</th>
+          <th>Tag</th>
+          <th style="width:160px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in analises %}
+        <tr>
+          <td>{{ a.id }}</td>
+          <td>{{ a.nome }}</td>
+          <td><span class="badge bg-secondary">{{ a.tag }}</span></td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.editar_analise', analise_id=a.id) }}">Editar</a>
+            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('main.excluir_analise_confirm', analise_id=a.id) }}">Excluir</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4" class="text-center text-muted py-4">Nenhum registro encontrado.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

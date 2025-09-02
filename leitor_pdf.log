@@ -1497,3 +1497,86 @@
 2025-09-02 08:16:11,458 - INFO - 127.0.0.1 - - [02/Sep/2025 08:16:11] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
 2025-09-02 08:16:39,203 - INFO - 127.0.0.1 - - [02/Sep/2025 08:16:39] "GET /processo/130827/analise HTTP/1.1" 200 -
 2025-09-02 08:16:39,240 - INFO - 127.0.0.1 - - [02/Sep/2025 08:16:39] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:21:33,553 - INFO -  * Detected change in 'C:\\projetos\\certificador\\forms.py', reloading
+2025-09-02 08:21:37,645 - INFO -  * Restarting with stat
+2025-09-02 08:21:54,444 - WARNING -  * Debugger is active!
+2025-09-02 08:21:54,461 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 08:26:59,581 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-02 08:27:00,942 - INFO -  * Restarting with stat
+2025-09-02 08:27:10,125 - WARNING -  * Debugger is active!
+2025-09-02 08:27:10,140 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 08:27:11,366 - INFO - 127.0.0.1 - - [02/Sep/2025 08:27:11] "[33mGET /analise HTTP/1.1[0m" 404 -
+2025-09-02 08:28:00,776 - INFO - 127.0.0.1 - - [02/Sep/2025 08:28:00] "GET /analises HTTP/1.1" 200 -
+2025-09-02 08:28:00,820 - INFO - 127.0.0.1 - - [02/Sep/2025 08:28:00] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:28:19,530 - INFO - 127.0.0.1 - - [02/Sep/2025 08:28:19] "GET /analises?q=ad HTTP/1.1" 200 -
+2025-09-02 08:28:19,572 - INFO - 127.0.0.1 - - [02/Sep/2025 08:28:19] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:28:23,711 - INFO - 127.0.0.1 - - [02/Sep/2025 08:28:23] "GET /analises?q= HTTP/1.1" 200 -
+2025-09-02 08:28:23,794 - INFO - 127.0.0.1 - - [02/Sep/2025 08:28:23] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:28:48,726 - INFO - 127.0.0.1 - - [02/Sep/2025 08:28:48] "GET /analises/2/editar HTTP/1.1" 200 -
+2025-09-02 08:28:48,771 - INFO - 127.0.0.1 - - [02/Sep/2025 08:28:48] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:29:12,048 - INFO -  * Detected change in 'C:\\projetos\\certificador\\forms.py', reloading
+2025-09-02 08:29:13,296 - INFO -  * Restarting with stat
+2025-09-02 08:29:22,162 - WARNING -  * Debugger is active!
+2025-09-02 08:29:22,180 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 08:29:23,603 - INFO - 127.0.0.1 - - [02/Sep/2025 08:29:23] "GET /analises/2/editar HTTP/1.1" 200 -
+2025-09-02 08:29:23,603 - INFO - 127.0.0.1 - - [02/Sep/2025 08:29:23] "GET /analises/2/editar HTTP/1.1" 200 -
+2025-09-02 08:29:23,670 - INFO - 127.0.0.1 - - [02/Sep/2025 08:29:23] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:30:07,557 - INFO -  * Detected change in 'C:\\projetos\\certificador\\forms.py', reloading
+2025-09-02 08:30:08,811 - INFO -  * Restarting with stat
+2025-09-02 08:30:17,395 - WARNING -  * Debugger is active!
+2025-09-02 08:30:17,412 - INFO -  * Debugger PIN: 583-137-784
+2025-09-02 08:30:18,884 - INFO - 127.0.0.1 - - [02/Sep/2025 08:30:18] "GET /analises HTTP/1.1" 200 -
+2025-09-02 08:30:18,929 - INFO - 127.0.0.1 - - [02/Sep/2025 08:30:18] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:30:30,483 - INFO - 127.0.0.1 - - [02/Sep/2025 08:30:30] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:30:30,530 - INFO - 127.0.0.1 - - [02/Sep/2025 08:30:30] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:31:23,343 - INFO - 127.0.0.1 - - [02/Sep/2025 08:31:23] "[35m[1mGET /analises/1/editar HTTP/1.1[0m" 500 -
+2025-09-02 08:31:23,370 - INFO - 127.0.0.1 - - [02/Sep/2025 08:31:23] "GET /analises/1/editar?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-09-02 08:31:23,372 - INFO - 127.0.0.1 - - [02/Sep/2025 08:31:23] "GET /analises/1/editar?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-09-02 08:31:23,397 - INFO - 127.0.0.1 - - [02/Sep/2025 08:31:23] "GET /analises/1/editar?__debugger__=yes&cmd=resource&f=console.png&s=TRQlb7UTGnIWMSfCSUGY HTTP/1.1" 200 -
+2025-09-02 08:31:23,419 - INFO - 127.0.0.1 - - [02/Sep/2025 08:31:23] "GET /analises/1/editar?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-09-02 08:31:35,983 - INFO - 127.0.0.1 - - [02/Sep/2025 08:31:35] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:31:36,065 - INFO - 127.0.0.1 - - [02/Sep/2025 08:31:36] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:32:07,189 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:07] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:32:07,244 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:07] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:32:21,849 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:21] "[32mPOST /analises/1/editar HTTP/1.1[0m" 302 -
+2025-09-02 08:32:21,857 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:21] "GET /analises HTTP/1.1" 200 -
+2025-09-02 08:32:21,904 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:21] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:32:26,482 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:26] "GET /analises/2/editar HTTP/1.1" 200 -
+2025-09-02 08:32:26,547 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:26] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:32:30,537 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:30] "GET /analises HTTP/1.1" 200 -
+2025-09-02 08:32:30,593 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:30] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:32:32,086 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:32] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:32:32,132 - INFO - 127.0.0.1 - - [02/Sep/2025 08:32:32] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:33:21,759 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:21] "[35m[1mGET /analises/1/editar HTTP/1.1[0m" 500 -
+2025-09-02 08:33:21,802 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:21] "[36mGET /analises/1/editar?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-09-02 08:33:21,805 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:21] "[36mGET /analises/1/editar?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-09-02 08:33:21,813 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:21] "[36mGET /analises/1/editar?__debugger__=yes&cmd=resource&f=console.png&s=TRQlb7UTGnIWMSfCSUGY HTTP/1.1[0m" 304 -
+2025-09-02 08:33:21,835 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:21] "[36mGET /analises/1/editar?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-09-02 08:33:29,460 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:29] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:33:29,521 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:29] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:33:38,334 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:38] "[35m[1mGET /analises/1/editar HTTP/1.1[0m" 500 -
+2025-09-02 08:33:38,360 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:38] "[36mGET /analises/1/editar?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2025-09-02 08:33:38,364 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:38] "[36mGET /analises/1/editar?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2025-09-02 08:33:38,376 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:38] "[36mGET /analises/1/editar?__debugger__=yes&cmd=resource&f=console.png&s=TRQlb7UTGnIWMSfCSUGY HTTP/1.1[0m" 304 -
+2025-09-02 08:33:38,397 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:38] "[36mGET /analises/1/editar?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2025-09-02 08:33:47,842 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:47] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:33:47,907 - INFO - 127.0.0.1 - - [02/Sep/2025 08:33:47] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:34:06,158 - INFO - 127.0.0.1 - - [02/Sep/2025 08:34:06] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:34:06,212 - INFO - 127.0.0.1 - - [02/Sep/2025 08:34:06] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:34:11,715 - INFO - 127.0.0.1 - - [02/Sep/2025 08:34:11] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:34:11,759 - INFO - 127.0.0.1 - - [02/Sep/2025 08:34:11] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:34:29,438 - INFO - 127.0.0.1 - - [02/Sep/2025 08:34:29] "GET /analises/1/editar HTTP/1.1" 200 -
+2025-09-02 08:34:29,503 - INFO - 127.0.0.1 - - [02/Sep/2025 08:34:29] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:35:14,818 - INFO - 127.0.0.1 - - [02/Sep/2025 08:35:14] "GET /analises HTTP/1.1" 200 -
+2025-09-02 08:35:14,869 - INFO - 127.0.0.1 - - [02/Sep/2025 08:35:14] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:35:19,610 - INFO - 127.0.0.1 - - [02/Sep/2025 08:35:19] "GET /analises/nova HTTP/1.1" 200 -
+2025-09-02 08:35:19,656 - INFO - 127.0.0.1 - - [02/Sep/2025 08:35:19] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:35:27,785 - INFO - 127.0.0.1 - - [02/Sep/2025 08:35:27] "GET /analises HTTP/1.1" 200 -
+2025-09-02 08:35:27,843 - INFO - 127.0.0.1 - - [02/Sep/2025 08:35:27] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:38:51,994 - INFO - 127.0.0.1 - - [02/Sep/2025 08:38:51] "GET / HTTP/1.1" 200 -
+2025-09-02 08:38:52,046 - INFO - 127.0.0.1 - - [02/Sep/2025 08:38:52] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:38:56,388 - INFO - 127.0.0.1 - - [02/Sep/2025 08:38:56] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-02 08:38:56,487 - INFO - 127.0.0.1 - - [02/Sep/2025 08:38:56] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-02 08:38:56,536 - INFO - 127.0.0.1 - - [02/Sep/2025 08:38:56] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-02 08:39:04,017 - INFO - 127.0.0.1 - - [02/Sep/2025 08:39:04] "GET /processo/130827/analise HTTP/1.1" 200 -
+2025-09-02 08:39:04,061 - INFO - 127.0.0.1 - - [02/Sep/2025 08:39:04] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center mt-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="mb-3">{{ titulo }}</h5>
+        <form method="post">
+          {{ form.hidden_tag() }}
+
+          <div class="mb-3">
+            {{ form.nome.label(class="form-label") }}
+            {{ form.nome(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.tag.label(class="form-label") }}
+            {{ form.tag(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.sugestao_documento.label(class="form-label") }}
+            {{ form.sugestao_documento(class="form-control") }}
+          </div>
+
+          <div class="mb-3">
+            {{ form.criterio.label(class="form-label") }}
+            {{ form.criterio(class="form-control", rows=30) }}
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            <a href="{{ url_for('main.listar_analises') }}" class="btn btn-secondary">Cancelar</a>
+            {{ form.submit(class="btn btn-success") }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -48,6 +48,7 @@ class ProcessoForm(FlaskForm):
 
 class AnaliseForm(FlaskForm):
     nome = StringField("Nome", validators=[DataRequired()])
-    criterio = TextAreaField("Critério", validators=[DataRequired()])
-    tag = StringField("Tag", validators=[DataRequired()])
+    criterio = TextAreaField("Critério (prompt de análise IA)", validators=[DataRequired()])
+    tag = StringField("Tag (marcador do arquivo no word)", validators=[DataRequired()])
+    sugestao_documento = StringField("Sugestão de documento", validators=[DataRequired()])
     submit = SubmitField("Salvar")

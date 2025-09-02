@@ -6,7 +6,7 @@ from models                 import Processo
 from models                 import Analise
 from documento_word         import PreencheDocumentoWord
 from ExportadorPDF          import ExportadorPDF
-from forms                  import BuscaForm, ProcessoForm
+from forms                  import BuscaForm, ProcessoForm, AnaliseForm
 from acreprevidencia_api    import DadosAcreprevidencia
 from gemini                 import GeminiClient
 from leitorPDF              import LeitorPDF
@@ -20,6 +20,60 @@ def index():
     if form.validate_on_submit():
         return redirect(url_for('main.editar', numero=form.numero.data))
     return render_template('search.html', form=form)
+
+@main_bp.get("/analises")
+def listar_analises():
+    q = request.args.get("q", "", type=str).strip()
+    query = Analise.query
+    if q:
+        like = f"%{q}%"
+        query = query.filter(
+            db.or_(Analise.nome.ilike(like), Analise.tag.ilike(like))
+        )
+    analises = query.order_by(Analise.id.desc()).all()
+    return render_template("analise_list.html", analises=analises, q=q)
+
+# CRIAR
+@main_bp.route("/analises/nova", methods=["GET", "POST"])
+def nova_analise():
+    form = AnaliseForm()
+    if form.validate_on_submit():
+        obj = Analise(
+            nome=form.nome.data.strip(),
+            criterio=form.criterio.data.strip(),
+            tag=form.tag.data.strip(),
+        )
+        db.session.add(obj)
+        db.session.commit()
+        flash("Análise criada com sucesso!", "success")
+        return redirect(url_for("main.listar_analises"))
+    return render_template("analise_form.html", form=form, titulo="Nova análise")
+
+# EDITAR
+@main_bp.route("/analises/<int:analise_id>/editar", methods=["GET", "POST"])
+def editar_analise(analise_id):
+    obj = Analise.query.get_or_404(analise_id)
+    form = AnaliseForm(obj=obj)
+    if form.validate_on_submit():
+        form.populate_obj(obj)
+        db.session.commit()
+        flash("Análise atualizada com sucesso!", "success")
+        return redirect(url_for("main.listar_analises"))
+    return render_template("analise_form.html", form=form, titulo=f"Editar análise #{obj.id}")
+
+# EXCLUIR (confirmação)
+@main_bp.get("/analises/<int:analise_id>/excluir")
+def excluir_analise_confirm(analise_id):
+    obj = Analise.query.get_or_404(analise_id)
+    return render_template("analise_confirm_delete.html", obj=obj)
+
+@main_bp.post("/analises/<int:analise_id>/excluir")
+def excluir_analise(analise_id):
+    obj = Analise.query.get_or_404(analise_id)
+    db.session.delete(obj)
+    db.session.commit()
+    flash("Análise excluída com sucesso!", "success")
+    return redirect(url_for("main.listar_analises"))
 
 @main_bp.route('/processo/<numero>', methods=['GET','POST'])
 def editar(numero):
