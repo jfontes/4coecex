@@ -143,6 +143,26 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Lógica para overlay ao clicar em "Gerar Certidão"
+  var btnCertidao = document.getElementById('btnCertidao');
+  if (btnCertidao) {
+    btnCertidao.addEventListener('click', function(e) {
+      var overlay = document.getElementById('loading-overlay');
+      if (overlay) {
+        overlay.style.display = 'flex';
+        overlay.querySelector('p').textContent = 'Aguarde o download do documento...';
+      }
+      // Oculta overlay após 5 segundos
+      setTimeout(function() {
+        if (overlay) overlay.style.display = 'none';
+      }, 5000);
+    });
+  }
+});
+</script>
 {% endblock %}
 
 {% block content %}
@@ -201,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </form>
         {% if proc %}
         <div class="text-center mt-4">
-          <a href="{{ url_for('main.gerar_certidao', numero=proc.processo) }}" class="btn btn-danger me-2">Gerar Certidão</a>
+          <a id="btnCertidao" href="{{ url_for('main.gerar_certidao', numero=proc.processo) }}" class="btn btn-danger me-2">Gerar Certidão</a>
           <a href="{{ url_for('main.analise_inatividade', numero=proc.processo) }}" class="btn btn-warning me-2">Analisar</a>
           <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Nova busca</a>
         </div>

@@ -2568,3 +2568,222 @@
 2025-09-04 08:40:52,858 - INFO - Extração de texto digital concluída.
 2025-09-04 08:40:54,638 - INFO - 127.0.0.1 - - [04/Sep/2025 08:40:54] "POST /processo/149341/analise/processar HTTP/1.1" 200 -
 2025-09-04 08:40:59,978 - INFO - 127.0.0.1 - - [04/Sep/2025 08:40:59] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-04 08:53:18,050 - INFO - 127.0.0.1 - - [04/Sep/2025 08:53:18] "GET / HTTP/1.1" 200 -
+2025-09-04 08:53:18,139 - INFO - 127.0.0.1 - - [04/Sep/2025 08:53:18] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 08:53:20,526 - INFO - 127.0.0.1 - - [04/Sep/2025 08:53:20] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-04 08:53:20,550 - INFO - 127.0.0.1 - - [04/Sep/2025 08:53:20] "GET /processo/130827 HTTP/1.1" 200 -
+2025-09-04 08:53:20,602 - INFO - 127.0.0.1 - - [04/Sep/2025 08:53:20] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:04:06,499 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:06] "GET /analises HTTP/1.1" 200 -
+2025-09-04 09:04:06,893 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:06] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:04:09,514 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:09] "GET /analises/4/editar HTTP/1.1" 200 -
+2025-09-04 09:04:09,559 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:09] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:04:15,294 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:15] "[32mPOST /analises/4/editar HTTP/1.1[0m" 302 -
+2025-09-04 09:04:15,301 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:15] "GET /analises HTTP/1.1" 200 -
+2025-09-04 09:04:15,346 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:15] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:04:21,925 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:21] "GET / HTTP/1.1" 200 -
+2025-09-04 09:04:21,979 - INFO - 127.0.0.1 - - [04/Sep/2025 09:04:21] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:06:05,812 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:05] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-04 09:06:05,852 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:05] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:06:05,898 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:05] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:06:09,718 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:09] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:06:09,791 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:09] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:06:09,796 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:09] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:06:20,517 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:20] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:06:20,614 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:20] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:06:20,618 - INFO - 127.0.0.1 - - [04/Sep/2025 09:06:20] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:10:30,501 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:10:37,286 - INFO -  * Restarting with stat
+2025-09-04 09:10:52,823 - WARNING -  * Debugger is active!
+2025-09-04 09:10:52,844 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:10:58,510 - INFO - 127.0.0.1 - - [04/Sep/2025 09:10:58] "GET / HTTP/1.1" 200 -
+2025-09-04 09:10:58,559 - INFO - 127.0.0.1 - - [04/Sep/2025 09:10:58] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:11:08,406 - INFO - 127.0.0.1 - - [04/Sep/2025 09:11:08] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:11:08,463 - INFO - 127.0.0.1 - - [04/Sep/2025 09:11:08] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:11:08,468 - INFO - 127.0.0.1 - - [04/Sep/2025 09:11:08] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:11:13,326 - INFO - 127.0.0.1 - - [04/Sep/2025 09:11:13] "[35m[1mGET /processo/149341/baixar?tipo=word HTTP/1.1[0m" 500 -
+2025-09-04 09:11:22,572 - INFO - 127.0.0.1 - - [04/Sep/2025 09:11:22] "[35m[1mGET /processo/149341/baixar?tipo=pdf HTTP/1.1[0m" 500 -
+2025-09-04 09:12:16,187 - INFO - 127.0.0.1 - - [04/Sep/2025 09:12:16] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:12:16,221 - INFO - 127.0.0.1 - - [04/Sep/2025 09:12:16] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:12:16,224 - INFO - 127.0.0.1 - - [04/Sep/2025 09:12:16] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:12:29,588 - INFO - 127.0.0.1 - - [04/Sep/2025 09:12:29] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:12:29,632 - INFO - 127.0.0.1 - - [04/Sep/2025 09:12:29] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:12:29,640 - INFO - 127.0.0.1 - - [04/Sep/2025 09:12:29] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:12:35,583 - INFO - 127.0.0.1 - - [04/Sep/2025 09:12:35] "[35m[1mGET /processo/149341/baixar?tipo=word HTTP/1.1[0m" 500 -
+2025-09-04 09:12:37,415 - INFO - 127.0.0.1 - - [04/Sep/2025 09:12:37] "[35m[1mGET /processo/149341/baixar?tipo=pdf HTTP/1.1[0m" 500 -
+2025-09-04 09:13:46,145 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:13:47,363 - INFO -  * Restarting with stat
+2025-09-04 09:13:55,952 - WARNING -  * Debugger is active!
+2025-09-04 09:13:55,969 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:15:09,692 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:15:10,900 - INFO -  * Restarting with stat
+2025-09-04 09:15:19,747 - WARNING -  * Debugger is active!
+2025-09-04 09:15:19,762 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:15:21,322 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:21] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:15:21,378 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:21] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:15:21,379 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:21] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:15:22,230 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:22] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:15:22,282 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:22] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:15:22,286 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:22] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:15:33,185 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:33] "GET / HTTP/1.1" 200 -
+2025-09-04 09:15:33,232 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:33] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:15:37,008 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:37] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-04 09:15:37,042 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:37] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:15:37,081 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:37] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:15:39,745 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:39] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:15:39,818 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:39] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:15:39,819 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:39] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:15:44,700 - INFO - 127.0.0.1 - - [04/Sep/2025 09:15:44] "GET /processo/149341/baixar-docx HTTP/1.1" 200 -
+2025-09-04 09:18:03,268 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:18:04,535 - INFO -  * Restarting with stat
+2025-09-04 09:18:13,744 - WARNING -  * Debugger is active!
+2025-09-04 09:18:13,763 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:18:21,227 - INFO - 127.0.0.1 - - [04/Sep/2025 09:18:21] "GET / HTTP/1.1" 200 -
+2025-09-04 09:18:21,278 - INFO - 127.0.0.1 - - [04/Sep/2025 09:18:21] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:18:24,469 - INFO - 127.0.0.1 - - [04/Sep/2025 09:18:24] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:18:24,510 - INFO - 127.0.0.1 - - [04/Sep/2025 09:18:24] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:18:24,515 - INFO - 127.0.0.1 - - [04/Sep/2025 09:18:24] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:18:26,143 - INFO - 127.0.0.1 - - [04/Sep/2025 09:18:26] "GET /processo/149341/baixar-docx HTTP/1.1" 200 -
+2025-09-04 09:19:24,168 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:19:25,381 - INFO -  * Restarting with stat
+2025-09-04 09:19:34,069 - WARNING -  * Debugger is active!
+2025-09-04 09:19:34,088 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:19:36,391 - INFO - 127.0.0.1 - - [04/Sep/2025 09:19:36] "GET / HTTP/1.1" 200 -
+2025-09-04 09:19:36,445 - INFO - 127.0.0.1 - - [04/Sep/2025 09:19:36] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:19:39,895 - INFO - 127.0.0.1 - - [04/Sep/2025 09:19:39] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:19:39,948 - INFO - 127.0.0.1 - - [04/Sep/2025 09:19:39] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:19:39,956 - INFO - 127.0.0.1 - - [04/Sep/2025 09:19:39] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:19:41,952 - INFO - 127.0.0.1 - - [04/Sep/2025 09:19:41] "[35m[1mGET /processo/149341/baixar-docx?tipo=word HTTP/1.1[0m" 500 -
+2025-09-04 09:19:43,867 - INFO - 127.0.0.1 - - [04/Sep/2025 09:19:43] "[35m[1mGET /processo/149341/baixar-docx?tipo=word HTTP/1.1[0m" 500 -
+2025-09-04 09:20:10,455 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:20:11,635 - INFO -  * Restarting with stat
+2025-09-04 09:20:20,157 - WARNING -  * Debugger is active!
+2025-09-04 09:20:20,171 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:20:21,243 - INFO - 127.0.0.1 - - [04/Sep/2025 09:20:21] "GET / HTTP/1.1" 200 -
+2025-09-04 09:20:21,305 - INFO - 127.0.0.1 - - [04/Sep/2025 09:20:21] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:20:24,484 - INFO - 127.0.0.1 - - [04/Sep/2025 09:20:24] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:20:24,540 - INFO - 127.0.0.1 - - [04/Sep/2025 09:20:24] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:20:24,543 - INFO - 127.0.0.1 - - [04/Sep/2025 09:20:24] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:20:27,903 - INFO - 127.0.0.1 - - [04/Sep/2025 09:20:27] "[35m[1mGET /processo/149341/baixar-docx?tipo=word HTTP/1.1[0m" 500 -
+2025-09-04 09:21:20,642 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:21:22,166 - INFO -  * Restarting with stat
+2025-09-04 09:21:31,004 - WARNING -  * Debugger is active!
+2025-09-04 09:21:31,017 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:21:39,762 - INFO - 127.0.0.1 - - [04/Sep/2025 09:21:39] "[35m[1mGET /processo/149341/baixar-docx?tipo=word HTTP/1.1[0m" 500 -
+2025-09-04 09:22:03,445 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:22:04,982 - INFO -  * Restarting with stat
+2025-09-04 09:22:15,388 - WARNING -  * Debugger is active!
+2025-09-04 09:22:15,407 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:22:21,064 - INFO - 127.0.0.1 - - [04/Sep/2025 09:22:21] "[33mGET /processo/149341/baixar-docx?tipo=word HTTP/1.1[0m" 404 -
+2025-09-04 09:22:31,691 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:22:32,920 - INFO -  * Restarting with stat
+2025-09-04 09:22:41,046 - WARNING -  * Debugger is active!
+2025-09-04 09:22:41,069 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:25:54,772 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:25:56,049 - INFO -  * Restarting with stat
+2025-09-04 09:26:05,099 - WARNING -  * Debugger is active!
+2025-09-04 09:26:05,146 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:26:06,572 - INFO - 127.0.0.1 - - [04/Sep/2025 09:26:06] "GET / HTTP/1.1" 200 -
+2025-09-04 09:26:06,622 - INFO - 127.0.0.1 - - [04/Sep/2025 09:26:06] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:26:10,523 - INFO - 127.0.0.1 - - [04/Sep/2025 09:26:10] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:26:10,599 - INFO - 127.0.0.1 - - [04/Sep/2025 09:26:10] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:26:10,605 - INFO - 127.0.0.1 - - [04/Sep/2025 09:26:10] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:26:12,589 - INFO - 127.0.0.1 - - [04/Sep/2025 09:26:12] "GET /processo/149341/baixar?tipo=word HTTP/1.1" 200 -
+2025-09-04 09:27:05,065 - INFO - 127.0.0.1 - - [04/Sep/2025 09:27:05] "GET /processo/149341/baixar?tipo=pdf HTTP/1.1" 200 -
+2025-09-04 09:27:05,630 - INFO - 127.0.0.1 - - [04/Sep/2025 09:27:05] "GET /processo/149341/baixar?tipo=pdf HTTP/1.1" 200 -
+2025-09-04 09:28:01,822 - INFO - 127.0.0.1 - - [04/Sep/2025 09:28:01] "GET / HTTP/1.1" 200 -
+2025-09-04 09:28:01,884 - INFO - 127.0.0.1 - - [04/Sep/2025 09:28:01] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:28:04,873 - INFO - 127.0.0.1 - - [04/Sep/2025 09:28:04] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-04 09:28:04,905 - INFO - 127.0.0.1 - - [04/Sep/2025 09:28:04] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:28:04,958 - INFO - 127.0.0.1 - - [04/Sep/2025 09:28:04] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:28:32,943 - INFO - 127.0.0.1 - - [04/Sep/2025 09:28:32] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:29:26,535 - INFO - 127.0.0.1 - - [04/Sep/2025 09:29:26] "[32mPOST /processo/149341 HTTP/1.1[0m" 302 -
+2025-09-04 09:29:26,801 - INFO - 127.0.0.1 - - [04/Sep/2025 09:29:26] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:29:26,861 - INFO - 127.0.0.1 - - [04/Sep/2025 09:29:26] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:29:52,393 - INFO - 127.0.0.1 - - [04/Sep/2025 09:29:52] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:30:25,104 - INFO - 127.0.0.1 - - [04/Sep/2025 09:30:25] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:31:09,262 - INFO - 127.0.0.1 - - [04/Sep/2025 09:31:09] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:31:09,493 - INFO - 127.0.0.1 - - [04/Sep/2025 09:31:09] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:31:13,877 - INFO - 127.0.0.1 - - [04/Sep/2025 09:31:13] "[32mPOST /processo/149341 HTTP/1.1[0m" 302 -
+2025-09-04 09:31:13,902 - INFO - 127.0.0.1 - - [04/Sep/2025 09:31:13] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:31:13,943 - INFO - 127.0.0.1 - - [04/Sep/2025 09:31:13] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:31:39,278 - INFO - 127.0.0.1 - - [04/Sep/2025 09:31:39] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:32:09,089 - INFO - 127.0.0.1 - - [04/Sep/2025 09:32:09] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:32:32,013 - INFO - 127.0.0.1 - - [04/Sep/2025 09:32:32] "GET / HTTP/1.1" 200 -
+2025-09-04 09:32:32,066 - INFO - 127.0.0.1 - - [04/Sep/2025 09:32:32] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:32:37,797 - INFO - 127.0.0.1 - - [04/Sep/2025 09:32:37] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-04 09:32:37,826 - INFO - 127.0.0.1 - - [04/Sep/2025 09:32:37] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:32:37,870 - INFO - 127.0.0.1 - - [04/Sep/2025 09:32:37] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:33:03,976 - INFO - 127.0.0.1 - - [04/Sep/2025 09:33:03] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:34:47,638 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:34:49,110 - INFO -  * Restarting with stat
+2025-09-04 09:35:48,221 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:80
+2025-09-04 09:35:48,222 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-04 09:35:48,226 - INFO -  * Restarting with stat
+2025-09-04 09:35:56,298 - WARNING -  * Debugger is active!
+2025-09-04 09:35:56,323 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:35:57,469 - INFO - 127.0.0.1 - - [04/Sep/2025 09:35:57] "GET / HTTP/1.1" 200 -
+2025-09-04 09:35:57,548 - INFO - 127.0.0.1 - - [04/Sep/2025 09:35:57] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:36:02,554 - INFO - 127.0.0.1 - - [04/Sep/2025 09:36:02] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-04 09:36:02,886 - INFO - 127.0.0.1 - - [04/Sep/2025 09:36:02] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:36:02,928 - INFO - 127.0.0.1 - - [04/Sep/2025 09:36:02] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:36:31,327 - INFO - 127.0.0.1 - - [04/Sep/2025 09:36:31] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:36:34,049 - INFO - 127.0.0.1 - - [04/Sep/2025 09:36:34] "[32mPOST /processo/149341 HTTP/1.1[0m" 302 -
+2025-09-04 09:36:34,059 - INFO - 127.0.0.1 - - [04/Sep/2025 09:36:34] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:36:34,104 - INFO - 127.0.0.1 - - [04/Sep/2025 09:36:34] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:36:59,206 - INFO - 127.0.0.1 - - [04/Sep/2025 09:36:59] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:39:16,066 - INFO - 127.0.0.1 - - [04/Sep/2025 09:39:16] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:39:16,317 - INFO - 127.0.0.1 - - [04/Sep/2025 09:39:16] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:39:43,667 - INFO - 127.0.0.1 - - [04/Sep/2025 09:39:43] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:40:47,836 - INFO - 127.0.0.1 - - [04/Sep/2025 09:40:47] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:40:47,885 - INFO - 127.0.0.1 - - [04/Sep/2025 09:40:47] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:40:49,596 - INFO - 127.0.0.1 - - [04/Sep/2025 09:40:49] "GET / HTTP/1.1" 200 -
+2025-09-04 09:40:49,639 - INFO - 127.0.0.1 - - [04/Sep/2025 09:40:49] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:40:53,296 - INFO - 127.0.0.1 - - [04/Sep/2025 09:40:53] "[32mPOST / HTTP/1.1[0m" 302 -
+2025-09-04 09:40:53,324 - INFO - 127.0.0.1 - - [04/Sep/2025 09:40:53] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:40:53,362 - INFO - 127.0.0.1 - - [04/Sep/2025 09:40:53] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:41:19,650 - INFO - 127.0.0.1 - - [04/Sep/2025 09:41:19] "GET /processo/149341/gerar-certidao HTTP/1.1" 200 -
+2025-09-04 09:42:12,703 - INFO - 127.0.0.1 - - [04/Sep/2025 09:42:12] "[35m[1mGET /processo/149341/analise HTTP/1.1[0m" 500 -
+2025-09-04 09:42:21,476 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:42:22,679 - INFO -  * Restarting with stat
+2025-09-04 09:42:30,866 - WARNING -  * Debugger is active!
+2025-09-04 09:42:30,878 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:42:40,729 - INFO - 127.0.0.1 - - [04/Sep/2025 09:42:40] "GET /processo/149341 HTTP/1.1" 200 -
+2025-09-04 09:42:42,978 - INFO - 127.0.0.1 - - [04/Sep/2025 09:42:42] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:42:43,029 - INFO - 127.0.0.1 - - [04/Sep/2025 09:42:43] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:42:43,034 - INFO - 127.0.0.1 - - [04/Sep/2025 09:42:43] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:43:51,671 - INFO -  * Detected change in 'C:\\projetos\\certificador\\routes.py', reloading
+2025-09-04 09:43:52,881 - INFO -  * Restarting with stat
+2025-09-04 09:44:00,588 - WARNING -  * Debugger is active!
+2025-09-04 09:44:00,602 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:44:45,349 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:80
+2025-09-04 09:44:45,350 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-04 09:44:45,355 - INFO -  * Restarting with stat
+2025-09-04 09:44:54,009 - WARNING -  * Debugger is active!
+2025-09-04 09:44:54,025 - INFO -  * Debugger PIN: 583-137-784
+2025-09-04 09:45:01,246 - INFO - 127.0.0.1 - - [04/Sep/2025 09:45:01] "GET / HTTP/1.1" 200 -
+2025-09-04 09:45:01,342 - INFO - 127.0.0.1 - - [04/Sep/2025 09:45:01] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:45:04,719 - INFO - 127.0.0.1 - - [04/Sep/2025 09:45:04] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:45:04,778 - INFO - 127.0.0.1 - - [04/Sep/2025 09:45:04] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:45:04,782 - INFO - 127.0.0.1 - - [04/Sep/2025 09:45:04] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:45:06,713 - INFO - 127.0.0.1 - - [04/Sep/2025 09:45:06] "GET /processo/149341/baixar?tipo=word HTTP/1.1" 200 -
+2025-09-04 09:45:45,345 - INFO - 127.0.0.1 - - [04/Sep/2025 09:45:45] "GET /processo/149341/baixar?tipo=pdf HTTP/1.1" 200 -
+2025-09-04 09:48:28,058 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:28] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:48:28,165 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:28] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:48:28,171 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:28] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:48:36,022 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:36] "GET /processo/149341/baixar?tipo=pdf HTTP/1.1" 200 -
+2025-09-04 09:48:55,104 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:55] "GET / HTTP/1.1" 200 -
+2025-09-04 09:48:55,162 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:55] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:48:59,310 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:59] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:48:59,359 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:59] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:48:59,365 - INFO - 127.0.0.1 - - [04/Sep/2025 09:48:59] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:49:24,811 - INFO - 127.0.0.1 - - [04/Sep/2025 09:49:24] "GET /processo/149341/baixar?tipo=pdf HTTP/1.1" 200 -
+2025-09-04 09:50:50,516 - INFO - 127.0.0.1 - - [04/Sep/2025 09:50:50] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:50:50,664 - INFO - 127.0.0.1 - - [04/Sep/2025 09:50:50] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:50:50,669 - INFO - 127.0.0.1 - - [04/Sep/2025 09:50:50] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:51:17,147 - INFO - 127.0.0.1 - - [04/Sep/2025 09:51:17] "GET /processo/149341/baixar?tipo=pdf HTTP/1.1" 200 -
+2025-09-04 09:52:24,210 - INFO - 127.0.0.1 - - [04/Sep/2025 09:52:24] "GET /processo/149341/analise HTTP/1.1" 200 -
+2025-09-04 09:52:24,266 - INFO - 127.0.0.1 - - [04/Sep/2025 09:52:24] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-04 09:52:24,271 - INFO - 127.0.0.1 - - [04/Sep/2025 09:52:24] "[36mGET /static/ia2.gif HTTP/1.1[0m" 304 -
+2025-09-04 09:52:50,336 - INFO - 127.0.0.1 - - [04/Sep/2025 09:52:50] "GET /processo/149341/baixar?tipo=pdf HTTP/1.1" 200 -

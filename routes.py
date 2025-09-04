@@ -279,20 +279,45 @@ def adicionar_no_relatorio():
     except Exception as e:
         return jsonify({"ok": False, "msg": f"Erro interno: {e}"}), 500
     
-@main_bp.get('/processo/<numero>/baixar-docx')
-def baixar_docx(numero):
+@main_bp.get('/processo/<numero>/baixar')
+def baixar(numero):
+    tipo = request.args.get('tipo', 'word')
+    print(f"Tipo solicitado: {tipo}")
     try:
         dados = session.get('dados', {})
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
         doc.substituir_campos(dados)
         docx_bytes = doc.gerar_bytes()
-        return send_file(
-            io.BytesIO(docx_bytes),
-            as_attachment=True,
-            download_name=f"relatorio_{numero}.docx",
-            mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        )
+
+        if tipo == 'pdf':
+            print("Gerando PDF...")
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".docx") as tmp:
+                tmp.write(docx_bytes)
+                tmp_path = tmp.name
+
+            pdf_path = ExportadorPDF(caminho_modelo).gerar_pdf(tmp_path)
+            with open(pdf_path, 'rb') as f:
+                pdf_bytes = f.read()
+            os.remove(tmp_path)
+            os.remove(pdf_path)
+
+            print("PDF gerado e enviado.")
+            return send_file(
+                io.BytesIO(pdf_bytes),
+                as_attachment=True,
+                download_name=f"relatorio_{numero}.pdf",
+                mimetype="application/pdf"
+            )
+        else:
+            print("Gerando Word...")
+            return send_file(
+                io.BytesIO(docx_bytes),
+                as_attachment=True,
+                download_name=f"relatorio_{numero}.docx",
+                mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
     except Exception as e:
+        print(f"Erro ao gerar o arquivo: {e}")
         flash(f"Erro ao gerar o arquivo: {e}", "danger")
         return redirect(url_for('main.analise_inatividade', numero=numero))
