@@ -265,7 +265,8 @@ def adicionar_no_relatorio():
         analise_id = request.form.get('analise_id')
         analise = Analise.query.get(analise_id)
 
-        dados[analise.tag] = analiseInteligente
+        dados[analise.tag] = f"\n{analiseInteligente}"
+        session['dados'] = dados
         
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)

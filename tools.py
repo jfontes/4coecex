@@ -22,6 +22,9 @@ class Tools:
         return dt.strftime('%d/%m/%Y') if dt else ''
 
     def PreencherDados(proc):
+        if proc.ato_concessorio is None:
+            proc.ato_concessorio = ''
+
         dados = {
             "servidor": proc.servidor or '',
             "cpf": proc.cpf or '',
@@ -36,7 +39,7 @@ class Tools:
                     .replace(",", "X").replace(".", ",").replace("X", ".")
                     if proc.proventos else "",
             "proventos_extenso": Tools.ValorPorExtenso(proc.proventos or Decimal('0.00')),
-            "ato_concessorio": re.sub(r'(^\w{1}|\.\s*\w{1})', lambda x: x.group().upper(),  proc.ato_concessorio.lower()) or "",
+            "ato_concessorio": re.sub(r'(^\w{1}|\.\s*\w{1})', lambda x: x.group().upper(),  proc.ato_concessorio.lower()),
             "data_ato_concessorio": Tools.FormatarData(proc.data_ato_concessorio),
             "publicacao": proc.publicacao or "",
             "data_publicacao": Tools.FormatarData(proc.data_publicacao),
