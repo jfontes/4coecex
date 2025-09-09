@@ -239,11 +239,15 @@ def processar_analise_inatividade(numero):
         return jsonify({"ok": False, "msg": "Nenhum PDF enviado."}), 400
 
     dados = session.get('dados', {}) 
+    
     try:
         analise_id = request.form.get('analise_id')
         analise = Analise.query.get(analise_id)
-
-        analiseInteligente = GeminiClient().get2(GeminiClient().lerPDF(files), analise.criterio)
+        parts = GeminiClient().lerPDF(files)
+        #parts.append(types.Part(text=str(dados)))
+        parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
+        print(f"------------------DEBUG: {len(parts)}-------------")
+        analiseInteligente = GeminiClient().get2(parts, analise.criterio)
     except Exception as e:
         return jsonify({"ok": False, "msg": f"Erro ao gerar resposta inteligente: {e}"}), 500
     

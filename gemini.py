@@ -28,6 +28,7 @@ class GeminiClient:
             raise ValueError(str(e))
         
     def get2(self, parts: List[types.Part], pergunta: str) -> str:
+        
         try:
             resposta = self.client.models.generate_content(
                 model=self.model,
@@ -51,7 +52,7 @@ class GeminiClient:
                     pdf.save(tmp.name)
                    #tmp.seek(0) # Volta ao início do arquivo para leitura
                     #part = types.Part.from_bytes(data=tmp.read_bytes(), mime_type="application/pdf")
-                    parts = types.Part.from_bytes(data=tmp.read(), mime_type="application/pdf")
+                    parts.append(types.Part.from_bytes(data=tmp.read(), mime_type="application/pdf"))
             except Exception as e:
                 raise IOError(f"Falha ao ler o arquivo PDF '{pdf.filename}': {e}")
             finally:
