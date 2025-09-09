@@ -3574,3 +3574,96 @@
 2025-09-09 08:25:39,176 - INFO -  * Restarting with stat
 2025-09-09 08:25:47,450 - WARNING -  * Debugger is active!
 2025-09-09 08:25:47,464 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 08:44:54,079 - INFO - Inicializando LeitorPDF
+2025-09-09 08:44:54,258 - INFO - PDF digital detectado.
+2025-09-09 08:44:54,458 - INFO - Extração de texto digital concluída.
+2025-09-09 08:44:56,967 - INFO - AFC is enabled with max remote calls: 10.
+2025-09-09 08:45:23,949 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 200 OK"
+2025-09-09 08:45:23,955 - INFO - AFC remote call 1 is done.
+2025-09-09 08:45:23,958 - INFO - 127.0.0.1 - - [09/Sep/2025 08:45:23] "POST /processo/149341/analise/processar HTTP/1.1" 200 -
+2025-09-09 08:45:55,806 - INFO - 127.0.0.1 - - [09/Sep/2025 08:45:55] "POST /processo/adicionar_no_relatorio HTTP/1.1" 200 -
+2025-09-09 08:54:09,029 - INFO -  * Detected change in 'C:\\projetos\\certificador\\testes\\novoGemini.py', reloading
+2025-09-09 08:54:10,575 - INFO -  * Restarting with stat
+2025-09-09 08:54:25,479 - WARNING -  * Debugger is active!
+2025-09-09 08:54:25,527 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 08:55:53,333 - INFO -  * Detected change in 'C:\\projetos\\certificador\\testes\\novoGemini.py', reloading
+2025-09-09 08:55:54,726 - INFO -  * Restarting with stat
+2025-09-09 08:56:05,583 - WARNING -  * Debugger is active!
+2025-09-09 08:56:05,609 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 08:56:31,851 - INFO -  * Detected change in 'C:\\projetos\\certificador\\testes\\novoGemini.py', reloading
+2025-09-09 08:56:33,109 - INFO -  * Restarting with stat
+2025-09-09 08:56:42,602 - WARNING -  * Debugger is active!
+2025-09-09 08:56:42,634 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 08:57:31,125 - INFO -  * Detected change in 'C:\\projetos\\certificador\\novoGemini.py', reloading
+2025-09-09 08:57:32,497 - INFO -  * Restarting with stat
+2025-09-09 08:57:47,529 - WARNING -  * Debugger is active!
+2025-09-09 08:57:47,549 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 09:01:46,344 - INFO -  * Detected change in 'C:\\projetos\\certificador\\novoGemini.py', reloading
+2025-09-09 09:01:47,734 - INFO -  * Restarting with stat
+2025-09-09 09:01:56,648 - WARNING -  * Debugger is active!
+2025-09-09 09:01:56,661 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 09:05:05,055 - INFO -  * Detected change in 'C:\\projetos\\certificador\\novoGemini.py', reloading
+2025-09-09 09:05:06,417 - INFO -  * Restarting with stat
+2025-09-09 09:05:19,537 - WARNING -  * Debugger is active!
+2025-09-09 09:05:19,547 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 09:09:57,420 - INFO - 127.0.0.1 - - [09/Sep/2025 09:09:57] "GET / HTTP/1.1" 200 -
+2025-09-09 09:09:57,817 - INFO - 127.0.0.1 - - [09/Sep/2025 09:09:57] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-09 09:10:02,083 - INFO - 127.0.0.1 - - [09/Sep/2025 09:10:02] "GET /analises HTTP/1.1" 200 -
+2025-09-09 09:10:02,146 - INFO - 127.0.0.1 - - [09/Sep/2025 09:10:02] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-09 09:10:03,651 - INFO - 127.0.0.1 - - [09/Sep/2025 09:10:03] "GET /analises/102/editar HTTP/1.1" 200 -
+2025-09-09 09:10:03,685 - INFO - 127.0.0.1 - - [09/Sep/2025 09:10:03] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-09 09:10:12,457 - INFO - 127.0.0.1 - - [09/Sep/2025 09:10:12] "[32mPOST /analises/102/editar HTTP/1.1[0m" 302 -
+2025-09-09 09:10:12,468 - INFO - 127.0.0.1 - - [09/Sep/2025 09:10:12] "GET /analises HTTP/1.1" 200 -
+2025-09-09 09:10:12,512 - INFO - 127.0.0.1 - - [09/Sep/2025 09:10:12] "[36mGET /static/logo_vertical.png HTTP/1.1[0m" 304 -
+2025-09-09 09:22:17,648 - INFO -  * Detected change in 'C:\\projetos\\certificador\\gemini.py', reloading
+2025-09-09 09:22:19,369 - INFO -  * Restarting with stat
+2025-09-09 09:22:31,776 - WARNING -  * Debugger is active!
+2025-09-09 09:22:31,835 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 09:24:14,526 - INFO -  * Detected change in 'C:\\projetos\\certificador\\gemini.py', reloading
+2025-09-09 09:24:15,684 - INFO -  * Restarting with stat
+2025-09-09 09:24:24,290 - WARNING -  * Debugger is active!
+2025-09-09 09:24:24,316 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 09:29:25,438 - INFO -  * Detected change in 'C:\\projetos\\certificador\\novoGemini.py', reloading
+2025-09-09 09:29:26,586 - INFO -  * Restarting with stat
+2025-09-09 09:29:35,542 - WARNING -  * Debugger is active!
+2025-09-09 09:29:35,560 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 09:31:00,595 - INFO -  * Detected change in 'C:\\projetos\\certificador\\novoGemini.py', reloading
+2025-09-09 09:31:01,986 - INFO -  * Restarting with stat
+2025-09-09 09:31:10,979 - WARNING -  * Debugger is active!
+2025-09-09 09:31:11,014 - INFO -  * Debugger PIN: 583-137-784
+2025-09-09 09:41:31,709 - INFO -  * Detected change in 'C:\\projetos\\certificador\\gemini.py', reloading
+2025-09-09 09:41:33,797 - INFO -  * Restarting with stat
+2025-09-09 10:37:32,297 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:80
+2025-09-09 10:37:32,298 - INFO - [33mPress CTRL+C to quit[0m
+2025-09-09 10:37:32,303 - INFO -  * Restarting with stat
+2025-09-09 10:42:57,182 - INFO -  * Restarting with stat
+2025-09-09 10:47:16,089 - INFO -  * Restarting with stat
+2025-09-09 10:49:03,160 - INFO -  * Restarting with stat
+2025-09-09 10:49:53,683 - INFO -  * Restarting with stat
+2025-09-09 10:59:28,625 - INFO -  * Restarting with stat
+2025-09-09 11:04:19,026 - INFO -  * Restarting with stat
+2025-09-09 11:06:06,864 - INFO -  * Restarting with stat
+2025-09-09 11:07:18,463 - INFO -  * Restarting with stat
+2025-09-09 11:12:04,629 - INFO -  * Restarting with stat
+2025-09-09 11:15:01,274 - INFO -  * Restarting with stat
+2025-09-09 11:22:58,248 - INFO -  * Restarting with stat
+2025-09-09 11:24:37,778 - INFO -  * Restarting with stat
+2025-09-09 11:27:18,958 - INFO -  * Restarting with stat
+2025-09-09 11:27:50,408 - INFO -  * Restarting with stat
+2025-09-09 11:30:32,792 - INFO -  * Restarting with stat
+2025-09-09 11:32:05,997 - INFO -  * Restarting with stat
+2025-09-09 11:34:09,266 - INFO -  * Restarting with stat
+2025-09-09 11:34:53,381 - INFO -  * Restarting with stat
+2025-09-09 11:36:24,649 - INFO -  * Restarting with stat
+2025-09-09 11:37:29,317 - INFO -  * Restarting with stat
+2025-09-09 11:37:37,902 - INFO -  * Restarting with stat
+2025-09-09 11:40:00,920 - INFO -  * Restarting with stat
+2025-09-09 11:41:27,775 - INFO -  * Restarting with stat
+2025-09-09 11:44:06,673 - INFO -  * Restarting with stat
+2025-09-09 11:47:33,248 - INFO -  * Restarting with stat
+2025-09-09 11:48:03,284 - INFO -  * Restarting with stat
+2025-09-09 11:53:15,782 - INFO -  * Restarting with stat
+2025-09-09 11:55:46,393 - INFO -  * Restarting with stat
+2025-09-09 11:59:42,764 - INFO -  * Restarting with stat
+2025-09-09 12:01:13,815 - INFO -  * Restarting with stat

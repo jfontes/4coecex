@@ -9,8 +9,9 @@ from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm, AnaliseForm
 from acreprevidencia_api    import DadosAcreprevidencia
 from gemini                 import GeminiClient
-from leitorPDF              import LeitorPDF
-import io, tempfile, os, mammoth
+from google.genai            import types
+#from leitorPDF              import LeitorPDF
+import io, tempfile, os, mammoth, json
 
 main_bp = Blueprint('main', __name__)
 
@@ -237,20 +238,12 @@ def processar_analise_inatividade(numero):
     if not files:
         return jsonify({"ok": False, "msg": "Nenhum PDF enviado."}), 400
 
-    leitor = LeitorPDF()
     dados = session.get('dados', {}) 
-    texto = f"{str(dados)}\n"
     try:
-        texto += leitor.extrair_textos(files)
-    except Exception as e:
-        return jsonify({"ok": False, "msg": f"Erro ao extrair texto: {e}"}), 500
-        
-    analise_id = request.form.get('analise_id')
-    analise = Analise.query.get(analise_id)
+        analise_id = request.form.get('analise_id')
+        analise = Analise.query.get(analise_id)
 
-    prompt = analise.criterio
-    try:
-        analiseInteligente = str(GeminiClient().get(texto, prompt))
+        analiseInteligente = GeminiClient().get2(GeminiClient().lerPDF(files), analise.criterio)
     except Exception as e:
         return jsonify({"ok": False, "msg": f"Erro ao gerar resposta inteligente: {e}"}), 500
     
