@@ -1,18 +1,13 @@
-import os
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from config import GEMINI_API_KEY
 
 class GeminiClient:
-    def __init__(self, model_name: str = "gemini-1.5-flash"):
+    def __init__(self, model_name: str = "gemini-2.5-flash"):
         self.api_key = GEMINI_API_KEY
         if not self.api_key:
             raise ValueError("A chave GOOGLE_API_KEY não está definida.")
         self.model_name = model_name
-        self._configurar()
-
-    def _configurar(self):
-        genai.configure(api_key=self.api_key)
-        self.model = genai.GenerativeModel(self.model_name)
 
     def get(self, conteudo: str, pergunta: str) -> str:
         prompt = [
@@ -20,8 +15,12 @@ class GeminiClient:
             {"role": "user", "parts": [{"text": pergunta}]},
         ]
         try:
-            resposta = self.model.generate_content(prompt)
+            client = genai.Client(api_key=self.api_key)
+            resposta = client.models.generate_content(
+                model=self.model_name,
+                contents=prompt,
+                config=types.GenerateContentConfig(temperature=0.1)
+            )
             return resposta.text
         except Exception as e:
-            print(f"Erro ao gerar resposta: {e}")
-            return ""
+            raise ValueError(f"Erro ao gerar resposta: {e}")
