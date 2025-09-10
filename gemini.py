@@ -50,7 +50,7 @@ class GeminiClient:
                 # O arquivo temporário é excluído automaticamente ao sair do bloco 'with'
                 with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as tmp:
                     pdf.save(tmp.name)
-                   #tmp.seek(0) # Volta ao início do arquivo para leitura
+                    #tmp.seek(0) # Volta ao início do arquivo para leitura
                     #part = types.Part.from_bytes(data=tmp.read_bytes(), mime_type="application/pdf")
                     parts.append(types.Part.from_bytes(data=tmp.read(), mime_type="application/pdf"))
             except Exception as e:

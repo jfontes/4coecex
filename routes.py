@@ -10,8 +10,8 @@ from forms                  import BuscaForm, ProcessoForm, AnaliseForm
 from acreprevidencia_api    import DadosAcreprevidencia
 from gemini                 import GeminiClient
 from google.genai            import types
-#from leitorPDF              import LeitorPDF
-import io, tempfile, os, mammoth, json
+import io, tempfile, os, mammoth, json, time
+from google.api_core.exceptions import ResourceExhausted
 
 main_bp = Blueprint('main', __name__)
 
@@ -239,17 +239,18 @@ def processar_analise_inatividade(numero):
         return jsonify({"ok": False, "msg": "Nenhum PDF enviado."}), 400
 
     dados = session.get('dados', {}) 
+    analise_id = request.form.get('analise_id')
+    try:
+        analise = Analise.query.get(analise_id)
+    except Exception as e:
+        return jsonify({"erro": False, "msg": f"Erro ao buscar critério no banco: {e}"})
     
     try:
-        analise_id = request.form.get('analise_id')
-        analise = Analise.query.get(analise_id)
         parts = GeminiClient().lerPDF(files)
-        #parts.append(types.Part(text=str(dados)))
         parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
-        print(f"------------------DEBUG: {len(parts)}-------------")
         analiseInteligente = GeminiClient().get2(parts, analise.criterio)
     except Exception as e:
-        return jsonify({"ok": False, "msg": f"Erro ao gerar resposta inteligente: {e}"}), 500
+        return jsonify({"erro": False, "msg": f"Erro ao gerar resposta inteligente: {e}"}), 500
     
     dados[analise.tag] = analiseInteligente
     session['dados'] = dados    
