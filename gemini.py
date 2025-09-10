@@ -1,8 +1,9 @@
 from google import genai
 from google.genai import types
 from config import GEMINI_API_KEY
-import tempfile, os
+import tempfile, os, time
 from typing import List
+from google.api_core.exceptions import ResourceExhausted
 
 class GeminiClient:
     def __init__(self, model_name: str = "gemini-2.5-flash"):
@@ -27,17 +28,24 @@ class GeminiClient:
         except Exception as e:
             raise ValueError(str(e))
         
-    def get2(self, parts: List[types.Part], pergunta: str) -> str:
-        
-        try:
-            resposta = self.client.models.generate_content(
-                model=self.model,
-                contents=[parts, pergunta],
-                config=types.GenerateContentConfig(temperature=0.1)
-            )
-            return resposta.text
-        except Exception as e:
-            raise ValueError(str(e))
+    def getAnalise(self, parts: List[types.Part], pergunta: str) -> str:
+        tentativas = 5
+        print("------------------INICIOU DE GET------------------")
+        for t in range(tentativas):
+            try:
+                resposta = self.client.models.generate_content(
+                    model=self.model,
+                    contents=[parts, pergunta],
+                    config=types.GenerateContentConfig(temperature=0.1)
+                )
+                print(f"------------------TERMINOU TENTATIVA {t+1}/{tentativas}------------------")
+                return resposta.text
+            except ResourceExhausted as re:
+                print(f"Recurso esgotado na tentativa {t+1}/{tentativas}. Aguardando para tentar novamente...")
+                time.sleep(2 ** t)
+            except Exception as e:
+                raise ValueError(f"Tentativas esgotadas, IA sobrecarregada: {e}")
+        raise ValueError(str(e))
 
     def lerPDF(self, files) -> List[types.Part]:
         """

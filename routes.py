@@ -10,8 +10,7 @@ from forms                  import BuscaForm, ProcessoForm, AnaliseForm
 from acreprevidencia_api    import DadosAcreprevidencia
 from gemini                 import GeminiClient
 from google.genai            import types
-import io, tempfile, os, mammoth, json, time
-from google.api_core.exceptions import ResourceExhausted
+import io, tempfile, os, mammoth, json
 
 main_bp = Blueprint('main', __name__)
 
@@ -242,13 +241,9 @@ def processar_analise_inatividade(numero):
     analise_id = request.form.get('analise_id')
     try:
         analise = Analise.query.get(analise_id)
-    except Exception as e:
-        return jsonify({"erro": False, "msg": f"Erro ao buscar critério no banco: {e}"})
-    
-    try:
         parts = GeminiClient().lerPDF(files)
         parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
-        analiseInteligente = GeminiClient().get2(parts, analise.criterio)
+        analiseInteligente = GeminiClient().getAnalise(parts, analise.criterio)
     except Exception as e:
         return jsonify({"erro": False, "msg": f"Erro ao gerar resposta inteligente: {e}"}), 500
     
