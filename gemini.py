@@ -30,7 +30,6 @@ class GeminiClient:
         
     def getAnalise(self, parts: List[types.Part], pergunta: str) -> str:
         tentativas = 5
-        print("------------------INICIOU DE GET------------------")
         for t in range(tentativas):
             try:
                 resposta = self.client.models.generate_content(
@@ -42,6 +41,7 @@ class GeminiClient:
                 return resposta.text
             except ResourceExhausted as re:
                 print(f"Recurso esgotado na tentativa {t+1}/{tentativas}. Aguardando para tentar novamente...")
+                print(re.message)
                 time.sleep(2 ** t)
             except Exception as e:
                 raise ValueError(f"Tentativas esgotadas, IA sobrecarregada: {e}")
