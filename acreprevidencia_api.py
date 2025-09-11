@@ -135,7 +135,7 @@ class DadosAcreprevidencia:
     #@staticmethod
     def getRegistroPorCPF(self, cpf: str)-> Optional[Dict[str, Any]]:
         return self.getRegistro(self.consultar(cpf))
-        
+
     def getRegistro(self, pedidos: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
         """
         Ajuda a puxar rapidamente dados comuns do último resultado.
@@ -156,9 +156,9 @@ class DadosAcreprevidencia:
                 "Contrato": f.get("CONTRATO"),
                 "CPF": f.get("CPF"),
                 "Nome": f.get("NOME"),
-                "Sexo": f.get("SEXO"), #NÃO MAPEADO
-                "Idade": f.get("IDADE"), #NÃO MAPEADO
-                "Nascimento": f.get("NASCIMENTO"), #NÃO MAPEADO
+                "Sexo": f.get("SEXO"), 
+                "Idade": f.get("IDADE"), 
+                "Nascimento": f.get("NASCIMENTO"), 
                 "Cargo": f.get("CARGO"),
                 "Classe": f.get("CLASSE"),
                 "Orgao": f.get("ORGAO"),
@@ -176,8 +176,8 @@ class DadosAcreprevidencia:
                 "Tempo_Contribuicao_Dias": a.get("DIAS_LIQUIDO"),
                 "Proventos": a.get("PROVENTO"),
                 "Data_concessao": a.get("DATA_CONCESSAO"),
-                "Data_ingresso_cargo": a.get("ING_CARGO"), #NÃO MAPEADO
-                "Data_ingresso_servico_publico": a.get("ING_SERVPUBLICO"), #NÃO MAPEADO
+                "Data_ingresso_cargo": a.get("ING_CARGO"), 
+                "Data_ingresso_servico_publico": a.get("ING_SERVPUBLICO"), 
                 "Fundamentacao": a.get("FUNDAMENTACAO"),
                 "Descricao": a.get("DESCRICAO"),
             })

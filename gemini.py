@@ -3,7 +3,7 @@ from google.genai import types
 from config import GEMINI_API_KEY
 import tempfile, os, time
 from typing import List
-from google.api_core.exceptions import ResourceExhausted
+from google.api_core.exceptions import ServiceUnavailable
 
 class GeminiClient:
     def __init__(self, model_name: str = "gemini-2.5-flash"):
@@ -39,12 +39,12 @@ class GeminiClient:
                 )
                 print(f"------------------TERMINOU TENTATIVA {t+1}/{tentativas}------------------")
                 return resposta.text
-            except ResourceExhausted as re:
-                print(f"Recurso esgotado na tentativa {t+1}/{tentativas}. Aguardando para tentar novamente...")
-                print(re.message)
+            except ServiceUnavailable as sue:
+                print(f"Serviço indisponível na tentativa {t+1}/{tentativas}. Aguardando para tentar novamente...")
+                print(sue.message)
                 time.sleep(2 ** t)
             except Exception as e:
-                raise ValueError(f"Tentativas esgotadas, IA sobrecarregada: {e}")
+                raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
         raise ValueError(str(e))
 
     def lerPDF(self, files) -> List[types.Part]:

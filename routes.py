@@ -145,6 +145,22 @@ def editar(numero):
     session['dados'] = Tools.PreencherDados(proc)
     return render_template('edit.html', form=form, proc=proc)
 
+def completarDados(cpf):
+    registro = DadosAcreprevidencia().getRegistroPorCPF(cpf)
+    if not registro:
+            return jsonify({"ok": False, "msg": "Nenhum registro encontrado para este CPF."}), 404
+    
+    dados = session.get('dados', {})
+    dados["Sexo"] = registro.get("Sexo")
+    dados["Idade"] = registro.get("Idade")
+    dados["Data_nascimento"] = registro.get("Nascimento")
+    dados["Data_ingresso_cargo"] = registro.get("Data_ingresso_cargo")
+    dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico")
+    dados["Observacoes"] = registro.get("Descricao") + registro.get("Fundamentacao")
+    session['dados'] = dados
+    print(dados)
+
+
 @main_bp.get("/api/acreprev")
 def api_acreprev():
     cpf = request.args.get("cpf", "").strip()
@@ -170,7 +186,7 @@ def api_acreprev():
         }
 
         dados = session.get('dados', {}) 
-        dados["sexo"] = registro.get("Sexo")
+        dados["Sexo"] = registro.get("Sexo")
         dados["Idade"] = registro.get("Idade")
         dados["Data_nascimento"] = registro.get("Nascimento")
         dados["Data_ingresso_cargo"] = registro.get("Data_ingresso_cargo")
@@ -214,7 +230,8 @@ def analise_inatividade(numero):
     if not proc:
         flash("Processo não encontrado.", "danger")
         return redirect(url_for('main.index'))
-    session['dados'] = Tools.PreencherDados(proc)
+    session['dados'] = Tools.PreencherDados(proc) #preenche com os dados do banco
+    completarDados(proc.cpf) #complementa com os dados do acreprevidência
     
     try:
         analises = Analise.query.all()
@@ -260,7 +277,7 @@ def adicionar_no_relatorio():
         analise_id = request.form.get('analise_id')
         analise = Analise.query.get(analise_id)
 
-        dados[analise.tag] = f"\n{analiseInteligente}"
+        dados[analise.tag] = f"{analiseInteligente}"
         session['dados'] = dados
         
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
