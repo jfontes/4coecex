@@ -8,7 +8,7 @@ from documento_word         import PreencheDocumentoWord
 from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm, AnaliseForm
 from acreprevidencia_api    import DadosAcreprevidencia
-from gemini                 import GeminiClient
+from gemini                 import Gemini
 from google.genai            import types
 import io, tempfile, os, mammoth, json
 
@@ -172,7 +172,7 @@ def api_acreprev():
             return jsonify({"ok": False, "msg": "Nenhum registro encontrado para este CPF."}), 404
 
         # mapeia para os nomes dos campos do formulário
-        cargo_fundamento = GeminiClient().extrairCargoFundamentoLegal(str(registro))
+        cargo_fundamento = Gemini().extrairCargoFundamentoLegal(str(registro))
         data = {
             "servidor": registro.get("Nome") or "",
             "matricula": str(registro.get("Matricula")) + "-" + str(registro.get("Contrato")) or "",
@@ -256,9 +256,9 @@ def processar_analise_inatividade(numero):
     analise_id = request.form.get('analise_id')
     try:
         analise = Analise.query.get(analise_id)
-        parts = GeminiClient().lerPDF(files)
+        parts = Gemini().lerPDF(files)
         parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
-        analiseInteligente = GeminiClient().getAnalise(parts, analise.criterio)
+        analiseInteligente = Gemini().getAnalise(parts, analise.criterio)
     except Exception as e:
         return jsonify({"erro": False, "msg": f"Erro ao gerar resposta inteligente: {e}"}), 500
     

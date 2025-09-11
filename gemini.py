@@ -9,7 +9,7 @@ class CargoFundamento(BaseModel):
     Cargo: str
     Fundamento_legal: str
 
-class GeminiClient:
+class Gemini:
     def __init__(self, model_name: str = "gemini-2.5-flash"):
         self.api_key = GEMINI_API_KEY
         if not self.api_key:
@@ -22,32 +22,38 @@ class GeminiClient:
             {"role": "user", "parts": [{"text": str(conteudo)}]},
             {"role": "user", "parts": [{"text": pergunta}]},
         ]
-        try:
-            resposta = self.client.models.generate_content(
-                model=self.model,
-                contents=prompt,
-                config=types.GenerateContentConfig(temperature=0.1)
-            )
-            return resposta.text
-        except Exception as e:
-            raise ValueError(str(e))
+        tentativas = 5
+        for t in range(tentativas):
+            print(f"------------------INICIANDO TENTATIVA {t+1}/{tentativas}------------------")
+            try:
+                resposta = self.client.models.generate_content(
+                    model=self.model,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(temperature=0.1)
+                )
+                return resposta.text
+            except Exception as e:
+                print(e.message)
+                time.sleep(2 ** t)
+        print(e.message)
+        raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
         
     def getAnalise(self, parts: List[types.Part], pergunta: str) -> str:
         tentativas = 5
         for t in range(tentativas):
+            print(f"------------------INICIANDO TENTATIVA {t+1}/{tentativas}------------------")
             try:
                 resposta = self.client.models.generate_content(
                     model=self.model,
                     contents=[parts, pergunta],
                     config=types.GenerateContentConfig(temperature=0.1)
                 )
-                print(f"------------------TERMINOU TENTATIVA {t+1}/{tentativas}------------------")
                 return resposta.text
             except Exception as e:
                 print(e.message)
                 time.sleep(2 ** t)
-                raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
-        raise ValueError(str(e))
+        print(e.message)
+        raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
 
     def lerPDF(self, files) -> List[types.Part]:
         """
@@ -78,21 +84,26 @@ class GeminiClient:
             {"role": "user", "parts": [{"text": str(conteudo)}]},
             {"role": "user", "parts": [{"text": "Extraia o cargo e o fundamento legal considerando: Cargo da pessoa (somente o nome, classe e referência, sem comentários) e Fundamento legal contendo todos os artigos e leis que fundamentam o registro (sem qualquer outro comentário)."}]},
         ]
-        try:
-            resposta = self.client.models.generate_content(
-                model=self.model,
-                contents=prompt,
-                config={
-                    "response_mime_type": "application/json",
-                    "temperature": 0.1,
-                    "response_schema": CargoFundamento,
-                    },
-            )
-            r = json.loads(resposta.text)
-            cargo_fundamento = []
-            cargo_fundamento.append(r.get("Cargo") or "")
-            cargo_fundamento.append(r.get("Fundamento_legal") or "")
-            return cargo_fundamento
-        except Exception as e:
-            print(e)
-            raise ValueError(str(e))
+        tentativas = 5
+        for t in range(tentativas):
+            print(f"------------------INICIANDO TENTATIVA {t+1}/{tentativas}------------------")
+            try:
+                resposta = self.client.models.generate_content(
+                    model=self.model,
+                    contents=prompt,
+                    config={
+                        "response_mime_type": "application/json",
+                        "temperature": 0.1,
+                        "response_schema": CargoFundamento,
+                        },
+                )
+                r = json.loads(resposta.text)
+                cargo_fundamento = []
+                cargo_fundamento.append(r.get("Cargo") or "")
+                cargo_fundamento.append(r.get("Fundamento_legal") or "")
+                return cargo_fundamento
+            except Exception as e:
+                print(e.message)
+                time.sleep(2 ** t)
+        print(e.message)
+        raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
