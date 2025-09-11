@@ -160,7 +160,6 @@ def completarDados(cpf):
     session['dados'] = dados
     print(dados)
 
-
 @main_bp.get("/api/acreprev")
 def api_acreprev():
     cpf = request.args.get("cpf", "").strip()
@@ -173,18 +172,18 @@ def api_acreprev():
             return jsonify({"ok": False, "msg": "Nenhum registro encontrado para este CPF."}), 404
 
         # mapeia para os nomes dos campos do formulário
+        cargo_fundamento = GeminiClient().extrairCargoFundamentoLegal(str(registro))
         data = {
             "servidor": registro.get("Nome") or "",
             "matricula": str(registro.get("Matricula")) + "-" + str(registro.get("Contrato")) or "",
             "orgao": registro.get("Orgao") or "",
             "proventos": registro.get("Proventos") or "",
             "data_concessao": registro.get("Data_concessao") or "",
-            "cargo": str(GeminiClient().get(str(registro), "Cargo da pessoa (somente o nome, classe e referência, sem comentários).")) or "",
-            "fundamento_legal": str(GeminiClient().get(str(registro), "Fundamento legal contendo todos os artigos e leis que fundamentam o registro. (Sem qualquer outro comentários)")) or "",
+            "cargo": cargo_fundamento[0],
+            "fundamento_legal": cargo_fundamento[1],
             "tempo_anos": registro.get("Tempo_Contribuicao_Ano") or "",
             "tempo_dias": registro.get("Tempo_Contribuicao_Dias") or "",
         }
-
         dados = session.get('dados', {}) 
         dados["Sexo"] = registro.get("Sexo")
         dados["Idade"] = registro.get("Idade")
@@ -193,7 +192,6 @@ def api_acreprev():
         dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico")
         dados["Observacoes"] = registro.get("Descricao") + registro.get("Fundamentacao")
         session['dados'] = dados
-        print(dados)
 
         return jsonify({"ok": True, "data": data})
     except Exception as e:

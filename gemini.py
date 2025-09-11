@@ -1,9 +1,14 @@
 from google import genai
 from google.genai import types
 from config import GEMINI_API_KEY
-import tempfile, os, time
+import tempfile, os, time, json
 from typing import List
 from google.api_core.exceptions import ServiceUnavailable
+from pydantic import BaseModel
+
+class CargoFundamento(BaseModel):
+    Cargo: str
+    Fundamento_legal: str
 
 class GeminiClient:
     def __init__(self, model_name: str = "gemini-2.5-flash"):
@@ -70,3 +75,27 @@ class GeminiClient:
                     pass
         return parts
         
+    
+    def extrairCargoFundamentoLegal(self, conteudo: str) -> dict:
+        prompt = [
+            {"role": "user", "parts": [{"text": str(conteudo)}]},
+            {"role": "user", "parts": [{"text": "Extraia o cargo e o fundamento legal considerando: Cargo da pessoa (somente o nome, classe e referência, sem comentários) e Fundamento legal contendo todos os artigos e leis que fundamentam o registro (sem qualquer outro comentário)."}]},
+        ]
+        try:
+            resposta = self.client.models.generate_content(
+                model=self.model,
+                contents=prompt,
+                config={
+                    "response_mime_type": "application/json",
+                    "temperature": 0.1,
+                    "response_schema": CargoFundamento,
+                    },
+            )
+            r = json.loads(resposta.text)
+            cargo_fundamento = []
+            cargo_fundamento.append(r.get("Cargo") or "")
+            cargo_fundamento.append(r.get("Fundamento_legal") or "")
+            return cargo_fundamento
+        except Exception as e:
+            print(e)
+            raise ValueError(str(e))
