@@ -9,6 +9,11 @@ class CargoFundamento(BaseModel):
     Cargo: str
     Fundamento_legal: str
 
+class AnaliseInteligente(BaseModel):
+    Analise: str
+    Metadado1: Optional[str] = None
+    Metadado2: Optional[str] = None
+
 class Gemini:
     def __init__(self, model_name: str = "gemini-2.5-flash"):
         self.api_key = GEMINI_API_KEY
@@ -77,7 +82,30 @@ class Gemini:
                 except Exception:
                     pass
         return parts
-        
+
+    def getAnaliseEstruturada(self, parts: List[types.Part], pergunta: str) -> any:
+        tentativas = 5
+        for t in range(tentativas):
+            print(f"------------------INICIANDO TENTATIVA {t+1}/{tentativas}------------------")
+            try:
+                resposta = self.client.models.generate_content(
+                    model=self.model,
+                    contents=[parts, pergunta],
+                    config={
+                        "response_mime_type": "application/json",
+                        "temperature": 0.1,
+                        "response_schema": AnaliseInteligente,
+                        },
+                )
+                r = json.loads(resposta.text)
+
+                return r
+            except Exception as e:
+                print(e.message)
+                time.sleep(2 ** t)
+        print(e.message)
+        raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
+
     def extrairCargoFundamentoLegal(self, conteudo: str) -> dict:
         prompt = [
             {"role": "user", "parts": [{"text": str(conteudo)}]},

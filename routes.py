@@ -258,10 +258,17 @@ def processar_analise_inatividade(numero):
         analise = Analise.query.get(analise_id)
         parts = Gemini().lerPDF(files)
         parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
-        analiseInteligente = Gemini().getAnalise(parts, analise.criterio)
+        ai = Gemini().getAnaliseEstruturada(parts, analise.criterio)
+        analiseInteligente = ai.get("Analise")
     except Exception as e:
         return jsonify({"erro": False, "msg": f"Erro ao gerar resposta inteligente: {e}"}), 500
     
+    if len(ai) > 1: #SE HOUVER METADADOS
+        #PRECISA CONSTRUIR UMA LÓGICA DE IDENTIFICAR O TIPO DE METADADO E DAR O TRATAMENTO ADEQUADO
+        #ATUALMENTE TRATA APENAS DOIS METADADOS, UM PARA CARGO E OUTRO PARA PROVENTOS
+        dados["cargo"] = ai.get("Metadado1")
+        dados["proventos"] = Tools.FormatarMoeda(ai.get("Metadado2"))
+        
     dados[analise.tag] = analiseInteligente
     session['dados'] = dados    
     

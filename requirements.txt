@@ -37,4 +37,3 @@ easyocr
 PyMuPDF 
 numpy
 pillow
-mammoth

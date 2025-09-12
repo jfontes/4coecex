@@ -21,6 +21,15 @@ class Tools:
     def FormatarData(dt):
         return dt.strftime('%d/%m/%Y') if dt else ''
 
+    def FormatarMoeda(valor):
+        """Formata um valor numérico para o padrão monetário brasileiro (R$ 1.234,56)."""
+        if valor is None:
+            return ""
+        try:
+            return f"R$ {Decimal(valor):,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+        except (ValueError, TypeError):
+            return str(valor) # Retorna o valor original se não for um número
+
     def PreencherDados(proc):
         if proc.ato_concessorio is None:
             proc.ato_concessorio = ''
