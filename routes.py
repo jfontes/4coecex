@@ -267,7 +267,7 @@ def processar_analise_inatividade(numero):
         #PRECISA CONSTRUIR UMA LÓGICA DE IDENTIFICAR O TIPO DE METADADO E DAR O TRATAMENTO ADEQUADO
         #ATUALMENTE TRATA APENAS DOIS METADADOS, UM PARA CARGO E OUTRO PARA PROVENTOS
         dados["cargo"] = ai.get("Metadado1")
-        dados["proventos"] = Tools.FormatarMoeda(ai.get("Metadado2"))
+        dados["proventos"] = ai.get("Metadado2")
         
     dados[analise.tag] = analiseInteligente
     session['dados'] = dados    
