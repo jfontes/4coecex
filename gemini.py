@@ -2,7 +2,7 @@ from google import genai
 from google.genai import types
 from config import GEMINI_API_KEY
 import tempfile, os, time, json
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 
 class CargoFundamento(BaseModel):
@@ -78,7 +78,6 @@ class Gemini:
                     pass
         return parts
         
-    
     def extrairCargoFundamentoLegal(self, conteudo: str) -> dict:
         prompt = [
             {"role": "user", "parts": [{"text": str(conteudo)}]},

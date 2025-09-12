@@ -42,6 +42,7 @@ def nova_analise():
             nome=form.nome.data.strip(),
             criterio=form.criterio.data.strip(),
             tag=form.tag.data.strip(),
+            sugestao_documento=form.sugestao_documento.data.strip() if form.sugestao_documento.data else "Nenhuma sugestão.",
         )
         db.session.add(obj)
         db.session.commit()
@@ -158,7 +159,6 @@ def completarDados(cpf):
     dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico")
     dados["Observacoes"] = registro.get("Descricao") + registro.get("Fundamentacao")
     session['dados'] = dados
-    print(dados)
 
 @main_bp.get("/api/acreprev")
 def api_acreprev():
