@@ -261,7 +261,8 @@ def processar_analise_inatividade(numero):
         ai = Gemini().getAnaliseEstruturada(parts, analise.criterio)
         analiseInteligente = ai.get("Analise")
     except Exception as e:
-        return jsonify({"erro": False, "msg": f"Erro ao gerar resposta inteligente: {e}"}), 500
+        print(e)
+        return jsonify({"erro": False, "msg": "Erro ao gerar resposta inteligente."}), 500
     
     if len(ai) > 1: #SE HOUVER METADADOS
         #PRECISA CONSTRUIR UMA LÓGICA DE IDENTIFICAR O TIPO DE METADADO E DAR O TRATAMENTO ADEQUADO

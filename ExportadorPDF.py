@@ -1,4 +1,4 @@
-from docx2pdf import convert
+from docx2pdf import convert #VERIFICAR A POSSIBILIDADE DE UTILIZAR A BIBLIOTECA docx-to-pdf, QUE POSSUI O MESMO MÉTODO convert(), PORÉM SEM UTILIZAR O WORD EXTERNO DO COMPUTADOR
 import os
 
 class ExportadorPDF:
