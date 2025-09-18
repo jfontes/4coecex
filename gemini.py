@@ -13,6 +13,7 @@ class AnaliseInteligente(BaseModel):
     Analise: str
     Metadado1: Optional[str] = None
     Metadado2: Optional[str] = None
+    Metadado3: Optional[str] = None
 
 class Gemini:
     def __init__(self, model_name: str = "gemini-2.5-flash"):
@@ -102,6 +103,14 @@ class Gemini:
                 return r
             except Exception as e:
                 print(e.message)
+                #self.model = "gemini-1.5-pro" if self.model == "gemini-1.5-flash" else "gemini-1.5-flash"
+                if self.model == "gemini-1.5-flash":
+                    self.model = "gemini-1.5-pro"
+                    print("------------ALTERANDO MODELO PARA O PRO-------------")
+                else:
+                    self.model = "gemini-1.5-flash"
+                    print("------------RETORNANDO AO MODELO FLASH-------------")
+
                 time.sleep(2 ** t)
         print(e.message)
         raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")

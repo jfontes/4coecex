@@ -267,8 +267,9 @@ def processar_analise_inatividade(numero):
     if len(ai) > 1: #SE HOUVER METADADOS
         #PRECISA CONSTRUIR UMA LÓGICA DE IDENTIFICAR O TIPO DE METADADO E DAR O TRATAMENTO ADEQUADO
         #ATUALMENTE TRATA APENAS DOIS METADADOS, UM PARA CARGO E OUTRO PARA PROVENTOS, MAS DEPENDENDO DO PROMPT PODE RETORNAR OUTRAS INFORMAÇÕES
-        dados["cargo"] = ai.get("Metadado1")
-        dados["proventos"] = ai.get("Metadado2")
+        if ai.get("Metadado1") == "SIM":
+            dados["cargo"] = ai.get("Metadado2")
+            dados["proventos"] = ai.get("Metadado3")
 
     dados[analise.tag] = analiseInteligente
     session['dados'] = dados    
