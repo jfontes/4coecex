@@ -10,33 +10,33 @@
 </head>
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-    <div class="container">
-      <div class="collapse navbar-collapse" id="mainNav">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-white" href="{{ url_for('main.index') }}">
-              <i class="bi bi-house-door-fill"></i> Início
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="{{ url_for('main.novo_processo') }}">Novo processo</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="{{ url_for('main.listar_analises') }}">Cadastro de Critérios</a>
-          </li>
-        </ul>
+  <div class="sticky-top shadow-sm">
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container-fluid px-3">
+        <a class="navbar-brand" href="https://tceac.tc.br">
+          <img src="{{ url_for('static', filename='icon_tce.png') }}" alt="Logo Tribunal de Contas" style="max-height:40px;">
+        </a>
       </div>
-    </div>
-  </nav>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white" style="padding-top: 0.1rem; padding-bottom: 0.1rem;">
+      <div class="container-fluid px-3">
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-dark link-primary" href="{{ url_for('main.index') }}">
+                <i class="bi bi-house-door-fill text-dark link-primary"></i> Início
+              </a>
+            </li>
+            <li class="nav-item"><a class="nav-link text-dark link-primary" href="{{ url_for('main.novo_processo') }}">Novo processo</a></li>
+            <li class="nav-item"><a class="nav-link text-dark link-primary" href="{{ url_for('main.listar_analises') }}">Cadastro de Critérios</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
   <header class="bg-light py-3 mb-4">
-    <div class="container d-flex justify-content-center">
-      <img src="{{ url_for('static', filename='logo_vertical.png') }}" alt="Logo Tribunal de Contas" style="max-height:100px;">
-    </div>
     <div class="container text-center mt-2">
-      <p class="card-title text-center text-primary mb-4" style="font-weight: bold;">SECRETARIA DE CONTROLE EXTERNO - SECEX</p>
-      <p class="card-title text-center text-primary mb-4" style="font-weight: bold;">4ª COORDENADORIA ESPECIALIZADA DE CONTROLE EXTERNO - 4ª COECEX</p>
-      <p class="card-title text-center text-primary mb-4" style="font-weight: bold;">SISTEMA DE GERAÇÃO DE DOCUMENTOS</p>
+      <img src="{{ url_for('static', filename='SAI.png') }}" alt="Sistema de Geração de Documentos" style="max-height:250px;">
     </div>
   </header>
 

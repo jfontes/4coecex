@@ -240,7 +240,7 @@ def analise_inatividade(numero):
         docx_bytes = doc.gerar_bytes()
         
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
-        html_doc = result.value[result.value.find("RELATÓRIO CONCLUSIVO")-8:]  # string HTML
+        html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]  # string HTML
 
         return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc, analises=analises)
     except Exception as e:
@@ -261,7 +261,7 @@ def processar_analise_inatividade(numero):
         ai = Gemini().getAnaliseEstruturada(parts, analise.criterio)
         analiseInteligente = ai.get("Analise")
     except Exception as e:
-        print(e)
+        print(e.message)
         return jsonify({"erro": False, "msg": "Erro ao gerar resposta inteligente."}), 500
     
     if len(ai) > 1: #SE HOUVER METADADOS
@@ -292,7 +292,7 @@ def adicionar_no_relatorio():
         docx_bytes = doc.gerar_bytes()
         
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
-        html_doc = result.value[result.value.find("RELATÓRIO CONCLUSIVO")-8:]  # string HTML
+        html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]  # string HTML
 
         return jsonify({"ok": True, "doc_html": html_doc})
     except Exception as e:
