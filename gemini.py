@@ -104,11 +104,11 @@ class Gemini:
             except Exception as e:
                 print(e.message)
                 #self.model = "gemini-1.5-pro" if self.model == "gemini-1.5-flash" else "gemini-1.5-flash"
-                if self.model == "gemini-1.5-flash":
-                    self.model = "gemini-1.5-pro"
+                if self.model == "gemini-2.5-flash":
+                    self.model = "gemini-2.5-pro"
                     print("------------ALTERANDO MODELO PARA O PRO-------------")
                 else:
-                    self.model = "gemini-1.5-flash"
+                    self.model = "gemini-2.5-flash"
                     print("------------RETORNANDO AO MODELO FLASH-------------")
 
                 time.sleep(2 ** t)
