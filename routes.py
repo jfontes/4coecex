@@ -147,18 +147,26 @@ def editar(numero):
     return render_template('edit.html', form=form, proc=proc)
 
 def completarDados(cpf):
-    registro = DadosAcreprevidencia().getRegistroPorCPF(cpf)
-    if not registro:
+    try:
+        registro = DadosAcreprevidencia().getRegistroPorCPF(cpf)
+        
+        if not registro:
             return jsonify({"ok": False, "msg": "Nenhum registro encontrado para este CPF."}), 404
-    
-    dados = session.get('dados', {})
-    dados["Sexo"] = registro.get("Sexo")
-    dados["Idade"] = registro.get("Idade")
-    dados["Data_nascimento"] = registro.get("Nascimento")
-    dados["Data_ingresso_cargo"] = registro.get("Data_ingresso_cargo")
-    dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico")
-    dados["Observacoes"] = registro.get("Descricao") + registro.get("Fundamentacao")
-    session['dados'] = dados
+
+        dados = session.get('dados', {})
+        dados["Sexo"] = registro.get("Sexo", "")
+        dados["Idade"] = registro.get("Idade", "")
+        dados["Data_nascimento"] = registro.get("Nascimento", "")
+        dados["Data_ingresso_cargo"] = registro.get("Data_ingresso_cargo", "")
+        dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico", "")
+        descricao = registro.get("Descricao", "")
+        fundamentacao = registro.get("Fundamentacao", "")
+        dados["Observacoes"] = f"{descricao} {fundamentacao}".strip()
+        
+        session['dados'] = dados
+
+    except Exception as e:
+        return jsonify({"ok": False, "msg": f"Erro ao buscar dados: {str(e)}"}), 500
 
 @main_bp.get("/api/acreprev")
 def api_acreprev():
