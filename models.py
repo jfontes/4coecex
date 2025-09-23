@@ -44,6 +44,7 @@ class Processo(db.Model):
     folha_ato_fixacao = db.Column(db.String(20))
     atualizado = db.Column(db.Integer)
     data_inicio_concessao = db.Column(db.Date)
+    dados_previdencia = db.Column(db.JSON)
     orgao_previdencia_id = db.Column(
         db.Integer,
         db.ForeignKey('orgao_previdencia.id'),

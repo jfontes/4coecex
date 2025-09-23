@@ -146,28 +146,6 @@ def editar(numero):
     session['dados'] = Tools.PreencherDados(proc)
     return render_template('edit.html', form=form, proc=proc)
 
-def completarDados(cpf):
-    try:
-        registro = DadosAcreprevidencia().getRegistroPorCPF(cpf)
-        
-        if not registro:
-            return jsonify({"ok": False, "msg": "Nenhum registro encontrado para este CPF."}), 404
-
-        dados = session.get('dados', {})
-        dados["Sexo"] = registro.get("Sexo", "")
-        dados["Idade"] = registro.get("Idade", "")
-        dados["Data_nascimento"] = registro.get("Nascimento", "")
-        dados["Data_ingresso_cargo"] = registro.get("Data_ingresso_cargo", "")
-        dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico", "")
-        descricao = registro.get("Descricao", "")
-        fundamentacao = registro.get("Fundamentacao", "")
-        dados["Observacoes"] = f"{descricao} {fundamentacao}".strip()
-        
-        session['dados'] = dados
-
-    except Exception as e:
-        return jsonify({"ok": False, "msg": f"Erro ao buscar dados: {str(e)}"}), 500
-
 @main_bp.get("/api/acreprev")
 def api_acreprev():
     cpf = request.args.get("cpf", "").strip()
@@ -175,11 +153,20 @@ def api_acreprev():
         return jsonify({"ok": False, "msg": "Informe o CPF."}), 400
 
     try:
-        registro = DadosAcreprevidencia().getRegistroPorCPF(cpf)
-        if not registro:
-            return jsonify({"ok": False, "msg": "Nenhum registro encontrado para este CPF."}), 404
+        proc = Processo.query.filter_by(cpf=Tools.FormatarCPF(cpf)).first()
 
-        # mapeia para os nomes dos campos do formulário
+        if not proc.dados_previdencia:
+            # Busca o registro na API
+            registro = DadosAcreprevidencia().getRegistroPorCPF(cpf)
+            if not registro:
+                return jsonify({"ok": False, "msg": "Nenhum registro encontrado para este CPF."}), 404
+            
+            proc.dados_previdencia = registro
+            db.session.commit()
+        else:
+            registro = proc.dados_previdencia
+
+        # Continua o processo de extrair dados para o formulário
         cargo_fundamento = Gemini().extrairCargoFundamentoLegal(str(registro))
         data = {
             "servidor": registro.get("Nome") or "",
@@ -192,13 +179,17 @@ def api_acreprev():
             "tempo_anos": registro.get("Tempo_Contribuicao_Ano") or "",
             "tempo_dias": registro.get("Tempo_Contribuicao_Dias") or "",
         }
+        
+        # Atualiza a sessão também, para manter consistência
         dados = session.get('dados', {}) 
-        dados["Sexo"] = registro.get("Sexo")
-        dados["Idade"] = registro.get("Idade")
-        dados["Data_nascimento"] = registro.get("Nascimento")
-        dados["Data_ingresso_cargo"] = registro.get("Data_ingresso_cargo")
-        dados["Data_ingresso_servico_publico"] = registro.get("Data_ingresso_servico_publico")
-        dados["Observacoes"] = registro.get("Descricao") + registro.get("Fundamentacao")
+        dados.update({
+            "Sexo": registro.get("Sexo"),
+            "Idade": registro.get("Idade"),
+            "Data_nascimento": registro.get("Nascimento"),
+            "Data_ingresso_cargo": registro.get("Data_ingresso_cargo"),
+            "Data_ingresso_servico_publico": registro.get("Data_ingresso_servico_publico"),
+            "Observacoes": registro.get("Descricao", "") + registro.get("Fundamentacao", "")
+        })
         session['dados'] = dados
 
         return jsonify({"ok": True, "data": data})
@@ -232,12 +223,34 @@ def gerar_certidao(numero):
 
 @main_bp.route('/processo/<numero>/analise')
 def analise_inatividade(numero):
-    proc = Processo.query.filter_by(processo=numero).first()
-    if not proc:
-        flash("Processo não encontrado.", "danger")
-        return redirect(url_for('main.index'))
-    session['dados'] = Tools.PreencherDados(proc) #preenche com os dados do banco
-    completarDados(proc.cpf) #complementa com os dados do acreprevidência
+    breakpoint()
+    proc = Processo.query.filter_by(processo=numero).first_or_404()
+
+    # 1. Preenche os dados básicos da sessão a partir do banco
+    session['dados'] = Tools.PreencherDados(proc)
+    
+    # 2. Verifica se os dados da previdência já estão no banco
+    dados_prev = proc.dados_previdencia
+    if not dados_prev:
+        # Se não estiverem, busca na API e salva no banco
+        print(f"Buscando dados da previdência para o CPF: {proc.cpf}")
+        dados_prev = DadosAcreprevidencia().getRegistroPorCPF(proc.cpf)
+        if dados_prev:
+            proc.dados_previdencia = dados_prev
+            db.session.commit()
+
+    # 3. Se houver dados da previdência (do banco ou da API), complementa a sessão
+    if dados_prev:
+        dados_sessao = session.get('dados', {})
+        dados_sessao.update({
+            "Sexo": dados_prev.get("Sexo"),
+            "Idade": dados_prev.get("Idade"),
+            "Data_nascimento": dados_prev.get("Nascimento"),
+            "Data_ingresso_cargo": dados_prev.get("Data_ingresso_cargo"),
+            "Data_ingresso_servico_publico": dados_prev.get("Data_ingresso_servico_publico"),
+            "Observacoes": dados_prev.get("Descricao", "") + dados_prev.get("Fundamentacao", "")
+        })
+        session['dados'] = dados_sessao
     
     try:
         analises = Analise.query.all()
@@ -248,7 +261,7 @@ def analise_inatividade(numero):
         docx_bytes = doc.gerar_bytes()
         
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
-        html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]  # string HTML
+        html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]
 
         return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc, analises=analises)
     except Exception as e:

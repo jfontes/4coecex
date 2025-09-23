@@ -21,13 +21,22 @@ class Tools:
     def FormatarData(dt):
         return dt.strftime('%d/%m/%Y') if dt else ''
 
-    def PreencherDados(proc):
-        if proc.ato_concessorio is None:
-            proc.ato_concessorio = ''
+    def FormatarCPF(cpf_str):
+        if not cpf_str or not isinstance(cpf_str, str):
+            return ''
+        
+        # Remove qualquer caractere que não seja dígito
+        cpf_digits = re.sub(r'\D', '', cpf_str)
+        
+        # Se não tiver 11 dígitos, retorna o que foi limpo (ou vazio)
+        if len(cpf_digits) != 11:
+            return cpf_digits
+            
+        return f"{cpf_digits[:3]}.{cpf_digits[3:6]}.{cpf_digits[6:9]}-{cpf_digits[9:]}"
 
+    def PreencherDados(proc):
         dados = {
-            "servidor": proc.servidor or '',
-            "cpf": proc.cpf or '',
+            "servidor": proc.servidor or '', "cpf": Tools.FormatarCPF(proc.cpf),
             "cargo": proc.cargo or '',
             "matricula": proc.matricula or '',
             "orgao": proc.orgao or '',
@@ -39,7 +48,7 @@ class Tools:
                     .replace(",", "X").replace(".", ",").replace("X", ".")
                     if proc.proventos else "",
             "proventos_extenso": Tools.ValorPorExtenso(proc.proventos or Decimal('0.00')),
-            "ato_concessorio": re.sub(r'(^\w{1}|\.\s*\w{1})', lambda x: x.group().upper(),  proc.ato_concessorio.lower()),
+            "ato_concessorio": re.sub(r'(^\w{1}|\.\s*\w{1})', lambda x: x.group().upper(),  (proc.ato_concessorio or '').lower()),
             "data_ato_concessorio": Tools.FormatarData(proc.data_ato_concessorio),
             "publicacao": proc.publicacao or "",
             "data_publicacao": Tools.FormatarData(proc.data_publicacao),
@@ -51,6 +60,8 @@ class Tools:
             "folha_ato_fixacao": proc.folha_ato_fixacao or "",
             "tipo": proc.classe.descricao.title() if proc.classe else "Aposentadoria",
             "data_inicio_concessao": Tools.FormatarData(proc.data_inicio_concessao),
+            "dados_previdencia": proc.dados_previdencia or ""
         }
         return dados
         
+    
