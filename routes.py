@@ -223,7 +223,6 @@ def gerar_certidao(numero):
 
 @main_bp.route('/processo/<numero>/analise')
 def analise_inatividade(numero):
-    breakpoint()
     proc = Processo.query.filter_by(processo=numero).first_or_404()
 
     # 1. Preenche os dados básicos da sessão a partir do banco
