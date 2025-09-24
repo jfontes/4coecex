@@ -7,7 +7,7 @@ from models                 import Analise
 from documento_word         import PreencheDocumentoWord
 from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm, AnaliseForm
-from acreprevidencia_api    import DadosAcreprevidencia
+from acreprevidencia_api    import DadosAcreprevidencia, AcrePrevAPIError 
 from gemini                 import Gemini
 from google.genai            import types
 import io, tempfile, os, mammoth, json
@@ -193,8 +193,10 @@ def api_acreprev():
         session['dados'] = dados
 
         return jsonify({"ok": True, "data": data})
+    except AcrePrevAPIError as e:
+        return jsonify({"erro": False, "msg": "O serviço da Acreprevidência está indisponível. Tente novamente mais tarde."}), 503
     except Exception as e:
-        return jsonify({"ok": False, "msg": str(e)}), 400
+        return jsonify({"erro": False, "msg": str(e)}), 400
 
 @main_bp.route('/processo/<numero>/gerar-certidao')
 def gerar_certidao(numero):
@@ -232,11 +234,16 @@ def analise_inatividade(numero):
     dados_prev = proc.dados_previdencia
     if not dados_prev:
         # Se não estiverem, busca na API e salva no banco
-        print(f"Buscando dados da previdência para o CPF: {proc.cpf}")
-        dados_prev = DadosAcreprevidencia().getRegistroPorCPF(proc.cpf)
-        if dados_prev:
-            proc.dados_previdencia = dados_prev
-            db.session.commit()
+        try:
+            if not dados_prev
+                print(f"Buscando dados da previdência para o CPF: {proc.cpf}")
+                dados_prev = DadosAcreprevidencia().getRegistroPorCPF(proc.cpf)
+                if dados_prev:
+                    proc.dados_previdencia = dados_prev
+                    db.session.commit()
+        except AcrePrevAPIError:
+            flash("Não foi possível conectar ao serviço da Acreprevidência. Alguns dados podem não estar disponíveis.", "warning")
+            dados_prev = None # Garante que o código continue sem os dados da previdência
 
     # 3. Se houver dados da previdência (do banco ou da API), complementa a sessão
     if dados_prev:
