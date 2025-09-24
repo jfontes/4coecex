@@ -9,7 +9,7 @@ from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm, AnaliseForm
 from acreprevidencia_api    import DadosAcreprevidencia, AcrePrevAPIError 
 from gemini                 import Gemini
-from google.genai            import types
+from google.genai           import types
 import io, tempfile, os, mammoth, json
 
 main_bp = Blueprint('main', __name__)
@@ -235,7 +235,7 @@ def analise_inatividade(numero):
     if not dados_prev:
         # Se não estiverem, busca na API e salva no banco
         try:
-            if not dados_prev
+            if not dados_prev:
                 print(f"Buscando dados da previdência para o CPF: {proc.cpf}")
                 dados_prev = DadosAcreprevidencia().getRegistroPorCPF(proc.cpf)
                 if dados_prev:
