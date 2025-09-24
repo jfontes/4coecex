@@ -2,8 +2,8 @@
 {% block title %}Análises{% endblock %}
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
-  <h4 class="m-0">Análises</h4>
-  <a href="{{ url_for('main.nova_analise') }}" class="btn btn-primary">Nova análise</a>
+  <h4 class="m-0">Critérios de Análise</h4>
+  <a href="{{ url_for('criterio.nova') }}" class="btn btn-primary">Novo critério</a>
 </div>
 
 <form class="row g-2 mb-3" method="get">
@@ -33,8 +33,8 @@
           <td>{{ a.nome }}</td>
           <td><span class="badge bg-secondary">{{ a.tag }}</span></td>
           <td class="text-end">
-            <a class="btn btn-sm btn-outline-primary" href="{{ url_for('main.editar_analise', analise_id=a.id) }}">Editar</a>
-            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('main.excluir_analise_confirm', analise_id=a.id) }}">Excluir</a>
+            <a class="btn btn-sm btn-outline-primary" href="{{ url_for('criterio.editar', analise_id=a.id) }}">Editar</a>
+            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('criterio.excluir', analise_id=a.id) }}">Excluir</a>
           </td>
         </tr>
         {% else %}
