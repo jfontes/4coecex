@@ -1,4 +1,4 @@
-from flask                  import Blueprint, session, render_template, request, jsonify, redirect, url_for, flash, send_file, current_app
+from flask                  import Blueprint, session, render_template, request, jsonify, redirect, url_for, flash, send_file, current_app, abort
 from sqlalchemy.exc         import ProgrammingError, DataError
 from extensions             import db
 from tools                  import Tools
@@ -236,7 +236,7 @@ def analise_inatividade(numero):
         # Se não estiverem, busca na API e salva no banco
         try:
             if not dados_prev:
-                print(f"Buscando dados da previdência para o CPF: {proc.cpf}")
+                current_app.logger.info(f"Buscando dados da previdência para o CPF: {proc.cpf}")
                 dados_prev = DadosAcreprevidencia().getRegistroPorCPF(proc.cpf)
                 if dados_prev:
                     proc.dados_previdencia = dados_prev
@@ -271,7 +271,8 @@ def analise_inatividade(numero):
 
         return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc, analises=analises)
     except Exception as e:
-        return f"Erro interno: {e}", 500
+        current_app.logger.error(f"ERRO em analise_atividade: {e}")
+        abort(500)
 
 @main_bp.post('/processo/<numero>/analise/processar')
 def processar_analise_inatividade(numero):
@@ -292,7 +293,7 @@ def processar_analise_inatividade(numero):
         ai = Gemini().getAnaliseEstruturada(parts, analise.criterio)
         analiseInteligente = ai.get("Analise")
     except Exception as e:
-        print(e.message)
+        current_app.logger.error(f"Erro ao processar análise inteligente: {e}")
         return jsonify({"erro": False, "msg": "Erro ao gerar resposta inteligente."}), 500
     
     if len(ai) > 1: #SE HOUVER METADADOS
@@ -328,12 +329,14 @@ def adicionar_no_relatorio():
 
         return jsonify({"ok": True, "doc_html": html_doc})
     except Exception as e:
-        return jsonify({"ok": False, "msg": f"Erro interno: {e}"}), 500
+        #return jsonify({"ok": False, "msg": f"Erro interno: {e}"}), 500
+        current_app.logger.error(f"Erro ao adicionar no relatório: {e}")
+        abort(500)
     
 @main_bp.get('/processo/<numero>/baixar')
 def baixar(numero):
     tipo = request.args.get('tipo', 'word')
-    print(f"Tipo solicitado: {tipo}")
+    current_app.logger.debug(f"Solicitação de download para o processo {numero} no formato: {tipo}")
     try:
         dados = session.get('dados', {})
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
@@ -342,7 +345,7 @@ def baixar(numero):
         docx_bytes = doc.gerar_bytes()
 
         if tipo == 'pdf':
-            print("Gerando PDF...")
+            current_app.logger.info(f"Gerando PDF para o processo {numero}.")
             with tempfile.NamedTemporaryFile(delete=False, suffix=".docx") as tmp:
                 tmp.write(docx_bytes)
                 tmp_path = tmp.name
@@ -353,7 +356,7 @@ def baixar(numero):
             os.remove(tmp_path)
             os.remove(pdf_path)
 
-            print("PDF gerado e enviado.")
+            current_app.logger.info("PDF gerado e enviado.")
             return send_file(
                 io.BytesIO(pdf_bytes),
                 as_attachment=True,
@@ -361,7 +364,7 @@ def baixar(numero):
                 mimetype="application/pdf"
             )
         else:
-            print("Gerando Word...")
+            current_app.logger.info(f"Gerando Word para o processo {numero}.")
             return send_file(
                 io.BytesIO(docx_bytes),
                 as_attachment=True,
@@ -369,6 +372,6 @@ def baixar(numero):
                 mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             )
     except Exception as e:
-        print(f"Erro ao gerar o arquivo: {e}")
+        current_app.logger.error(f"Erro em routes.py. Ocorreu uma falha ao gerar arquivo para o processo {numero}: {e}")
         flash(f"Erro ao gerar o arquivo: {e}", "danger")
         return redirect(url_for('main.analise_inatividade', numero=numero))

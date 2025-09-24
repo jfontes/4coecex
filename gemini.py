@@ -4,6 +4,7 @@ from config import GEMINI_API_KEY
 import tempfile, os, time, json
 from typing import List, Optional
 from pydantic import BaseModel
+import logging
 
 class CargoFundamento(BaseModel):
     Cargo: str
@@ -30,7 +31,7 @@ class Gemini:
         ]
         tentativas = 5
         for t in range(tentativas):
-            print(f"------------------INICIANDO TENTATIVA {t+1}/{tentativas}------------------")
+            logging.info(f"------------------API Gemini: Iniciando tentativa {t+1}/{tentativas} com o modelo {self.model}.------------------")
             try:
                 resposta = self.client.models.generate_content(
                     model=self.model,
@@ -39,15 +40,17 @@ class Gemini:
                 )
                 return resposta.text
             except Exception as e:
-                print(e.message)
+                #Mudando o modelo para a próxima tentativa
+                self.model = "gemini-2.5-pro" if self.model == "gemini-2.5-flash" else "gemini-2.5-flash"
+                logging.info(f"API Gemini: Alterando para o modelo {self.model} para a próxima tentativa")
                 time.sleep(2 ** t)
-        print(e.message)
+        logging.error(f"API Gemini: Todas as {tentativas} tentativas falharam. Último erro: {e}")
         raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
         
     def getAnalise(self, parts: List[types.Part], pergunta: str) -> str:
         tentativas = 5
         for t in range(tentativas):
-            print(f"------------------INICIANDO TENTATIVA {t+1}/{tentativas}------------------")
+            logging.info(f"------------------API Gemini: Iniciando tentativa {t+1}/{tentativas} com o modelo {self.model}.------------------")
             try:
                 resposta = self.client.models.generate_content(
                     model=self.model,
@@ -56,9 +59,11 @@ class Gemini:
                 )
                 return resposta.text
             except Exception as e:
-                print(e.message)
+                #Mudando o modelo para a próxima tentativa
+                self.model = "gemini-2.5-pro" if self.model == "gemini-2.5-flash" else "gemini-2.5-flash"
+                logging.info(f"API Gemini: Alterando para o modelo {self.model} para a próxima tentativa")
                 time.sleep(2 ** t)
-        print(e.message)
+        logging.error(f"API Gemini: Todas as {tentativas} tentativas falharam. Último erro: {e}")
         raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
 
     def lerPDF(self, files) -> List[types.Part]:
@@ -87,7 +92,7 @@ class Gemini:
     def getAnaliseEstruturada(self, parts: List[types.Part], pergunta: str) -> any:
         tentativas = 5
         for t in range(tentativas):
-            print(f"------------------INICIANDO TENTATIVA {t+1}/{tentativas}------------------")
+            logging.info(f"------------------API Gemini: Iniciando tentativa {t+1}/{tentativas} com o modelo {self.model}.------------------")
             try:
                 resposta = self.client.models.generate_content(
                     model=self.model,
@@ -102,17 +107,11 @@ class Gemini:
 
                 return r
             except Exception as e:
-                print(e.message)
-                #self.model = "gemini-1.5-pro" if self.model == "gemini-1.5-flash" else "gemini-1.5-flash"
-                if self.model == "gemini-2.5-flash":
-                    self.model = "gemini-2.5-pro"
-                    print("------------ALTERANDO MODELO PARA O PRO-------------")
-                else:
-                    self.model = "gemini-2.5-flash"
-                    print("------------RETORNANDO AO MODELO FLASH-------------")
-
+                #Mudando o modelo para a próxima tentativa
+                self.model = "gemini-2.5-pro" if self.model == "gemini-2.5-flash" else "gemini-2.5-flash"
+                logging.info(f"API Gemini: Alterando para o modelo {self.model} para a próxima tentativa")
                 time.sleep(2 ** t)
-        print(e.message)
+        logging.error(f"API Gemini: Todas as {tentativas} tentativas falharam. Último erro: {e}")
         raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
 
     def extrairCargoFundamentoLegal(self, conteudo: str) -> dict:
@@ -122,7 +121,7 @@ class Gemini:
         ]
         tentativas = 5
         for t in range(tentativas):
-            print(f"------------------INICIANDO TENTATIVA {t+1}/{tentativas}------------------")
+            logging.info(f"------------------API Gemini: Iniciando tentativa {t+1}/{tentativas} com o modelo {self.model}.------------------")
             try:
                 resposta = self.client.models.generate_content(
                     model=self.model,
@@ -139,7 +138,9 @@ class Gemini:
                 cargo_fundamento.append(r.get("Fundamento_legal") or "")
                 return cargo_fundamento
             except Exception as e:
-                print(e.message)
+                #Mudando o modelo para a próxima tentativa
+                self.model = "gemini-2.5-pro" if self.model == "gemini-2.5-flash" else "gemini-2.5-flash"
+                logging.info(f"API Gemini: Alterando para o modelo {self.model} para a próxima tentativa")
                 time.sleep(2 ** t)
-        print(e.message)
+        #logging.error(f"API Gemini: Todas as {tentativas} tentativas falharam. Último erro: {e}")
         raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
