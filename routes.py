@@ -274,9 +274,13 @@ def processar_analise_inatividade(numero):
 
     dados = session.get('dados', {}) 
     analise_id = request.form.get('analise_id')
+    contexto = request.form.get('contexto', '').strip()
     try:
         analise = Analise.query.get(analise_id)
         parts = Gemini().lerPDF(files)
+        if contexto:
+            parts.insert(0, types.Part(text=f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"))
+        
         parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
         ai = Gemini().getAnaliseEstruturada(parts, analise.criterio)
         analiseInteligente = ai.get("Analise")
