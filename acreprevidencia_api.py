@@ -18,8 +18,8 @@ class DadosAcreprevidencia:
 
     def __init__(
         self,
-        timeout: float = 15.0,
-        max_retries: int = 3,
+        timeout: float = 5.0,
+        max_retries: int = 2,
         backoff_factor: float = 0.3,
     ) -> None:
         self.username = "tce_api_concessao"
