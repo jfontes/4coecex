@@ -170,6 +170,7 @@ def gerar_certidao(numero):
 @main_bp.route('/processo/<numero>/analise')
 def analise_inatividade(numero):
     proc = Processo.query.filter_by(processo=numero).first_or_404()
+    session['analises'] = [] #Variável de sessão para armazenar as análises do usuário
 
     # 1. Preenche os dados básicos da sessão a partir do banco
     session['dados'] = Tools.PreencherDados(proc)
@@ -252,8 +253,8 @@ def processar_analise_inatividade(numero):
     
     return jsonify({"ok": True, "texto": analiseInteligente})
     
-@main_bp.post('/processo/adicionar_no_relatorio')
-def adicionar_no_relatorio():
+@main_bp.post('/processo/<numero>/adicionar_no_relatorio')
+def adicionar_no_relatorio(numero):
     try:
         dados = session.get('dados', {})
         analiseInteligente = request.form.get('analiseInteligente', '')
@@ -271,12 +272,26 @@ def adicionar_no_relatorio():
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
         html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]  # string HTML
 
+        #Adiciona a análise à lista da sessão
+        session['analises'].append({"criterio": criterio.id, "nome": criterio.nome, "processo": numero, "analise": analiseInteligente})
+
         return jsonify({"ok": True, "doc_html": html_doc})
     except Exception as e:
         #return jsonify({"ok": False, "msg": f"Erro interno: {e}"}), 500
         current_app.logger.error(f"Erro ao adicionar no relatório: {e}")
         abort(500)
     
+@main_bp.get('/processo/<numero>/salvar')
+def salvarAnalises(numero):
+    current_app.logger.debug(f"Salvando análises no banco de dados.")
+    try:
+        print(session.get('analises'))
+    except Exception as e:
+        current_app.logger.error(f"Erro ao salvar análises: {e}")
+        flash(f"Erro ao salvar análises", "danger")
+    return redirect(url_for('main.analise_inatividade', numero=numero))
+
+
 @main_bp.get('/processo/<numero>/baixar')
 def baixar(numero):
     tipo = request.args.get('tipo', 'word')
