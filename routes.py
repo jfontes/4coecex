@@ -203,7 +203,7 @@ def analise_inatividade(numero):
         session['dados'] = dados_sessao
     
     try:
-        criterios = Criterio.query.all()
+        criterios = Criterio.query.filter_by(ativo=True).order_by(Criterio.nome.asc()).all()
         
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)

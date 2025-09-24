@@ -18,6 +18,7 @@ class Criterio(db.Model):
     prompt = db.Column(db.Text, nullable=False)
     tag = db.Column(db.String(50), nullable=False)
     sugestao_documento = db.Column(db.String(150), nullable=True)
+    ativo = db.Column(db.Boolean, nullable=False, default=True, server_default='1')
 
     def __repr__(self):
         return f"<Critério {self.id} - {self.nome}>"

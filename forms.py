@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField, DecimalField, DateField,
-    IntegerField, TextAreaField, SubmitField, SelectField
+    IntegerField, TextAreaField, SubmitField, BooleanField
 )
 from wtforms.validators import DataRequired, Regexp, Optional, NumberRange
 from models import OrgaoPrevidencia, Classe
@@ -55,4 +55,5 @@ class CriterioForm(FlaskForm):
     prompt = TextAreaField("Prompt de análise IA", validators=[DataRequired()])
     tag = StringField("Tag (marcador do arquivo no word)", validators=[DataRequired()])
     sugestao_documento = StringField("Sugestão de documento", validators=[DataRequired()])
+    ativo = BooleanField("Ativo", default=True)
     submit = SubmitField("Salvar")

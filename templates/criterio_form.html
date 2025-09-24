@@ -24,6 +24,11 @@
             {{ form.sugestao_documento(class="form-control") }}
           </div>
 
+          <div class="form-check mt-3">
+            {{ form.ativo(class="form-check-input") }}
+            {{ form.ativo.label(class="form-check-label") }}
+          </div>
+
           <div class="mb-3">
             {{ form.prompt.label(class="form-label") }}
             {{ form.prompt(class="form-control", rows=30) }}
