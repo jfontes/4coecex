@@ -50,9 +50,9 @@ class ProcessoForm(FlaskForm):
     dias_tempo_de_contribuicao = IntegerField('Dias de Contribuição', validators=[Optional(), NumberRange(min=0, max=364)])
     submit = SubmitField('Salvar Alterações')
 
-class AnaliseForm(FlaskForm):
+class CriterioForm(FlaskForm):
     nome = StringField("Nome", validators=[DataRequired()])
-    criterio = TextAreaField("Critério (prompt de análise IA)", validators=[DataRequired()])
+    prompt = TextAreaField("Prompt de análise IA", validators=[DataRequired()])
     tag = StringField("Tag (marcador do arquivo no word)", validators=[DataRequired()])
     sugestao_documento = StringField("Sugestão de documento", validators=[DataRequired()])
     submit = SubmitField("Salvar")

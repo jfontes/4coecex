@@ -2,11 +2,10 @@ from flask                  import Blueprint, session, render_template, request,
 from sqlalchemy.exc         import ProgrammingError, DataError
 from extensions             import db
 from tools                  import Tools
-from models                 import Processo
-from models                 import Analise
+from models                 import Processo, Criterio
 from documento_word         import PreencheDocumentoWord
 from ExportadorPDF          import ExportadorPDF
-from forms                  import BuscaForm, ProcessoForm, AnaliseForm
+from forms                  import BuscaForm, ProcessoForm
 from acreprevidencia_api    import DadosAcreprevidencia, AcrePrevAPIError 
 from gemini                 import Gemini
 from google.genai           import types
@@ -204,7 +203,7 @@ def analise_inatividade(numero):
         session['dados'] = dados_sessao
     
     try:
-        analises = Analise.query.all()
+        criterios = Criterio.query.all()
         
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
@@ -214,7 +213,7 @@ def analise_inatividade(numero):
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
         html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]
 
-        return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc, analises=analises)
+        return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc, criterios=criterios)
     except Exception as e:
         current_app.logger.error(f"ERRO em analise_atividade: {e}")
         abort(500)
@@ -226,16 +225,16 @@ def processar_analise_inatividade(numero):
         return jsonify({"ok": False, "msg": "Nenhum PDF enviado."}), 400
 
     dados = session.get('dados', {}) 
-    analise_id = request.form.get('analise_id')
+    criterio_id = request.form.get('criterio_id')
     contexto = request.form.get('contexto', '').strip()
     try:
-        analise = Analise.query.get(analise_id)
+        criterio = Criterio.query.get(criterio_id)
         parts = Gemini().lerPDF(files)
         if contexto:
             parts.insert(0, types.Part(text=f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"))
         
         parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
-        ai = Gemini().getAnaliseEstruturada(parts, analise.criterio)
+        ai = Gemini().getAnaliseEstruturada(parts, criterio.prompt)
         analiseInteligente = ai.get("Analise")
     except Exception as e:
         current_app.logger.error(f"Erro ao processar análise inteligente: {e}")
@@ -248,7 +247,7 @@ def processar_analise_inatividade(numero):
             dados["cargo"] = ai.get("Metadado2")
             dados["proventos"] = ai.get("Metadado3")
 
-    dados[analise.tag] = analiseInteligente
+    dados[criterio.tag] = analiseInteligente
     session['dados'] = dados    
     
     return jsonify({"ok": True, "texto": analiseInteligente})
@@ -258,10 +257,10 @@ def adicionar_no_relatorio():
     try:
         dados = session.get('dados', {})
         analiseInteligente = request.form.get('analiseInteligente', '')
-        analise_id = request.form.get('analise_id')
-        analise = Analise.query.get(analise_id)
+        criterio_id = request.form.get('criterio_id')
+        criterio = Criterio.query.get(criterio_id)
 
-        dados[analise.tag] = f"{analiseInteligente}"
+        dados[criterio.tag] = f"{analiseInteligente}"
         session['dados'] = dados
         
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')

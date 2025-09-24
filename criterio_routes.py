@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from extensions import db
-from models import Analise
-from forms import AnaliseForm
+from models import Criterio
+from forms import CriterioForm
 
 criterio_bp = Blueprint('criterio', __name__, url_prefix='/criterio')
 
@@ -9,23 +9,23 @@ criterio_bp = Blueprint('criterio', __name__, url_prefix='/criterio')
 @criterio_bp.route("/")
 def listar():
     q = request.args.get("q", "", type=str).strip()
-    query = Analise.query
+    query = Criterio.query
     if q:
         like = f"%{q}%"
         query = query.filter(
-            db.or_(Analise.nome.ilike(like), Analise.tag.ilike(like))
+            db.or_(Criterio.nome.ilike(like), Criterio.tag.ilike(like))
         )
-    analises = query.order_by(Analise.id.desc()).all()
+    criterios = query.order_by(Criterio.id.desc()).all()
     # O template continua o mesmo
-    return render_template("criterio_list.html", analises=analises, q=q)
+    return render_template("criterio_list.html", criterios=criterios, q=q)
 
 @criterio_bp.route("/nova", methods=["GET", "POST"])
 def nova():
-    form = AnaliseForm()
+    form = CriterioForm()
     if form.validate_on_submit():
-        obj = Analise(
+        obj = Criterio(
             nome=form.nome.data.strip(),
-            criterio=form.criterio.data.strip(),
+            prompt=form.prompt.data.strip(),
             tag=form.tag.data.strip(),
             sugestao_documento=form.sugestao_documento.data.strip() if form.sugestao_documento.data else "Nenhuma sugestão.",
         )
@@ -36,10 +36,10 @@ def nova():
         return redirect(url_for(".listar"))
     return render_template("criterio_form.html", form=form, titulo="Novo critério")
 
-@criterio_bp.route("/<int:analise_id>/editar", methods=["GET", "POST"])
-def editar(analise_id):
-    obj = Analise.query.get_or_404(analise_id)
-    form = AnaliseForm(obj=obj)
+@criterio_bp.route("/<int:criterio_id>/editar", methods=["GET", "POST"])
+def editar(criterio_id):
+    obj = Criterio.query.get_or_404(criterio_id)
+    form = CriterioForm(obj=obj)
     if form.validate_on_submit():
         form.populate_obj(obj)
         db.session.commit()
@@ -47,9 +47,9 @@ def editar(analise_id):
         return redirect(url_for(".listar"))
     return render_template("criterio_form.html", form=form, titulo=f"Editar critério #{obj.id}")
 
-@criterio_bp.route("/<int:analise_id>/excluir", methods=["GET", "POST"])
-def excluir(analise_id):
-    obj = Analise.query.get_or_404(analise_id)
+@criterio_bp.route("/<int:criterio_id>/excluir", methods=["GET", "POST"])
+def excluir(criterio_id):
+    obj = Criterio.query.get_or_404(criterio_id)
     if request.method == "POST":
         db.session.delete(obj)
         db.session.commit()

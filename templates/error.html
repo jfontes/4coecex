@@ -3,14 +3,15 @@
 {% block title %}Erro {{ error_code }}{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-1">
     <div class="row">
         <div class="col-md-8 offset-md-2 text-center">
-            <h1 class="display-1">{{ error_code }}</h1>
-            <h2 class="mb-4">{{ error_message }}</h2>
-            <p class="lead">{{ error_details }}</p>
+            <i class="bi bi-x-circle-fill text-danger" style="font-size: 4rem;"></i>
+            <h3>{{ error_message }}</h3>
+            <h6>{{ error_details|default('Não foi possível processar sua solicitação. Tente novamente mais tarde.') }}</h6>
             <a href="{{ url_for('main.index') }}" class="btn btn-primary mt-3">Voltar para a Página Inicial</a>
         </div>
     </div>
 </div>
+
 {% endblock %}

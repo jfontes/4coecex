@@ -5,7 +5,7 @@
 
 <script>
 (function(){
-  const select = document.getElementById('selectAnalise');
+  const select = document.getElementById('selectCriterio');
   const bloco = document.getElementById('blocoAnalise');
   const files = document.getElementById('inputPDFs');
   const btn   = document.getElementById('btnAnalisar');
@@ -34,7 +34,7 @@
       for (const f of files.files) {
         fd.append('pdfs[]', f, f.name);
       }
-      fd.append('analise_id', select.value);
+      fd.append('criterio_id', select.value);
       fd.append('contexto', contexto.value);
 
       const url = "{{ url_for('main.processar_analise_inatividade', numero=proc) }}";
@@ -64,7 +64,7 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
     const url = "{{ url_for('main.adicionar_no_relatorio') }}";
     const texto = document.getElementById('txtResultado').value;
     const fd = new FormData();
-    fd.append('analise_id', document.getElementById('selectAnalise').value);
+    fd.append('criterio_id', document.getElementById('selectCriterio').value);
     fd.append('analiseInteligente', texto);
 
     const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin' });
@@ -81,7 +81,7 @@ document.getElementById('btnAdicionar').addEventListener('click', async function
 </script>
 
 <script>
-  document.getElementById('selectAnalise').addEventListener('change', function() {
+  document.getElementById('selectCriterio').addEventListener('change', function() {
     const selected = this.options[this.selectedIndex];
     document.getElementById('sugestaoDocumento').textContent = 
       "Sugestão de documento: " + (selected.dataset.sugestao || "");
@@ -115,16 +115,16 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="card shadow-sm h-100">
     <div class="card-body">
       <div class="mb-3">
-        <label class="form-label fw-semibold" for="selectAnalise">
+        <label class="form-label fw-semibold" for="selectCriterio">
           Selecione um critério de análise:
         </label>
-        <select id="selectAnalise" class="form-select">
-          {% for analise in analises %}
-            <option value="{{ analise.id }}" data-sugestao="{{ analise.sugestao_documento }}">{{ analise.nome }}</option>
+        <select id="selectCriterio" class="form-select">
+          {% for criterio in criterios %}
+            <option value="{{ criterio.id }}" data-sugestao="{{ criterio.sugestao_documento }}">{{ criterio.nome }}</option>
           {% endfor %}
         </select>
         <div id="sugestaoDocumento" class="form-text mt-1">
-          Sugestão de documento: {{ analises[0].sugestao_documento if analises else '' }}
+          Sugestão de documento: {{ criterios[0].sugestao_documento if criterios else '' }}
         </div>
       </div>
 

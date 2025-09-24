@@ -11,16 +11,16 @@ class OrgaoPrevidencia(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
 
-class Analise(db.Model):
-    __tablename__ = 'analise'
+class Criterio(db.Model):
+    __tablename__ = 'criterio'
     id = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     nome = db.Column(db.String(150), nullable=False)
-    criterio = db.Column(db.Text, nullable=False)
+    prompt = db.Column(db.Text, nullable=False)
     tag = db.Column(db.String(50), nullable=False)
     sugestao_documento = db.Column(db.String(150), nullable=True)
 
     def __repr__(self):
-        return f"<Analise {self.id} - {self.nome}>"
+        return f"<Critério {self.id} - {self.nome}>"
 
 class Processo(db.Model):
     __tablename__ = 'processo'
