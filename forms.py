@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField, DecimalField, DateField,
-    IntegerField, TextAreaField, SubmitField, BooleanField
+    IntegerField, TextAreaField, SubmitField, BooleanField, SelectField
 )
-from wtforms.validators import DataRequired, Regexp, Optional, NumberRange
+from wtforms.validators import DataRequired, Regexp, Optional, NumberRange, Length
 from models import OrgaoPrevidencia, Classe
 from wtforms_sqlalchemy.fields import QuerySelectField
+from flask_wtf.file import FileField, FileAllowed
 
 class BuscaForm(FlaskForm):
     numero = StringField(
@@ -15,10 +16,26 @@ class BuscaForm(FlaskForm):
     submit = SubmitField('Buscar')
 
 class ClasseForm(FlaskForm):
-    nome = StringField('Nome da Classe', validators=[DataRequired()])
-    modelo_de_relatorio = StringField(
-        'Arquivo do Modelo de Relatório', validators=[Optional()],
-        description="Ex: modelo_aposentadoria_voluntaria.docx"
+    """Formulário para criar e editar Classes."""
+    nome = StringField('Nome da Classe', validators=[DataRequired(), Length(max=100)])
+    
+    # NOVO CAMPO: Dropdown para selecionar um modelo já existente
+    modelo_existente = SelectField(
+        'Selecione um modelo existente',
+        choices=[], # As opções serão populadas dinamicamente na rota
+        coerce=str,
+        validators=[Optional()],
+        description="Escolha um modelo da lista para associar a esta classe."
+    )
+
+    # CAMPO DE UPLOAD: Permanece para enviar novos arquivos
+    novo_modelo = FileField(
+        'Ou envie um novo modelo (.docx)',
+        validators=[
+            Optional(), 
+            FileAllowed(['docx'], 'Apenas arquivos .docx são permitidos!')
+        ],
+        description="Se um novo arquivo for enviado, ele terá prioridade sobre o modelo selecionado."
     )
 
 class ProcessoForm(FlaskForm):

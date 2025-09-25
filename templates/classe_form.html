@@ -6,7 +6,7 @@
 <div class="container mt-4">
     <h5>{{ titulo }}</h5>
 
-    <form method="POST" novalidate>
+    <form method="POST" novalidate enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         <div class="mb-3">
@@ -17,11 +17,29 @@
             {% endfor %}
         </div>
 
+        <hr>
+
         <div class="mb-3">
-            {{ form.modelo_de_relatorio.label(class="form-label") }}
-            {{ form.modelo_de_relatorio(class="form-control", placeholder="ex: modelo_voluntaria.docx") }}
-             <div class="form-text">{{ form.modelo_de_relatorio.description }}</div>
-            {% for error in form.modelo_de_relatorio.errors %}
+            <label class="form-label">Modelo de Relatório Atual</label>
+            <input type="text" class="form-control" value="{{ classe.modelo_de_relatorio or 'Nenhum modelo associado' }}" readonly disabled>
+        </div>
+
+        <div class="mb-3">
+            {{ form.modelo_existente.label(class="form-label") }}
+            {{ form.modelo_existente(class="form-select") }}
+            <div class="form-text">{{ form.modelo_existente.description }}</div>
+            {% for error in form.modelo_existente.errors %}
+                <span class="text-danger small">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <p class="text-center text-muted my-3">OU</p>
+
+        <div class="mb-4">
+            {{ form.novo_modelo.label(class="form-label") }}
+            {{ form.novo_modelo(class="form-control") }}
+            <div class="form-text">{{ form.novo_modelo.description }}</div>
+            {% for error in form.novo_modelo.errors %}
                 <span class="text-danger small">{{ error }}</span>
             {% endfor %}
         </div>
