@@ -5,6 +5,7 @@ from extensions import db
 from routes     import main_bp
 from waitress   import serve
 from criterio_routes import criterio_bp
+from classe_routes import classe_bp
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +17,7 @@ def create_app():
     # registra rotas (ou blueprints)
     app.register_blueprint(main_bp)
     app.register_blueprint(criterio_bp)
+    app.register_blueprint(classe_bp)
 
     return app
 

@@ -14,6 +14,13 @@ class BuscaForm(FlaskForm):
     )
     submit = SubmitField('Buscar')
 
+class ClasseForm(FlaskForm):
+    nome = StringField('Nome da Classe', validators=[DataRequired()])
+    modelo_de_relatorio = StringField(
+        'Arquivo do Modelo de Relatório', validators=[Optional()],
+        description="Ex: modelo_aposentadoria_voluntaria.docx"
+    )
+
 class ProcessoForm(FlaskForm):
     processo = StringField(
         'Número do Processo',

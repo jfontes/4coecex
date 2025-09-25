@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Exclusão{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Confirmar Exclusão</h1>
+    <p>Você tem certeza que deseja excluir a classe <strong>"{{ classe.nome }}"</strong>?</p>
+    <p class="text-danger">Esta ação não poderá ser desfeita.</p>
+
+    <form method="POST">
+        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+        <a href="{{ url_for('classe.listar') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

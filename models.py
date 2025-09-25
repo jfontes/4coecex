@@ -5,6 +5,7 @@ class Classe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(150), nullable=False)
     descricao = db.Column(db.String(50), nullable=False)
+    modelo_de_relatorio = db.Column(db.String(50), nullable=False)
 
 class OrgaoPrevidencia(db.Model):
     __tablename__ = 'orgao_previdencia'
