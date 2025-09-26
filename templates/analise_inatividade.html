@@ -106,6 +106,51 @@
 </script>
 
 <script>
+// Script para o botão Salvar via AJAX
+document.addEventListener('DOMContentLoaded', function() {
+  const btnSalvar = document.getElementById('btnSalvar');
+  const salvarStatus = document.getElementById('salvarStatus');
+
+  if (btnSalvar) {
+    btnSalvar.addEventListener('click', async function() {
+      // Pega a URL da rota a partir do atributo 'data-url'
+      const url = btnSalvar.dataset.url;
+      
+      // Mostra um feedback visual para o usuário
+      salvarStatus.textContent = 'Salvando...';
+      salvarStatus.className = 'text-muted small ms-2';
+      btnSalvar.disabled = true;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        // Atualiza o status com a mensagem do servidor
+        salvarStatus.textContent = data.msg;
+        if (response.ok && data.ok) {
+          salvarStatus.className = 'text-success small ms-2';
+        } else {
+          salvarStatus.className = 'text-danger small ms-2';
+        }
+
+      } catch (error) {
+        salvarStatus.textContent = 'Erro de conexão ao tentar salvar.';
+        salvarStatus.className = 'text-danger small ms-2';
+      } finally {
+        // Reativa o botão após um tempo para o usuário ler a mensagem
+        setTimeout(() => {
+          btnSalvar.disabled = false;
+          // Opcional: limpa a mensagem de status
+          // salvarStatus.textContent = ''; 
+        }, 3000); // A mensagem some após 3 segundos
+      }
+    });
+  }
+});
+</script>
+
+
+<script>
 document.getElementById('btnAdicionar').addEventListener('click', async function(){
   try {
     const url = "{{ url_for('main.adicionar_no_relatorio', numero=proc) }}";
@@ -224,9 +269,11 @@ document.addEventListener('DOMContentLoaded', function() {
         <a id="btnBaixarPdf" href="{{ url_for('main.baixar', numero=proc, tipo='pdf') }}" class="btn btn-outline-secondary btn-sm ms-2" download>
           PDF
         </a>
-        <!--<a id="btnSalvar" href="{{ url_for('main.salvarAnalises', numero=proc) }}" class="btn btn-outline-secondary btn-sm ms-2">
+        <button id="btnSalvar" type="button" class="btn btn-outline-success btn-sm ms-2" data-url="{{ url_for('main.salvarAnalises', numero=proc) }}">
           Salvar
-        </a></h6>-->
+        </button>
+        <span id="salvarStatus"></span>
+      </h6>
         <div id="editor" class="docx-page mx-auto" style="font-weight: normal;">
           {{ doc_html|safe }}
         </div>

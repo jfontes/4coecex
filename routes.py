@@ -172,7 +172,14 @@ def analise_inatividade(numero):
     proc = Processo.query.filter_by(processo=numero).first_or_404()
 
     # 1. Preenche os dados básicos da sessão a partir do banco
+    session['analises'] = []
+    
     session['dados'] = Tools.PreencherDados(proc)
+    
+    if proc.analises:
+        session['dados'].update(proc.analises)
+        analises_salvas = [{'tag': tag, 'texto': texto} for tag, texto in proc.analises.items()]
+        session['analises'] = analises_salvas
     
     # 2. Verifica se os dados da previdência já estão no banco
     dados_prev = proc.dados_previdencia
@@ -205,7 +212,6 @@ def analise_inatividade(numero):
     try:
         grupos = Grupo.query.order_by(Grupo.nome.asc()).all()
         criterios = []
-        #criterios = Criterio.query.filter_by(ativo=True).order_by(Criterio.nome.asc()).all()
         
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', proc.classe.modelo_de_relatorio or 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
@@ -287,6 +293,22 @@ def adicionar_no_relatorio(numero):
         dados[criterio.tag] = f"{analiseInteligente}"
         session['dados'] = dados
         
+        # 3. ACUMULA a análise na lista temporária 'analises'
+        analises_temp = session.get('analises', [])
+        encontrado = False
+        for analise in analises_temp:
+            if analise['tag'] == criterio.tag:
+                analise['texto'] = analiseInteligente # Atualiza o texto
+                encontrado = True
+                break
+        
+        if not encontrado:
+            analises_temp.append({
+                'tag': criterio.tag,
+                'texto': analiseInteligente
+            })
+        session['analises'] = analises_temp
+
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', proc.classe.modelo_de_relatorio or 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
         doc.substituir_campos(dados)
@@ -302,20 +324,33 @@ def adicionar_no_relatorio(numero):
         abort(500)
     
 @main_bp.get('/processo/<numero>/salvar')
-#
-#
-#   TERMINAR LÓGICA DA FUNÇÃO
-#
-#
 def salvarAnalises(numero):
     current_app.logger.debug(f"Salvando análises no banco de dados.")
     try:
-        print(session.get('analises'))
-    except Exception as e:
-        current_app.logger.error(f"Erro ao salvar análises: {e}")
-        flash(f"Erro ao salvar análises", "danger")
-    return redirect(url_for('main.analise_inatividade', numero=numero))
+        proc = Processo.query.filter_by(processo=numero).first_or_404()
+        
+        # Pega a lista de análises da sessão
+        analises = session.get('analises', [])
 
+        if not analises:
+            return jsonify({"warning": False, "msg": "Nenhuma nova análise para salvar."}), 400
+
+        # Converte a lista de dicionários em um único dicionário para salvar
+        dados_formatados = {item['tag']: item['texto'] for item in analises}
+
+        proc.analises = dados_formatados
+
+        # Salva o dicionário no campo JSON do banco
+        #a = proc.analises or {}
+        #a.update(dados_formatados)
+        #proc.analises = a
+        db.session.commit()
+        
+        return jsonify({"ok": True, "msg": "Análises salvas com sucesso!"}), 200
+    except Exception as e:
+        db.session.rollback()
+        current_app.logger.error(f"Erro ao salvar análises para o processo {numero}: {e}")
+        return jsonify({"error": True, "msg": "Erro ao salvar as análises!"}), 200
 
 @main_bp.get('/processo/<numero>/baixar')
 def baixar(numero):
