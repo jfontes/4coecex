@@ -170,7 +170,6 @@ def gerar_certidao(numero):
 @main_bp.route('/processo/<numero>/analise')
 def analise_inatividade(numero):
     proc = Processo.query.filter_by(processo=numero).first_or_404()
-    session['analises'] = [] #Variável de sessão para armazenar as análises do usuário
 
     # 1. Preenche os dados básicos da sessão a partir do banco
     session['dados'] = Tools.PreencherDados(proc)
@@ -295,9 +294,6 @@ def adicionar_no_relatorio(numero):
         
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
         html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]  # string HTML
-
-        #Adiciona a análise à lista da sessão
-        #session['analises'].append({"criterio": criterio.id, "nome": criterio.nome, "processo": numero, "analise": analiseInteligente})
 
         return jsonify({"ok": True, "doc_html": html_doc})
     except Exception as e:
