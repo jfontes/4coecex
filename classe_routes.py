@@ -55,7 +55,7 @@ def nova():
         flash('Classe criada com sucesso!', 'success')
         return redirect(url_for('classe.listar'))
     
-    return render_template('classe_form.html', form=form, titulo='Nova Classe')
+    return render_template('classe_form.html', form=form, titulo='Nova Classe', classe=None)
 
 @classe_bp.route('/<int:classe_id>/editar', methods=['GET', 'POST'])
 def editar(classe_id):
