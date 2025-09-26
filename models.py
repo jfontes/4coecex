@@ -12,6 +12,25 @@ class OrgaoPrevidencia(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
 
+criterio_grupo = db.Table('criterio_grupo',
+    db.Column('criterio_id', db.Integer, db.ForeignKey('criterio.id'), primary_key=True),
+    db.Column('grupo_id', db.Integer, db.ForeignKey('grupo.id'), primary_key=True)
+)
+
+class Grupo(db.Model):
+    __tablename__ = 'grupo'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(100), nullable=False, unique=True)
+    descricao = db.Column(db.Text, nullable=True)
+    # O relacionamento 'back_populates' cria uma via de mão dupla entre os modelos
+    criterios = db.relationship(
+        'Criterio', 
+        secondary=criterio_grupo, 
+        back_populates='grupos'
+    )
+    def __repr__(self):
+        return f'<Grupo {self.nome}>'
+    
 class Criterio(db.Model):
     __tablename__ = 'criterio'
     id = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
@@ -20,7 +39,11 @@ class Criterio(db.Model):
     tag = db.Column(db.String(50), nullable=False)
     sugestao_documento = db.Column(db.String(150), nullable=True)
     ativo = db.Column(db.Boolean, nullable=False, default=True, server_default='1')
-
+    grupos = db.relationship(
+        'Grupo', 
+        secondary=criterio_grupo, 
+        back_populates='criterios'
+    )
     def __repr__(self):
         return f"<Critério {self.id} - {self.nome}>"
 

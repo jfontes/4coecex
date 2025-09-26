@@ -5,7 +5,9 @@
 
 <script>
 (function(){
+  const selectGrupo = document.getElementById('selectGrupo');
   const select = document.getElementById('selectCriterio');
+  const sugestaoDoc = document.getElementById('sugestaoDocumento');
   const bloco = document.getElementById('blocoAnalise');
   const files = document.getElementById('inputPDFs');
   const btn   = document.getElementById('btnAnalisar');
@@ -13,6 +15,51 @@
   const out   = document.getElementById('txtResultado');
   const stat  = document.getElementById('analiseStatus');
   const contexto = document.getElementById('inputContexto');
+
+// Função para atualizar o dropdown de critérios
+  async function atualizarCriterios() {
+    const grupoId = selectGrupo.value;
+    
+    // Limpa o select de critérios
+    selectCriterio.innerHTML = '<option value="">Selecione um critério...</option>';
+    sugestaoDoc.textContent = 'Sugestão de documento: ';
+
+    if (!grupoId) {
+      return; // Se nenhum grupo for selecionado, não faz nada
+    }
+
+    try {
+      // Faz a chamada à API que criamos
+      const url = `/api/grupo/${grupoId}/criterios`;
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Falha ao carregar critérios.');
+      }
+      const criterios = await response.json();
+
+      // Popula o select com os novos critérios
+      criterios.forEach(criterio => {
+        const option = document.createElement('option');
+        option.value = criterio.id;
+        option.textContent = criterio.nome;
+        option.dataset.sugestao = criterio.sugestao_documento || '';
+        selectCriterio.appendChild(option);
+      });
+
+    } catch (error) {
+      console.error(error);
+      // Aqui você poderia mostrar uma mensagem de erro para o usuário
+    }
+  }
+
+  // Adiciona o 'listener' para o evento de mudança no select de Grupo
+  selectGrupo.addEventListener('change', atualizarCriterios);
+
+  // Adiciona um listener para o select de Critérios para atualizar a sugestão
+  selectCriterio.addEventListener('change', function() {
+    const selectedOption = this.options[this.selectedIndex];
+    sugestaoDoc.textContent = "Sugestão de documento: " + (selectedOption.dataset.sugestao || "");
+  });
 
   function setStatus(msg, isError=false, showGif=false) {
     stat.textContent = msg || '';
@@ -112,21 +159,32 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="row g-4 mt-4">
   <!-- Lado esquerdo: área de análise (você detalha depois) -->
   <div class="col-lg-4">
-  <div class="card shadow-sm h-100">
-    <div class="card-body">
-      <div class="mb-3">
-        <label class="form-label fw-semibold" for="selectCriterio">
-          Selecione um critério de análise:
-        </label>
-        <select id="selectCriterio" class="form-select">
-          {% for criterio in criterios %}
-            <option value="{{ criterio.id }}" data-sugestao="{{ criterio.sugestao_documento }}">{{ criterio.nome }}</option>
-          {% endfor %}
-        </select>
-        <div id="sugestaoDocumento" class="form-text mt-1">
-          Sugestão de documento: {{ criterios[0].sugestao_documento if criterios else '' }}
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        
+        <div class="mb-3">
+          <label class="form-label fw-semibold" for="selectGrupo">
+            Grupo de Análise:
+          </label>
+          <select id="selectGrupo" class="form-select">
+            <option value="">Selecione um grupo...</option>
+            {% for grupo in grupos %}
+              <option value="{{ grupo.id }}">{{ grupo.nome }}</option>
+            {% endfor %}
+          </select>
         </div>
-      </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold" for="selectCriterio">
+            Critério:
+          </label>
+          <select id="selectCriterio" class="form-select">
+            <option value="">Selecione um grupo primeiro</option>
+          </select>
+          <div id="sugestaoDocumento" class="form-text mt-1">
+            Sugestão de documento:
+          </div>
+        </div>
 
       <div id="blocoAnalise" aria-disabled="false">
         <div class="mb-3">
@@ -166,10 +224,10 @@ document.addEventListener('DOMContentLoaded', function() {
         <a id="btnBaixarPdf" href="{{ url_for('main.baixar', numero=proc, tipo='pdf') }}" class="btn btn-outline-secondary btn-sm ms-2" download>
           PDF
         </a>
-        <a id="btnSalvar" href="{{ url_for('main.salvarAnalises', numero=proc) }}" class="btn btn-outline-secondary btn-sm ms-2">
+        <!--<a id="btnSalvar" href="{{ url_for('main.salvarAnalises', numero=proc) }}" class="btn btn-outline-secondary btn-sm ms-2">
           Salvar
-        </a></h6>
-        <div id="editor" class="docx-page mx-auto">
+        </a></h6>-->
+        <div id="editor" class="docx-page mx-auto" style="font-weight: normal;">
           {{ doc_html|safe }}
         </div>
       </div>

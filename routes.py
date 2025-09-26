@@ -2,7 +2,7 @@ from flask                  import Blueprint, session, render_template, request,
 from sqlalchemy.exc         import ProgrammingError, DataError
 from extensions             import db
 from tools                  import Tools
-from models                 import Processo, Criterio
+from models                 import Processo, Criterio, Grupo
 from documento_word         import PreencheDocumentoWord
 from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm
@@ -204,9 +204,11 @@ def analise_inatividade(numero):
         session['dados'] = dados_sessao
     
     try:
-        criterios = Criterio.query.filter_by(ativo=True).order_by(Criterio.nome.asc()).all()
+        grupos = Grupo.query.order_by(Grupo.nome.asc()).all()
+        criterios = []
+        #criterios = Criterio.query.filter_by(ativo=True).order_by(Criterio.nome.asc()).all()
         
-        caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
+        caminho_modelo = os.path.join(current_app.root_path, 'modelos', proc.classe.modelo_de_relatorio or 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
         doc.substituir_campos(session.get('dados', {}))
         docx_bytes = doc.gerar_bytes()
@@ -214,10 +216,30 @@ def analise_inatividade(numero):
         result = mammoth.convert_to_html(io.BytesIO(docx_bytes))
         html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]
 
-        return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc, criterios=criterios)
+        return render_template('analise_inatividade.html', proc=numero, doc_html=html_doc, grupos=grupos, criterios=criterios)
     except Exception as e:
         current_app.logger.error(f"ERRO em analise_atividade: {e}")
         abort(500)
+
+@main_bp.route('/api/grupo/<int:grupo_id>/criterios')
+def api_criterios_por_grupo(grupo_id):
+    """Retorna uma lista de critérios (apenas os ativos) para um grupo específico."""
+    grupo = Grupo.query.get_or_404(grupo_id)
+    
+    # Filtra os critérios para pegar apenas os que estão ativos
+    criterios_ativos = [c for c in grupo.criterios if c.ativo]
+    
+    # Monta a lista de resultados em um formato que o JavaScript entende
+    resultado = [
+        {
+            "id": criterio.id,
+            "nome": criterio.nome,
+            "sugestao_documento": criterio.sugestao_documento
+        } 
+        for criterio in criterios_ativos
+    ]
+    
+    return jsonify(resultado)
 
 @main_bp.post('/processo/<numero>/analise/processar')
 def processar_analise_inatividade(numero):
@@ -256,6 +278,8 @@ def processar_analise_inatividade(numero):
 @main_bp.post('/processo/<numero>/adicionar_no_relatorio')
 def adicionar_no_relatorio(numero):
     try:
+        proc = Processo.query.filter_by(processo=numero).first_or_404()
+
         dados = session.get('dados', {})
         analiseInteligente = request.form.get('analiseInteligente', '')
         criterio_id = request.form.get('criterio_id')
@@ -264,7 +288,7 @@ def adicionar_no_relatorio(numero):
         dados[criterio.tag] = f"{analiseInteligente}"
         session['dados'] = dados
         
-        caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
+        caminho_modelo = os.path.join(current_app.root_path, 'modelos', proc.classe.modelo_de_relatorio or 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
         doc.substituir_campos(dados)
         docx_bytes = doc.gerar_bytes()
@@ -273,7 +297,7 @@ def adicionar_no_relatorio(numero):
         html_doc = result.value[result.value.find("1. INTRODUÇÃO")-8:]  # string HTML
 
         #Adiciona a análise à lista da sessão
-        session['analises'].append({"criterio": criterio.id, "nome": criterio.nome, "processo": numero, "analise": analiseInteligente})
+        #session['analises'].append({"criterio": criterio.id, "nome": criterio.nome, "processo": numero, "analise": analiseInteligente})
 
         return jsonify({"ok": True, "doc_html": html_doc})
     except Exception as e:
@@ -282,6 +306,11 @@ def adicionar_no_relatorio(numero):
         abort(500)
     
 @main_bp.get('/processo/<numero>/salvar')
+#
+#
+#   TERMINAR LÓGICA DA FUNÇÃO
+#
+#
 def salvarAnalises(numero):
     current_app.logger.debug(f"Salvando análises no banco de dados.")
     try:
@@ -297,8 +326,10 @@ def baixar(numero):
     tipo = request.args.get('tipo', 'word')
     current_app.logger.debug(f"Solicitação de download para o processo {numero} no formato: {tipo}")
     try:
+        proc = Processo.query.filter_by(processo=numero).first_or_404()
+
         dados = session.get('dados', {})
-        caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_relatorio.docx')
+        caminho_modelo = os.path.join(current_app.root_path, 'modelos', proc.classe.modelo_de_relatorio or 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
         doc.substituir_campos(dados)
         docx_bytes = doc.gerar_bytes()
