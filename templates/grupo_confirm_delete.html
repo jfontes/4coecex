@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Confirmar Exclusão{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h1>Confirmar Exclusão</h1>
+    <p>Você tem certeza que deseja excluir o grupo <strong>"{{ grupo.nome }}"</strong>?</p>
+    <p class="text-danger">A exclusão do grupo não removerá os critérios, apenas a associação entre eles.</p>
+    <form method="POST">
+        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+        <a href="{{ url_for('grupo.listar') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

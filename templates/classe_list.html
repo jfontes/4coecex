@@ -38,10 +38,10 @@
                         <td>{{ classe.nome }}</td>
                         <td>{{ classe.modelo_de_relatorio or 'N/D' }}</td>
                         <td>
-                            <a href="{{ url_for('classe.editar', classe_id=classe.id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
+                            <a href="{{ url_for('classe.editar', classe_id=classe.id) }}" class="btn btn-sm btn-outline-primary" title="Editar">Editar
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <a href="{{ url_for('classe.excluir', classe_id=classe.id) }}" class="btn btn-sm btn-outline-danger" title="Excluir">
+                            <a href="{{ url_for('classe.excluir', classe_id=classe.id) }}" class="btn btn-sm btn-outline-danger" title="Excluir">Excluir
                                 <i class="bi bi-trash"></i>
                             </a>
                         </td>

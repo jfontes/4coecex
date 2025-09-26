@@ -1,12 +1,13 @@
 from flask_wtf import FlaskForm
 from wtforms import (
-    StringField, DecimalField, DateField,
-    IntegerField, TextAreaField, SubmitField, BooleanField, SelectField
+    StringField, DecimalField, DateField, SelectMultipleField,
+    IntegerField, TextAreaField, SubmitField, BooleanField, SelectField 
 )
 from wtforms.validators import DataRequired, Regexp, Optional, NumberRange, Length
 from models import OrgaoPrevidencia, Classe
 from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_wtf.file import FileField, FileAllowed
+from models import Criterio
 
 class BuscaForm(FlaskForm):
     numero = StringField(
@@ -14,6 +15,26 @@ class BuscaForm(FlaskForm):
         validators=[DataRequired(), Regexp(r'^\d{6}$', message='Formato inválido. Use 123456')]
     )
     submit = SubmitField('Buscar')
+
+class GrupoForm(FlaskForm):
+    """Formulário para criar e editar Grupos."""
+    nome = StringField('Nome do Grupo', validators=[DataRequired(), Length(max=100)])
+    descricao = TextAreaField('Descrição', validators=[Optional()])
+
+    # Campo de múltipla seleção para associar critérios
+    criterios = SelectMultipleField(
+        'Critérios associados',
+        coerce=int, # Garante que os valores do formulário sejam convertidos para inteiros (IDs)
+        validators=[DataRequired(message="Selecione ao menos um critério.")]
+    )
+
+    def __init__(self, *args, **kwargs):
+        """Popula as opções do campo 'criterios' dinamicamente."""
+        super(GrupoForm, self).__init__(*args, **kwargs)
+        # Busca todos os critérios ativos e os ordena por nome
+        self.criterios.choices = [
+            (c.id, c.nome) for c in Criterio.query.filter_by(ativo=True).order_by(Criterio.nome).all()
+        ]
 
 class ClasseForm(FlaskForm):
     """Formulário para criar e editar Classes."""

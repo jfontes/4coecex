@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h5>{{ titulo }}</h5>
+    <form method="POST" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.nome.label(class="form-label") }}
+            {{ form.nome(class="form-control") }}
+            {% for error in form.nome.errors %}<span class="text-danger small">{{ error }}</span>{% endfor %}
+        </div>
+        <div class="mb-3">
+            {{ form.criterios.label(class="form-label") }}
+            {{ form.criterios(class="form-select", size=10, multiple=True) }}
+            <div class="form-text">Segure a tecla CTRL (ou Command no Mac) para selecionar múltiplos critérios.</div>
+            {% for error in form.criterios.errors %}<span class="text-danger small">{{ error }}</span>{% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="{{ url_for('grupo.listar') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

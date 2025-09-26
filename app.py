@@ -1,11 +1,13 @@
 import os
-from flask      import Flask, render_template
-from config     import *
-from extensions import db
-from routes     import main_bp
-from waitress   import serve
-from criterio_routes import criterio_bp
-from classe_routes import classe_bp
+from flask              import Flask, render_template
+from config             import *
+from extensions         import db
+from routes             import main_bp
+from waitress           import serve
+from criterio_routes    import criterio_bp
+from classe_routes      import classe_bp
+from groupo_routes      import grupo_bp
+
 
 def create_app():
     app = Flask(__name__)
@@ -18,6 +20,7 @@ def create_app():
     app.register_blueprint(main_bp)
     app.register_blueprint(criterio_bp)
     app.register_blueprint(classe_bp)
+    app.register_blueprint(grupo_bp)
 
     return app
 

@@ -33,8 +33,8 @@
           <td>{{ c.nome }}</td>
           <td><span class="badge bg-secondary">{{ c.tag }}</span></td>
           <td class="text-end">
-            <a class="btn btn-sm btn-outline-primary" href="{{ url_for('criterio.editar', criterio_id=c.id) }}">Editar</a>
-            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('criterio.excluir', criterio_id=c.id) }}">Excluir</a>
+            <a class="btn btn-sm btn-outline-primary" href="{{ url_for('criterio.editar', criterio_id=c.id) }}">Editar<i class="bi bi-pencil-square"></i></a>
+            <a class="btn btn-sm btn-outline-danger" href="{{ url_for('criterio.excluir', criterio_id=c.id) }}">Excluir<i class="bi bi-trash"></i></a>
           </td>
         </tr>
         {% else %}
