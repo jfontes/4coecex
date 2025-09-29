@@ -73,6 +73,7 @@ class ProcessoForm(FlaskForm):
     )
     servidor = StringField('Servidor', filters=[lambda x: x.upper() if x else x], validators=[Optional()])
     matricula = StringField('Matrícula', filters=[lambda x: x.upper() if x else x], validators=[Optional()])
+    rg = StringField('RG', filters=[lambda x: x.upper() if x else x], validators=[Optional()])
     cpf = StringField('CPF', validators=[Optional()])
     cargo = StringField('Cargo', filters=[lambda x: x.upper() if x else x], validators=[Optional()])
     orgao = StringField('Órgão', filters=[lambda x: x.upper() if x else x], validators=[Optional()])

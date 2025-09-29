@@ -38,6 +38,7 @@ class Tools:
         dados = {
             "servidor": proc.servidor or '', "cpf": Tools.FormatarCPF(proc.cpf),
             "cargo": proc.cargo or '',
+            "rg": proc.rg or '',
             "matricula": proc.matricula or '',
             "orgao": proc.orgao or '',
             "orgao_previdencia": proc.orgao_previdencia.nome if proc.orgao_previdencia else '',
