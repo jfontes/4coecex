@@ -23,6 +23,7 @@
           <th style="width:80px;">ID</th>
           <th>Nome</th>
           <th>Tag</th>
+          <th>Ativo?</th>
           <th style="width:160px;"></th>
         </tr>
       </thead>
@@ -32,6 +33,7 @@
           <td>{{ c.id }}</td>
           <td>{{ c.nome }}</td>
           <td><span class="badge bg-secondary">{{ c.tag }}</span></td>
+          <td>{% if c.ativo %}Sim{% else %}Não{% endif %}</td>
           <td class="text-end">
             <a class="btn btn-sm btn-outline-primary" href="{{ url_for('criterio.editar', criterio_id=c.id) }}">Editar<i class="bi bi-pencil-square"></i></a>
             <a class="btn btn-sm btn-outline-danger" href="{{ url_for('criterio.excluir', criterio_id=c.id) }}">Excluir<i class="bi bi-trash"></i></a>

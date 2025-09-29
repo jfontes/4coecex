@@ -106,49 +106,84 @@
 </script>
 
 <script>
-// Script para o botão Salvar via AJAX
+// --- SCRIPT PARA O BOTÃO COPIAR ---
 document.addEventListener('DOMContentLoaded', function() {
-  const btnSalvar = document.getElementById('btnSalvar');
-  const salvarStatus = document.getElementById('salvarStatus');
+  const btnCopiar = document.getElementById('btnCopiarHtml');
+  const editorHtml = document.getElementById('editor');
 
-  if (btnSalvar) {
-    btnSalvar.addEventListener('click', async function() {
-      // Pega a URL da rota a partir do atributo 'data-url'
-      const url = btnSalvar.dataset.url;
-      
-      // Mostra um feedback visual para o usuário
-      salvarStatus.textContent = 'Salvando...';
-      salvarStatus.className = 'text-muted small ms-2';
-      btnSalvar.disabled = true;
-
-      try {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        // Atualiza o status com a mensagem do servidor
-        salvarStatus.textContent = data.msg;
-        if (response.ok && data.ok) {
-          salvarStatus.className = 'text-success small ms-2';
-        } else {
-          salvarStatus.className = 'text-danger small ms-2';
-        }
-
-      } catch (error) {
-        salvarStatus.textContent = 'Erro de conexão ao tentar salvar.';
-        salvarStatus.className = 'text-danger small ms-2';
-      } finally {
-        // Reativa o botão após um tempo para o usuário ler a mensagem
+  if (btnCopiar) {
+    btnCopiar.addEventListener('click', function() {
+      // Usa a API moderna do navegador para copiar o conteúdo HTML do editor
+      navigator.clipboard.writeText(editorHtml.innerHTML).then(function() {
+        // Feedback para o usuário que a cópia foi bem-sucedida
+        const originalText = btnCopiar.innerHTML;
+        btnCopiar.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
+        
+        // Volta ao texto original após 2 segundos
         setTimeout(() => {
-          btnSalvar.disabled = false;
-          // Opcional: limpa a mensagem de status
-          // salvarStatus.textContent = ''; 
-        }, 3000); // A mensagem some após 3 segundos
-      }
+          btnCopiar.innerHTML = originalText;
+        }, 2000);
+
+      }, function(err) {
+        // Feedback em caso de erro
+        console.error('Erro ao tentar copiar o conteúdo: ', err);
+        alert('Falha ao copiar para a área de transferência.');
+      });
     });
   }
 });
 </script>
 
+<script>
+// --- SCRIPT ROBUSTO PARA O BOTÃO COPIAR ---
+document.addEventListener('DOMContentLoaded', function() {
+  const btnCopiar = document.getElementById('btnCopiarHtml');
+  const editorHtml = document.getElementById('editor');
+
+  if (btnCopiar && editorHtml) {
+    btnCopiar.addEventListener('click', function() {
+      const originalText = btnCopiar.innerHTML;
+
+      function showFeedback(success) {
+        if (success) {
+          btnCopiar.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
+        } else {
+          alert('Falha ao copiar para a área de transferência. Tente manualmente (Ctrl+C).');
+        }
+        setTimeout(() => {
+          btnCopiar.innerHTML = originalText;
+        }, 2500);
+      }
+
+      // Tenta usar a API moderna (requer HTTPS ou localhost)
+      if (navigator.clipboard && window.isSecureContext) {
+        // Copia como HTML formatado
+        const type = "text/html";
+        const blob = new Blob([editorHtml.innerHTML], { type });
+        const data = [new ClipboardItem({ [type]: blob })];
+
+        navigator.clipboard.write(data).then(
+          () => showFeedback(true),
+          () => showFeedback(false)
+        );
+      } else {
+        // Fallback: Usa o método antigo (funciona em HTTP)
+        const range = document.createRange();
+        range.selectNode(editorHtml);
+        window.getSelection().removeAllRanges(); // Limpa seleções anteriores
+        window.getSelection().addRange(range);
+        try {
+          const successful = document.execCommand('copy');
+          showFeedback(successful);
+        } catch (err) {
+          showFeedback(false);
+        }
+        window.getSelection().removeAllRanges(); // Desfaz a seleção
+      }
+    });
+  }
+});
+</script>
 
 <script>
 document.getElementById('btnAdicionar').addEventListener('click', async function(){
@@ -263,6 +298,11 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="card shadow-sm h-100">
       <div class="card-body">
         <h6 class="mb-3">Documento (visualização somente leitura)
+
+        <button type="button" id="btnCopiarHtml" class="btn btn-outline-secondary btn-sm ms-2">
+          <i class="bi bi-clipboard"></i> Copiar
+        </button>
+
         <a id="btnBaixarDocx" href="{{ url_for('main.baixar', numero=proc, tipo='word') }}" class="btn btn-outline-secondary btn-sm ms-2" download>
           Word
         </a>
@@ -270,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
           PDF
         </a>
         <button id="btnSalvar" type="button" class="btn btn-outline-success btn-sm ms-2" data-url="{{ url_for('main.salvarAnalises', numero=proc) }}">
-          Salvar
+            Salvar
         </button>
         <span id="salvarStatus"></span>
       </h6>
