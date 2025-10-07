@@ -25,7 +25,8 @@ def init_db_command():
         {'name': 'acessar_cadastro_grupos', 'description': 'Acesso ao cadastro de Grupos'},
         
         # Administração
-        {'name': 'gerenciar_permissoes', 'description': 'Acesso à tela de gestão de permissões (apenas Admin)'}
+        {'name': 'gerenciar_permissoes', 'description': 'Acesso à tela de gestão de permissões (apenas Admin)'},
+        {'name': 'gerenciar_utilizadores', 'description': 'Acesso à tela de gestão de utilizadores (apenas Admin)'}
     ]
     
     for p_data in permissions_list:

@@ -1,6 +1,14 @@
-from extensions import db
+import enum
+from extensions import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+
+# Enum para o cargo do utilizador
+class CargoEnum(enum.Enum):
+    AUDITOR = "Auditor de Controle Externo"
+    TECNICO = "Técnico de Controle Externo"
+    ESTAGIARIO = "Estagiário"
+    CHEFE = "Auditor-chefe"
 
 class Classe(db.Model):
     __tablename__ = 'classe'
@@ -100,12 +108,15 @@ roles_permissions = db.Table('roles_permissions',
     db.Column('permission_id', db.Integer, db.ForeignKey('permission.id'), primary_key=True)
 )
 
-class User(db.Model, UserMixin):
+class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password_hash = db.Column(db.String(200), nullable=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), nullable=False)
+    username = db.Column(db.String(64), unique=True, nullable=False)
+    password_hash = db.Column(db.String(256), nullable=False)
+    nome = db.Column(db.String(150), nullable=False)
+    cargo = db.Column(db.Enum(CargoEnum), nullable=False)
+    
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
     role = db.relationship('Role', back_populates='users')
 
     def set_password(self, password):
@@ -114,20 +125,43 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def can(self, permission_name):
+        """Verifica se o utilizador tem uma determinada permissão."""
+        if self.role:
+            return self.role.has_permission(permission_name)
+        return False
+
+    def is_admin(self):
+        """Verifica se o utilizador é um Administrador."""
+        return self.role and self.role.name == 'Administrador'
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+
 class Role(db.Model):
     __tablename__ = 'role'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     users = db.relationship('User', back_populates='role')
-    permissions = db.relationship('Permission', secondary=roles_permissions, backref=db.backref('roles', lazy='dynamic'))
+    permissions = db.relationship('Permission', secondary=roles_permissions, backref=db.backref('roles'))
 
     def has_permission(self, permission_name):
-        return any(p.name == permission_name for p in self.permissions)
+        """Verifica se o perfil tem uma permissão específica."""
+        return any(permission.name == permission_name for permission in self.permissions)
 
+    def __repr__(self):
+        return f'<Role {self.name}>'
+    
 class Permission(db.Model):
     __tablename__ = 'permission'
     id = db.Column(db.Integer, primary_key=True)
-    # Nome da permissão, ex: 'acessar_cadastro_criterios'
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    # Descrição amigável para a tela do admin, ex: 'Acessar o menu de Cadastro de Critérios'
+    name = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(255))
+
+    def __repr__(self):
+        return f'<Permission {self.name}>'
+    
+# Função de loader para o Flask-Login
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))    

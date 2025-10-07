@@ -1,19 +1,49 @@
-from flask_wtf import FlaskForm
-from wtforms import (
-    StringField, DecimalField, DateField, SelectMultipleField,
-    IntegerField, TextAreaField, SubmitField, BooleanField, SelectField, PasswordField
-)
-from wtforms.validators import DataRequired, Regexp, Optional, NumberRange, Length
-from models import OrgaoPrevidencia, Classe
+from flask_wtf                 import FlaskForm
+from wtforms                   import (StringField, DecimalField, DateField, SelectMultipleField,
+                                       IntegerField, TextAreaField, SubmitField, BooleanField, SelectField, PasswordField)
+from wtforms.validators        import DataRequired, Regexp, Optional, NumberRange, Length, EqualTo, ValidationError
+from models                    import OrgaoPrevidencia, Classe, User, Criterio, Role, CargoEnum
 from wtforms_sqlalchemy.fields import QuerySelectField
-from flask_wtf.file import FileField, FileAllowed
-from models import Criterio
+from flask_wtf.file            import FileField, FileAllowed
+from models                    import Criterio
+
 
 class LoginForm(FlaskForm):
-    """Formulário de login."""
     username = StringField('Usuário', validators=[DataRequired()])
     password = PasswordField('Senha', validators=[DataRequired()])
     remember_me = BooleanField('Lembrar-me')
+    submit = SubmitField('Entrar')
+
+class UserForm(FlaskForm):
+    nome = StringField('Nome Completo', validators=[DataRequired(), Length(max=150)])
+    username = StringField('Nome de Utilizador (para login)', validators=[DataRequired(), Length(max=64)])
+    cargo = SelectField('Cargo', coerce=str, validators=[DataRequired(message="O cargo é obrigatório.")])
+    role = SelectField('Perfil de Acesso', coerce=int, validators=[DataRequired()])
+    # Na criação, a senha é obrigatória. Na edição, se torna opcional.
+    password = PasswordField('Senha', validators=[DataRequired(), Length(min=6, message='A senha deve ter pelo menos 6 caracteres.')])
+    password2 = PasswordField('Confirmar Senha', validators=[DataRequired(), EqualTo('password', message='As senhas devem ser iguais.')])
+
+    def __init__(self, original_username=None, *args, **kwargs):
+        """Popula as opções dos campos de seleção dinamicamente."""
+        super(UserForm, self).__init__(*args, **kwargs)
+        self.original_username = original_username
+        
+        # Popula os campos de seleção
+        self.role.choices = [(r.id, r.name) for r in Role.query.order_by('name').all()]
+        self.cargo.choices = [(cargo.name, cargo.value) for cargo in CargoEnum]
+
+        # Se for um formulário de edição (identificado pela presença de original_username),
+        # torna os campos de senha opcionais.
+        if self.original_username:
+            self.password.validators = [Optional(), Length(min=6, message='A senha deve ter pelo menos 6 caracteres.')]
+            self.password2.validators = [Optional(), EqualTo('password', message='As senhas devem ser iguais se a senha for alterada.')]
+
+    def validate_username(self, username):
+        """Verifica se o nome de utilizador já existe (exceto para o próprio utilizador a ser editado)."""
+        if username.data != self.original_username:
+            user = User.query.filter_by(username=self.username.data).first()
+            if user is not None:
+                raise ValidationError('Este nome de utilizador já está em uso. Por favor, escolha outro.')
 
 class BuscaForm(FlaskForm):
     numero = StringField(
@@ -43,7 +73,6 @@ class GrupoForm(FlaskForm):
         ]
 
 class ClasseForm(FlaskForm):
-    """Formulário para criar e editar Classes."""
     nome = StringField('Nome da Classe', validators=[DataRequired(), Length(max=100)])
     
     # NOVO CAMPO: Dropdown para selecionar um modelo já existente

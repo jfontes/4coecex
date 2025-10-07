@@ -63,7 +63,11 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUserDropdown">
                       {% if current_user.role.name == 'Administrador' %}
-                        <li><a class="dropdown-item" href="{{ url_for('admin.manage_permissions') }}">Gerenciar Permissões</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('admin.permission_management') }}">Gerenciar Permissões</a></li>
+                        <!-- Link para Gestão de Utilizadores -->
+                        {% if current_user.can('gerenciar_utilizadores') %}
+                          <li><a class="dropdown-item" href="{{ url_for('admin.list_users') }}">Usuários</a></li>
+                        {% endif %}
                         <li><hr class="dropdown-divider"></li>
                       {% endif %}
                       <li><a class="dropdown-item" href="{{ url_for('admin.logout') }}">Sair</a></li>
@@ -75,8 +79,6 @@
       </nav>
     {% endif %}
   </div>
-
-
 
   <main class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
