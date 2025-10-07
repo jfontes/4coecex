@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Confirmar Exclusão de Usuário{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-danger shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Confirmar Exclusão</h5>
+                </div>
+                <div class="card-body">
+                    <p>Você tem certeza que deseja excluir permanentemente o usuário <strong>{{ user_to_delete.nome }}</strong> ({{ user_to_delete.username }})?</p>
+                    <p class="text-danger"><strong>Atenção:</strong> Esta ação não pode ser desfeita.</p>
+                    <form method="POST">
+                        <a href="{{ url_for('admin.list_users') }}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-danger">Sim, Excluir Usuário</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

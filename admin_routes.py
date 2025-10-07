@@ -5,7 +5,6 @@ from models import User, Role, Permission, CargoEnum
 from auth import AuthenticationManager
 from forms import LoginForm, UserForm
 from decorators import permission_required
-import json
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -33,34 +32,34 @@ def logout():
     return redirect(url_for('admin.login'))
 
 # --- ROTAS DE GESTÃO DE PERMISSÕES ---
-@admin_bp.route('/permissions')
+@admin_bp.route('/permissions', methods=['GET', 'POST'])
 @login_required
 @permission_required('gerenciar_permissoes')
 def permission_management():
+    if request.method == 'POST':
+        # Itera sobre todos os perfis para atualizar suas permissões
+        roles = Role.query.all()
+        permissions = Permission.query.all()
+
+        for role in roles:
+            # Obtém a lista de IDs de permissão enviados para este perfil
+            permissions_ids_for_role = request.form.getlist(f'role_{role.id}')
+            
+            # Limpa as permissões atuais e adiciona as novas
+            role.permissions.clear()
+            if permissions_ids_for_role:
+                # Busca os objetos Permission correspondentes aos IDs
+                selected_permissions = Permission.query.filter(Permission.id.in_(permissions_ids_for_role)).all()
+                role.permissions.extend(selected_permissions)
+        
+        db.session.commit()
+        flash('Permissões atualizadas com sucesso!', 'success')
+        return redirect(url_for('admin.permission_management'))
+
+    # Para o método GET, apenas exibe a página
     roles = Role.query.order_by(Role.id).all()
     permissions = Permission.query.order_by(Permission.name).all()
     return render_template('admin/permission_management.html', roles=roles, permissions=permissions)
-
-@admin_bp.route('/permissions/save', methods=['POST'])
-@login_required
-@permission_required('gerenciar_permissoes')
-def save_permissions():
-    data = request.get_json()
-    role_id = data.get('role_id')
-    permission_id = data.get('permission_id')
-    checked = data.get('checked')
-    role = Role.query.get(role_id)
-    permission = Permission.query.get(permission_id)
-    if role and permission:
-        if checked:
-            if permission not in role.permissions:
-                role.permissions.append(permission)
-        else:
-            if permission in role.permissions:
-                role.permissions.remove(permission)
-        db.session.commit()
-        return jsonify({'success': True})
-    return jsonify({'success': False}), 400
 
 # --- ROTAS DE GESTÃO DE UTILIZADORES (CRUD) ---
 @admin_bp.route('/users')
