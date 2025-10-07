@@ -10,10 +10,13 @@ from acreprevidencia_api    import DadosAcreprevidencia, AcrePrevAPIError
 from gemini                 import Gemini
 from google.genai           import types
 import io, tempfile, os, mammoth, json
+from flask_login            import login_required
+from decorators             import permission_required
 
 main_bp = Blueprint('main', __name__)
 
 @main_bp.route('/', methods=['GET','POST'])
+@login_required
 def index():
     form = BuscaForm()
     if form.validate_on_submit():
@@ -21,6 +24,8 @@ def index():
     return render_template('search.html', form=form)
 
 @main_bp.route('/processo/novo', methods=['GET', 'POST'])
+@login_required
+@permission_required('criar_processos')
 def novo_processo():
     form = ProcessoForm()
 
@@ -68,6 +73,8 @@ def novo_processo():
     return render_template('edit.html', form=form, proc=None)
 
 @main_bp.route('/processo/<numero>', methods=['GET','POST'])
+@login_required
+@permission_required('acessar_processos')
 def editar(numero):
     proc = Processo.query.filter_by(processo=numero).first()
     if not proc:
@@ -91,6 +98,7 @@ def editar(numero):
     return render_template('edit.html', form=form, proc=proc)
 
 @main_bp.get("/api/acreprev")
+@login_required
 def api_acreprev():
     cpf = request.args.get("cpf", "").strip()
     if not cpf:
@@ -143,6 +151,8 @@ def api_acreprev():
         return jsonify({"erro": False, "msg": str(e)}), 400
 
 @main_bp.route('/processo/<numero>/gerar-certidao')
+@login_required
+@permission_required('analisar_processos')
 def gerar_certidao(numero):
     caminho_modelo = os.path.join(current_app.root_path, 'modelos', 'modelo_base.docx')    
     doc = PreencheDocumentoWord(caminho_modelo)
@@ -168,6 +178,8 @@ def gerar_certidao(numero):
     )
 
 @main_bp.route('/processo/<numero>/analise')
+@login_required
+@permission_required('analisar_processos')
 def analise_inatividade(numero):
     proc = Processo.query.filter_by(processo=numero).first_or_404()
 
@@ -227,6 +239,7 @@ def analise_inatividade(numero):
         abort(500)
 
 @main_bp.route('/api/grupo/<int:grupo_id>/criterios')
+@login_required
 def api_criterios_por_grupo(grupo_id):
     """Retorna uma lista de critérios (apenas os ativos) para um grupo específico."""
     grupo = Grupo.query.get_or_404(grupo_id)
@@ -247,6 +260,8 @@ def api_criterios_por_grupo(grupo_id):
     return jsonify(resultado)
 
 @main_bp.post('/processo/<numero>/analise/processar')
+@login_required
+@permission_required('analisar_processos')
 def processar_analise_inatividade(numero):
     files = request.files.getlist('pdfs[]')
     if not files:
@@ -281,6 +296,8 @@ def processar_analise_inatividade(numero):
     return jsonify({"ok": True, "texto": analiseInteligente})
     
 @main_bp.post('/processo/<numero>/adicionar_no_relatorio')
+@login_required
+@permission_required('analisar_processos')
 def adicionar_no_relatorio(numero):
     try:
         proc = Processo.query.filter_by(processo=numero).first_or_404()
@@ -324,6 +341,8 @@ def adicionar_no_relatorio(numero):
         abort(500)
     
 @main_bp.get('/processo/<numero>/salvar')
+@login_required
+@permission_required('analisar_processos')
 def salvarAnalises(numero):
     current_app.logger.debug(f"Salvando análises no banco de dados.")
     try:
@@ -353,6 +372,8 @@ def salvarAnalises(numero):
         return jsonify({"error": True, "msg": "Erro ao salvar as análises!"}), 200
 
 @main_bp.get('/processo/<numero>/baixar')
+@login_required
+@permission_required('analisar_processos')
 def baixar(numero):
     tipo = request.args.get('tipo', 'word')
     current_app.logger.debug(f"Solicitação de download para o processo {numero} no formato: {tipo}")

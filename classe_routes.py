@@ -5,10 +5,13 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from extensions import db
 from models import Classe
 from forms import ClasseForm
+from flask_login import login_required
+from decorators import permission_required
 
 # Crie um novo Blueprint para o CRUD de Classe
 classe_bp = Blueprint('classe', __name__, url_prefix='/classes')
-
+@login_required
+@permission_required('acessar_cadastro_classes')
 def obter_lista_modelos():
     """Lê a pasta /modelos e retorna uma lista de arquivos .docx."""
     caminho_modelos = os.path.join(current_app.root_path, 'modelos')
@@ -22,12 +25,16 @@ def obter_lista_modelos():
         return [('', 'Pasta de modelos não encontrada')]
 
 @classe_bp.route('/')
+@login_required
+@permission_required('acessar_cadastro_classes')
 def listar():
     # ... (código existente)
     classes = Classe.query.order_by(Classe.nome).all()
     return render_template('classe_list.html', classes=classes)
 
 @classe_bp.route('/nova', methods=['GET', 'POST'])
+@login_required
+@permission_required('acessar_cadastro_classes')
 def nova():
     form = ClasseForm()
     # Popula o dropdown com os arquivos da pasta /modelos
@@ -58,6 +65,8 @@ def nova():
     return render_template('classe_form.html', form=form, titulo='Nova Classe', classe=None)
 
 @classe_bp.route('/<int:classe_id>/editar', methods=['GET', 'POST'])
+@login_required
+@permission_required('acessar_cadastro_classes')
 def editar(classe_id):
     classe = Classe.query.get_or_404(classe_id)
     form = ClasseForm(obj=classe)
@@ -90,6 +99,8 @@ def editar(classe_id):
     return render_template('classe_form.html', form=form, titulo=f'Editar Classe: {classe.nome}', classe=classe)
 
 @classe_bp.route('/<int:classe_id>/excluir', methods=['GET', 'POST'])
+@login_required
+@permission_required('acessar_cadastro_classes')
 def excluir(classe_id):
     """Exclui uma classe."""
     classe = Classe.query.get_or_404(classe_id)

@@ -1,12 +1,15 @@
 import os
 from flask              import Flask, render_template
 from config             import *
-from extensions         import db
+from extensions         import db, login_manager
+from models             import User
 from routes             import main_bp
-from waitress           import serve
+from admin_routes       import admin_bp
 from criterio_routes    import criterio_bp
 from classe_routes      import classe_bp
 from groupo_routes      import grupo_bp
+from commands           import register_commands
+from waitress           import serve
 
 
 def create_app():
@@ -15,14 +18,24 @@ def create_app():
 
     # inicializa o SQLAlchemy
     db.init_app(app)
+    login_manager.init_app(app)
 
     # registra rotas (ou blueprints)
     app.register_blueprint(main_bp)
     app.register_blueprint(criterio_bp)
     app.register_blueprint(classe_bp)
     app.register_blueprint(grupo_bp)
+    app.register_blueprint(admin_bp)
+
+    # Registra comandos CLI (ex: flask init-db)
+    register_commands(app)
 
     return app
+
+# Função para carregar o utilizador a partir da sessão em cada requisição
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 app = create_app()
 

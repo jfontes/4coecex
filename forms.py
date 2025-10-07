@@ -1,13 +1,19 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField, DecimalField, DateField, SelectMultipleField,
-    IntegerField, TextAreaField, SubmitField, BooleanField, SelectField 
+    IntegerField, TextAreaField, SubmitField, BooleanField, SelectField, PasswordField
 )
 from wtforms.validators import DataRequired, Regexp, Optional, NumberRange, Length
 from models import OrgaoPrevidencia, Classe
 from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_wtf.file import FileField, FileAllowed
 from models import Criterio
+
+class LoginForm(FlaskForm):
+    """Formulário de login."""
+    username = StringField('Utilizador', validators=[DataRequired()])
+    password = PasswordField('Senha', validators=[DataRequired()])
+    remember_me = BooleanField('Lembrar-me')
 
 class BuscaForm(FlaskForm):
     numero = StringField(

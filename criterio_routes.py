@@ -2,11 +2,15 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from extensions import db
 from models import Criterio
 from forms import CriterioForm
+from flask_login import login_required
+from decorators import permission_required
 
 criterio_bp = Blueprint('criterio', __name__, url_prefix='/criterio')
 
 # 2. Mova todas as rotas de 'Criterios' para cá, trocando @main_bp por @analysis_bp
 @criterio_bp.route("/")
+@login_required
+@permission_required('acessar_cadastro_criterios')
 def listar():
     q = request.args.get("q", "", type=str).strip()
     query = Criterio.query
@@ -20,6 +24,8 @@ def listar():
     return render_template("criterio_list.html", criterios=criterios, q=q)
 
 @criterio_bp.route("/nova", methods=["GET", "POST"])
+@login_required
+@permission_required('acessar_cadastro_criterios')
 def nova():
     form = CriterioForm()
     if form.validate_on_submit():
@@ -37,6 +43,8 @@ def nova():
     return render_template("criterio_form.html", form=form, titulo="Novo critério")
 
 @criterio_bp.route("/<int:criterio_id>/editar", methods=["GET", "POST"])
+@login_required
+@permission_required('acessar_cadastro_criterios')
 def editar(criterio_id):
     obj = Criterio.query.get_or_404(criterio_id)
     form = CriterioForm(obj=obj)
@@ -48,6 +56,8 @@ def editar(criterio_id):
     return render_template("criterio_form.html", form=form, titulo=f"Editar critério #{obj.id}")
 
 @criterio_bp.route("/<int:criterio_id>/excluir", methods=["GET", "POST"])
+@login_required
+@permission_required('acessar_cadastro_criterios')
 def excluir(criterio_id):
     obj = Criterio.query.get_or_404(criterio_id)
     if request.method == "POST":
