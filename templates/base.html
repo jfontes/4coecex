@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="sticky-top shadow-sm">
+    
     <nav class="navbar navbar-dark bg-primary">
       <div class="container-fluid px-3">
         <a class="navbar-brand" href="https://tceac.tc.br">
@@ -15,52 +16,48 @@
         </a>
       </div>
     </nav>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-      <div class="container-fluid px-3">
-        <div class="collapse navbar-collapse" id="mainNav">
-          
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <!-- Mostra menus principais apenas se o utilizador estiver logado -->
-            {% if current_user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link text-dark" href="{{ url_for('main.index') }}">
-                  <i class="bi bi-house-door-fill text-dark"></i> Início
-                </a>
-              </li>
-              
-              {% if current_user.role.has_permission('criar_processos') %}
-              <li class="nav-item">
-                <a class="nav-link text-dark" href="{{ url_for('main.novo_processo') }}">Novo processo</a>
-              </li>
-              {% endif %}
+    {% if current_user.is_authenticated %}
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid px-3">
+          <div class="collapse navbar-collapse" id="mainNav">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <!-- Mostra menus principais apenas se o utilizador estiver logado -->
+                <li class="nav-item">
+                  <a class="nav-link text-dark" href="{{ url_for('main.index') }}">
+                    <i class="bi bi-house-door-fill text-dark"></i> Início
+                  </a>
+                </li>
+                
+                {% if current_user.role.has_permission('criar_processos') %}
+                <li class="nav-item">
+                  <a class="nav-link text-dark" href="{{ url_for('main.novo_processo') }}">Novo processo</a>
+                </li>
+                {% endif %}
 
-              <!-- Dropdown de Cadastros (visível se tiver permissão para pelo menos um item) -->
-              {% if current_user.role.has_permission('acessar_cadastro_criterios') or current_user.role.has_permission('acessar_cadastro_classes') or current_user.role.has_permission('acessar_cadastro_grupos') %}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownCadastros" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Cadastros
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownCadastros">
-                  {% if current_user.role.has_permission('acessar_cadastro_criterios') %}
-                    <li><a class="dropdown-item" href="{{ url_for('analysis.listar') }}">Critérios</a></li>
-                  {% endif %}
-                  {% if current_user.role.has_permission('acessar_cadastro_classes') %}
-                    <li><a class="dropdown-item" href="{{ url_for('classe.listar') }}">Classes</a></li>
-                  {% endif %}
-                  {% if current_user.role.has_permission('acessar_cadastro_grupos') %}
-                    <li><a class="dropdown-item" href="{{ url_for('grupo.listar') }}">Grupos de Critérios</a></li>
-                  {% endif %}
-                </ul>
-              </li>
-              {% endif %}
-            {% endif %}
-          </ul>
-          
-          
-
+                <!-- Dropdown de Cadastros (visível se tiver permissão para pelo menos um item) -->
+                {% if current_user.role.has_permission('acessar_cadastro_criterios') or current_user.role.has_permission('acessar_cadastro_classes') or current_user.role.has_permission('acessar_cadastro_grupos') %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownCadastros" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Cadastros
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownCadastros">
+                    {% if current_user.role.has_permission('acessar_cadastro_criterios') %}
+                      <li><a class="dropdown-item" href="{{ url_for('criterio.listar') }}">Critérios</a></li>
+                    {% endif %}
+                    {% if current_user.role.has_permission('acessar_cadastro_classes') %}
+                      <li><a class="dropdown-item" href="{{ url_for('classe.listar') }}">Classes</a></li>
+                    {% endif %}
+                    {% if current_user.role.has_permission('acessar_cadastro_grupos') %}
+                      <li><a class="dropdown-item" href="{{ url_for('grupo.listar') }}">Grupos de Critérios</a></li>
+                    {% endif %}
+                  </ul>
+                </li>
+                {% endif %}
+              </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    {% endif %}
   </div>
 
   <header class="bg-light py-3 mb-4">

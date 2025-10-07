@@ -15,17 +15,17 @@ def init_db_command():
     # O 'name' é usado no decorador @permission_required, a 'description' é para a tela de admin.
     permissions_list = [
         # Processos
-        {'name': 'acessar_processos', 'description': 'Aceder à edição de processos'},
+        {'name': 'acessar_processos', 'description': 'Acesso à edição de processos'},
         {'name': 'criar_processos', 'description': 'Criar novos processos'},
-        {'name': 'analisar_processos', 'description': 'Aceder à tela de análise de inatividade'},
+        {'name': 'analisar_processos', 'description': 'Acesso à tela de análise de inatividade'},
         
         # Cadastros
-        {'name': 'acessar_cadastro_criterios', 'description': 'Aceder ao cadastro de Critérios'},
-        {'name': 'acessar_cadastro_classes', 'description': 'Aceder ao cadastro de Classes'},
-        {'name': 'acessar_cadastro_grupos', 'description': 'Aceder ao cadastro de Grupos'},
+        {'name': 'acessar_cadastro_criterios', 'description': 'Acesso ao cadastro de Critérios'},
+        {'name': 'acessar_cadastro_classes', 'description': 'Acesso ao cadastro de Classes'},
+        {'name': 'acessar_cadastro_grupos', 'description': 'Acesso ao cadastro de Grupos'},
         
         # Administração
-        {'name': 'gerenciar_permissoes', 'description': 'Aceder à tela de gestão de permissões (apenas Admin)'}
+        {'name': 'gerenciar_permissoes', 'description': 'Acesso à tela de gestão de permissões (apenas Admin)'}
     ]
     
     for p_data in permissions_list:

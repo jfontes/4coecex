@@ -11,7 +11,7 @@ from models import Criterio
 
 class LoginForm(FlaskForm):
     """Formulário de login."""
-    username = StringField('Utilizador', validators=[DataRequired()])
+    username = StringField('Usuário', validators=[DataRequired()])
     password = PasswordField('Senha', validators=[DataRequired()])
     remember_me = BooleanField('Lembrar-me')
 

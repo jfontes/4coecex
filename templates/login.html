@@ -3,23 +3,25 @@
 
 {% block content %}
 <div class="container mt-5">
+    <style>
+        .form-control.text-center::placeholder { /* Para navegadores modernos */
+            text-align: center;
+        }
+    </style>
     <div class="row">
-        <div class="col-md-6 col-lg-4 mx-auto">
+        <div class="col-md-6 col-lg-5 mx-auto">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3 class="card-title text-center mb-4">Acessar Sistema</h3>
                     <form method="POST" novalidate>
                         {{ form.hidden_tag() }}
                         <div class="mb-3">
-                            {{ form.username.label(class="form-label") }}
-                            {{ form.username(class="form-control") }}
+                            {{ form.username(class="form-control text-center", placeholder=form.username.label.text) }}
                         </div>
                         <div class="mb-3">
-                            {{ form.password.label(class="form-label") }}
-                            {{ form.password(class="form-control") }}
+                            {{ form.password(class="form-control text-center", placeholder=form.password.label.text, type="password") }}
                         </div>
                         <div class="mb-3 form-check">
-                            {{ form.remember_me(class="form-check-input") }}
+                            {{ form.remember_me(class="form-check-input", checked=True) }}
                             {{ form.remember_me.label(class="form-check-label") }}
                         </div>
                         <div class="d-grid">
