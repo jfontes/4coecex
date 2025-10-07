@@ -12,7 +12,7 @@
     <nav class="navbar navbar-dark bg-primary">
       <div class="container-fluid px-3">
         <a class="navbar-brand" href="https://tceac.tc.br">
-          <img src="{{ url_for('static', filename='icon_tce.png') }}" alt="Logo Tribunal de Contas" style="max-height:40px;">
+          <img src="{{ url_for('static', filename='icon_tce.png') }}" alt="Logo Tribunal de Contas" style="max-height:40px;"> 
         </a>
       </div>
     </nav>
@@ -76,11 +76,7 @@
     {% endif %}
   </div>
 
-  <header class="bg-light py-3 mb-4">
-    <div class="container text-center mt-2">
-      <img src="{{ url_for('static', filename='SAI.png') }}" alt="Sistema de Geração de Documentos" style="max-height:250px;">
-    </div>
-  </header>
+
 
   <main class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
