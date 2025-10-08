@@ -10,10 +10,10 @@ LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 # Monta o ODBC_CONNECT
 odbc_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
-    "SERVER=NBK-011274\\SQLEXPRESS;"
+    "SERVER=172.20.12.219;"
     "DATABASE=atos;"
-    "UID=sa;"
-    "PWD=mssql;"
+    "UID=sis.atos;"
+    "PWD=sisatos@TCEAC@2025;"
     "Trusted_Connection=no;"
 )
 ODBC_CONNECT = quote_plus(odbc_str)

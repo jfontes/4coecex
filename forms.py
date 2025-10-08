@@ -15,7 +15,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Entrar')
 
 class UserForm(FlaskForm):
-    nome = StringField('Nome Completo', validators=[DataRequired(), Length(max=150)])
+    nome = StringField('Nome Completo', validators=[DataRequired(), Length(max=150)], filters=[lambda x: x.upper() if x else x])
     username = StringField('Nome de Utilizador (para login)', validators=[DataRequired(), Length(max=64)])
     cargo = SelectField('Cargo', coerce=str, validators=[DataRequired(message="O cargo é obrigatório.")])
     role = SelectField('Perfil de Acesso', coerce=int, validators=[DataRequired()])

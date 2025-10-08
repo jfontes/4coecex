@@ -16,17 +16,5 @@ class AuthenticationManager:
             return user
         
         # --- FUTURA LÓGICA DO ACTIVE DIRECTORY ---
-        # No futuro, você substituiria o código acima por algo como:
-        #
-        # if ad_service.validate_credentials(username, password):
-        #     user = User.query.filter_by(username=username).first()
-        #     # Se o usuário não existir no banco local, você pode criá-lo aqui
-        #     if not user:
-        #         # Lógica para sincronizar/criar usuário do AD
-        #         pass
-        #     return user
-        # 
-        # return None
-        # ---------------------------------------------------------
 
         return None
