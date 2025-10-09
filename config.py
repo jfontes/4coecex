@@ -8,6 +8,9 @@ GEMINI_API_KEY = "AIzaSyAaMg0T6NIoSYV_8_3leJd9mjkwA2Of_A0"
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
 # Monta o ODBC_CONNECT
+#"SERVER=172.20.12.219;"
+#"UID=sis.atos;"
+#"PWD=sisatos@TCEAC@2025;"
 odbc_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
     "SERVER=172.20.12.219;"

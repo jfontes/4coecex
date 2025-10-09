@@ -10,15 +10,15 @@ LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 # Monta o ODBC_CONNECT
 odbc_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
-    "SERVER=NBK-011274\\SQLEXPRESS;"
-    "DATABASE=atos;"
-    "UID=sa;"
-    "PWD=mssql;"
-    "Trusted_Connection=no;"
+    "SERVER=DESKTOP-IUGBE2R;"
+    "DATABASE=certificador;"
+    "Trusted_Connection=yes;"
 )
+
 ODBC_CONNECT = quote_plus(odbc_str)
 
 SQLALCHEMY_DATABASE_URI = f"mssql+pyodbc:///?odbc_connect={ODBC_CONNECT}"
+
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 if not os.path.exists(LIBREOFFICE_PATH):
