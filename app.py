@@ -54,11 +54,12 @@ def generic_error(error):
 if __name__ == '__main__':
     env = os.getenv('FLASK_ENV', 'development')
     if env == 'production':
-        # troque pelo IP que você quer expor
+        # Produção: usando Waitress com IP específico
         SERVE_HOST = '192.168.226.216'
         SERVE_PORT = 5000
         serve(app, host=SERVE_HOST, port=SERVE_PORT, threads=8)
     else:
-        # desenvolvimento: Flask debug em localhost
-        app.run(host='127.0.0.1', port=80, debug=True)
+        # Desenvolvimento: Flask debug com acesso de rede
+        # Use 0.0.0.0 para permitir acesso de outros dispositivos na rede
+        app.run(host='0.0.0.0', port=5000, debug=True)
         
