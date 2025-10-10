@@ -5,6 +5,7 @@ from urllib.parse import quote_plus
 SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(24).hex()
 # Gemini API Key
 GEMINI_API_KEY = "AIzaSyAaMg0T6NIoSYV_8_3leJd9mjkwA2Of_A0"
+OPENAI_API_KEY = "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"
 
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
