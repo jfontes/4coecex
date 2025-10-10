@@ -7,7 +7,8 @@ from documento_word         import PreencheDocumentoWord
 from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm
 from acreprevidencia_api    import DadosAcreprevidencia, AcrePrevAPIError 
-from gemini                 import Gemini
+from ia_handler             import GenerativeAI
+#from google    import Gemini
 from google.genai           import types
 import io, tempfile, os, mammoth, json
 from flask_login            import login_required
@@ -272,12 +273,12 @@ def processar_analise_inatividade(numero):
     contexto = request.form.get('contexto', '').strip()
     try:
         criterio = Criterio.query.get(criterio_id)
-        parts = Gemini().lerPDF(files)
+        parts = GenerativeAI.lerPDF(files)
         if contexto:
             parts.insert(0, types.Part(text=f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"))
         
         parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
-        ai = Gemini().getAnaliseEstruturada(parts, criterio.prompt)
+        ai = GenerativeAI().get_structured_analysis(parts, criterio.prompt)
         analiseInteligente = ai.get("Analise")
     except Exception as e:
         current_app.logger.error(f"Erro ao processar análise inteligente: {e}")
