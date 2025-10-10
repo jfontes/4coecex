@@ -1,0 +1,79 @@
+# Dockerfile otimizado para Red Hat Enterprise Linux / CentOS
+FROM registry.redhat.io/ubi8/python-312:latest
+
+# Metadados da imagem
+LABEL maintainer="TCE-AC <sistemas@tce.ac.gov.br>"
+LABEL description="ATOS - Sistema de Análise Inteligente de Atos"
+LABEL version="1.0.0"
+
+# Instalar dependências do sistema necessárias
+USER root
+RUN dnf update -y && \
+    dnf install -y \
+    # Para pyodbc e SQL Server
+    curl \
+    gnupg2 \
+    # Para processamento de documentos
+    libreoffice \
+    # Para OpenCV e processamento de imagem
+    mesa-libGL \
+    glib2 \
+    libSM \
+    libXext \
+    libXrender \
+    libgomp \
+    # Para PDF processing
+    poppler-utils \
+    # Para compilação
+    gcc \
+    gcc-c++ \
+    make \
+    # Para ODBC
+    unixODBC-devel \
+    && dnf clean all
+
+# Instalar Microsoft ODBC Driver para SQL Server
+RUN curl https://packages.microsoft.com/config/rhel/8/prod.repo > /etc/yum.repos.d/mssql-release.repo && \
+    ACCEPT_EULA=Y dnf install -y msodbcsql17 && \
+    dnf clean all
+
+# Criar usuário da aplicação
+RUN groupadd -r appuser && useradd -r -g appuser -d /app -s /sbin/nologin appuser
+
+# Definir diretório de trabalho
+WORKDIR /app
+
+# Copiar requirements primeiro para cache de dependências
+COPY requirements.txt .
+
+# Instalar dependências Python
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Copiar código da aplicação
+COPY --chown=appuser:appuser . .
+
+# Criar diretórios necessários
+RUN mkdir -p /app/logs /app/temp /app/backup \
+    && chown -R appuser:appuser /app \
+    && chmod -R 755 /app
+
+# Configurar variáveis de ambiente
+ENV FLASK_APP=app.py
+ENV FLASK_ENV=production
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+ENV LIBREOFFICE_PATH=/usr/lib64/libreoffice/program/soffice
+
+# Expor porta
+EXPOSE 5000
+
+# Mudar para usuário não-root
+USER appuser
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:5000/ || exit 1
+
+# Comando de inicialização
+CMD ["python", "app.py"]

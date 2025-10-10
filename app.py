@@ -1,6 +1,5 @@
 import os
 from flask              import Flask, render_template
-from config             import *
 from extensions         import db, login_manager
 from models             import User
 from routes             import main_bp
@@ -14,7 +13,13 @@ from waitress           import serve
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config')
+    
+    # Usar configuração de produção se estiver em container
+    if os.environ.get('FLASK_ENV') == 'production' or os.path.exists('/.dockerenv'):
+        app.config.from_object('config_production')
+    else:
+        from config import *
+        app.config.from_object('config')
 
     # inicializa o SQLAlchemy
     db.init_app(app)
@@ -51,11 +56,17 @@ def not_found_error(error):
 def generic_error(error):
     return render_template('error.html', error_message=str(error)), 500
 
+# Health check endpoint para monitoramento
+@app.route('/health')
+def health_check():
+    return {'status': 'healthy', 'service': 'atos'}, 200
+
 if __name__ == '__main__':
     env = os.getenv('FLASK_ENV', 'development')
     if env == 'production':
-        # Produção: usando Waitress com IP específico
-        SERVE_HOST = '192.168.226.216'
+        # Produção: usando Waitress com acesso de rede
+        # Use 0.0.0.0 para permitir acesso do proxy reverso
+        SERVE_HOST = '0.0.0.0'
         SERVE_PORT = 5000
         serve(app, host=SERVE_HOST, port=SERVE_PORT, threads=8)
     else:

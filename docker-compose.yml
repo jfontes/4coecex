@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  atos-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: atos-application
+    restart: unless-stopped
+    ports:
+      - "80:5000"
+    environment:
+      # Flask Configuration
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-this}
+      
+      # Database Configuration
+      - DB_SERVER=${DB_SERVER:-172.20.12.219}
+      - DB_NAME=${DB_NAME:-ATOS}
+      - DB_USER=${DB_USER:-sis.atos}
+      - DB_PASSWORD=${DB_PASSWORD:-sisatos@TCEAC@2025}
+      
+      # Gemini API
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      
+      # LibreOffice Path (container)
+      - LIBREOFFICE_PATH=/usr/lib/libreoffice/program/soffice
+      
+      # Python Configuration
+      - PYTHONPATH=/app
+      - PYTHONUNBUFFERED=1
+      
+    volumes:
+      # Persistir logs
+      - ./logs:/app/logs
+      # Persistir arquivos temporários
+      - ./temp:/app/temp
+      # Persistir backups
+      - ./backup:/app/backup
+      # Persistir arquivos de documentos
+      - ./arquivos:/app/arquivos
+      
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+      
+    # Limites de recursos
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '1.0'
+        reservations:
+          memory: 512M
+          cpus: '0.5'
