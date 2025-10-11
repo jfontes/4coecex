@@ -116,35 +116,6 @@
 </script>
 
 <script>
-// --- SCRIPT PARA O BOTÃO COPIAR ---
-document.addEventListener('DOMContentLoaded', function() {
-  const btnCopiar = document.getElementById('btnCopiarHtml');
-  const editorHtml = document.getElementById('editor');
-
-  if (btnCopiar) {
-    btnCopiar.addEventListener('click', function() {
-      // Usa a API moderna do navegador para copiar o conteúdo HTML do editor
-      navigator.clipboard.writeText(editorHtml.innerHTML).then(function() {
-        // Feedback para o usuário que a cópia foi bem-sucedida
-        const originalText = btnCopiar.innerHTML;
-        btnCopiar.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
-        
-        // Volta ao texto original após 2 segundos
-        setTimeout(() => {
-          btnCopiar.innerHTML = originalText;
-        }, 2000);
-
-      }, function(err) {
-        // Feedback em caso de erro
-        console.error('Erro ao tentar copiar o conteúdo: ', err);
-        alert('Falha ao copiar para a área de transferência.');
-      });
-    });
-  }
-});
-</script>
-
-<script>
 // --- SCRIPT ROBUSTO PARA COPIAR HTML ---
 document.addEventListener('DOMContentLoaded', function() {
   const btnCopiar = document.getElementById('btnCopiarHtml');
