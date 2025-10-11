@@ -2,6 +2,10 @@
 {% block title %}Análise de inatividade – Processo {{ proc }}{% endblock %}
 
 {% block extra_js %}
+<!-- Quill Rich Text Editor -->
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
 <script>
 (function(){
   const selectGrupo = document.getElementById('selectGrupo');
@@ -9,11 +13,18 @@
   const sugestaoDoc = document.getElementById('sugestaoDocumento');
   const bloco = document.getElementById('blocoAnalise');
   const files = document.getElementById('inputPDFs');
-  const btn   = document.getElementById('btnAnalisar');
-  const btn2   = document.getElementById('btnAdicionar');
-  const out   = document.getElementById('txtResultado');
+  const btn = document.getElementById('btnAnalisar');
+  const btn2 = document.getElementById('btnAdicionar');
   const stat  = document.getElementById('analiseStatus');
   const contexto = document.getElementById('inputContexto');
+
+  // Inicializa o editor Quill
+  const quill = new Quill('#txtResultado', {
+    theme: 'snow',
+    modules: {
+      toolbar: [['bold']] // Apenas o botão de negrito
+    }
+  });
 
 // Função para atualizar o dropdown de critérios
   async function atualizarCriterios() {
@@ -91,7 +102,7 @@
         throw new Error(data.msg || 'Falha ao processar arquivos.');
       }
 
-      out.value = data.texto || '';
+      quill.setText(data.texto || ''); // Usa a API do Quill para definir o texto
       setStatus('Análise concluída.', false, false);
       btn2.disabled = false;
     } catch (e) {
@@ -191,10 +202,11 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('btnAdicionar').addEventListener('click', async function(){
   try {
     const url = "{{ url_for('main.adicionar_no_relatorio', numero=proc) }}";
-    const texto = document.getElementById('txtResultado').value;
+    const quill = Quill.find(document.getElementById('txtResultado'));
+    const textoHtml = quill.root.innerHTML; // Pega o conteúdo como HTML
     const fd = new FormData();
     fd.append('criterio_id', document.getElementById('selectCriterio').value);
-    fd.append('analiseInteligente', texto);
+    fd.append('analiseInteligente', textoHtml);
 
     const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin' });
     const data = await resp.json();
@@ -289,7 +301,10 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <a><img id="loadingGif" src="/static/ia2.gif" alt="Carregando..." style="float: right; z-index: 9999; width:67px; height:80px; display: none;"></a>
         <label for="txtResultado" class="form-label" style="font-weight: bold;">Resultado da análise</label>
-        <textarea id="txtResultado" class="form-control" rows="14" placeholder="O resultado da análise aparecerá aqui..."></textarea>
+        <!-- O textarea foi substituído por este container para o Quill -->
+        <div id="txtResultado" style="height: 300px; background-color: white;">
+          <p>O resultado da análise aparecerá aqui...</p>
+        </div>
       </div>
     </div>
   </div>
@@ -340,6 +355,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   .docx-page * {
     background: transparent !important;
+  }
+  /* Ajustes para o editor Quill se integrar melhor ao Bootstrap */
+  .ql-toolbar.ql-snow {
+    border-top-left-radius: var(--bs-border-radius);
+    border-top-right-radius: var(--bs-border-radius);
   }
 </style>
 <!-- Overlay de carregamento -->

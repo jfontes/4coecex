@@ -305,6 +305,7 @@ def adicionar_no_relatorio(numero):
 
         dados = session.get('dados', {})
         analiseInteligente = request.form.get('analiseInteligente', '')
+        print(analiseInteligente)
         criterio_id = request.form.get('criterio_id')
         criterio = Criterio.query.get(criterio_id)
 

@@ -1,22 +1,24 @@
 import os
 from urllib.parse import quote_plus
 
-# Secret key
 SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(24).hex()
-# Gemini API Key
-GEMINI_API_KEY = "AIzaSyAaMg0T6NIoSYV_8_3leJd9mjkwA2Of_A0"
-OPENAI_API_KEY = "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"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") # type: ignore
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") # type: ignore
 
+# Validação das chaves de API
+if not GEMINI_API_KEY:
+    raise ValueError("A variável de ambiente 'GEMINI_API_KEY' não está definida.")
+if not OPENAI_API_KEY:
+    raise ValueError("A variável de ambiente 'OPENAI_API_KEY' não está definida.")
+    
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
 
 # Monta o ODBC_CONNECT
 odbc_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
-    "SERVER=NBK-011274\SQLEXPRESS;"
+    "SERVER=DESKTOP-IUGBE2R;"
     "DATABASE=atos;"
-    "UID=sa;"
-    "PWD=mssql;"
-    "Trusted_Connection=no;"
+    "Trusted_Connection=yes;"
 )
 
 ODBC_CONNECT = quote_plus(odbc_str)
