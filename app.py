@@ -18,7 +18,7 @@ def create_app():
     if os.environ.get('FLASK_ENV') == 'production' or os.path.exists('/.dockerenv'):
         app.config.from_object('config_production')
     else:
-        from config import *
+        import config
         app.config.from_object('config')
 
     # inicializa o SQLAlchemy
