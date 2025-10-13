@@ -1,4 +1,5 @@
 from flask                  import Blueprint, session, render_template, request, jsonify, redirect, url_for, flash, send_file, current_app, abort
+from flask_login            import current_user, login_required
 from sqlalchemy.exc         import ProgrammingError, DataError
 from extensions             import db
 from tools                  import Tools
@@ -182,11 +183,16 @@ def gerar_certidao(numero):
 def analise_inatividade(numero):
     proc = Processo.query.filter_by(processo=numero).first_or_404()
 
-    # 1. Preenche os dados básicos da sessão a partir do banco
+    # 1. Preenche os dados básicos de usuário e processo da sessão a partir do banco e autenticação
     session['analises'] = []
-    
     session['dados'] = Tools.PreencherDados(proc)
-    
+
+    if current_user.is_authenticated:
+        dados_sessao = session.get('dados', {})
+        dados_sessao['usuario'] = current_user.nome
+        dados_sessao['cargo_usuario'] = current_user.cargo.value # .value para obter a string do Enum
+        session['dados'] = dados_sessao
+
     if proc.analises:
         session['dados'].update(proc.analises)
         analises_salvas = [{'tag': tag, 'texto': texto} for tag, texto in proc.analises.items()]
