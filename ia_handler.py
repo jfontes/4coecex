@@ -79,7 +79,7 @@ class GeminiHandler:
         self.model = model
 
     def get_structured_analysis(self, b: List[bytes], prompt: str) -> dict:
-        tentativas = 7
+        tentativas = 4
         for t in range(tentativas):
             logging.warning(f"------------------API Gemini: Iniciando tentativa {t+1}/{tentativas} com o modelo {self.model}.------------------")
 
