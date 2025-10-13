@@ -2,9 +2,11 @@
 {% block title %}Análise de inatividade – Processo {{ proc }}{% endblock %}
 
 {% block extra_js %}
-<!-- Quill Rich Text Editor -->
+<!-- Quill Rich Text Editor-->
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <script>
 (function(){
@@ -17,14 +19,16 @@
   const btn2 = document.getElementById('btnAdicionar');
   const stat  = document.getElementById('analiseStatus');
   const contexto = document.getElementById('inputContexto');
+  const out   = document.getElementById('txtResultado');
 
   // Inicializa o editor Quill
-  const quill = new Quill('#txtResultado', {
-    theme: 'snow',
-    modules: {
-      toolbar: [['bold']] // Apenas o botão de negrito
-    }
-  });
+  //const quill = new Quill('#txtResultado', {
+  //  theme: 'snow',
+  //  placeholder: 'O resultado da análise aparecerá aqui...',
+  //  modules: {
+  //    toolbar: ['bold', 'italic', 'underline'],
+  //  }
+  //});
 
 // Função para atualizar o dropdown de critérios
   async function atualizarCriterios() {
@@ -102,7 +106,13 @@
         throw new Error(data.msg || 'Falha ao processar arquivos.');
       }
 
-      quill.setText(data.texto || ''); // Usa a API do Quill para definir o texto
+      // 4. Converter o Markdown para HTML e inserir no Quill
+      //if (data.texto) {
+      //  const htmlContent = marked.parse(data.texto);
+      //  quill.clipboard.dangerouslyPasteHTML(htmlContent);
+      //}
+      //quill.setText(data.texto || ''); // Usa a API do Quill para definir o texto
+      out.value = data.texto || '';
       setStatus('Análise concluída.', false, false);
       btn2.disabled = false;
     } catch (e) {
@@ -173,11 +183,13 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('btnAdicionar').addEventListener('click', async function(){
   try {
     const url = "{{ url_for('main.adicionar_no_relatorio', numero=proc) }}";
-    const quill = Quill.find(document.getElementById('txtResultado'));
-    const textoHtml = quill.root.innerHTML; // Pega o conteúdo como HTML
+    //const quill = Quill.find(document.getElementById('txtResultado'));
+    //const textoHtml = quill.root.innerHTML; // Pega o conteúdo como HTML
+    const texto = document.getElementById('txtResultado').value;
     const fd = new FormData();
     fd.append('criterio_id', document.getElementById('selectCriterio').value);
-    fd.append('analiseInteligente', textoHtml);
+    //fd.append('analiseInteligente', textoHtml);
+    fd.append('analiseInteligente', texto);
 
     const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin' });
     const data = await resp.json();
@@ -270,12 +282,12 @@ document.addEventListener('DOMContentLoaded', function() {
           </button>
           <span id="analiseStatus" class="text-muted small"></span>
         </div>
-        <a><img id="loadingGif" src="/static/ia2.gif" alt="Carregando..." style="float: right; z-index: 9999; width:67px; height:80px; display: none;"></a>
+        <a><img id="loadingGif" src="/static/ia2.gif" alt="Carregando..." style="float: right; z-index: 9999; width:67px; height:80px; display: none;"></a><br/>
         <label for="txtResultado" class="form-label" style="font-weight: bold;">Resultado da análise</label>
-        <!-- O textarea foi substituído por este container para o Quill -->
-        <div id="txtResultado" style="height: 300px; background-color: white;">
-          <p>O resultado da análise aparecerá aqui...</p>
-        </div>
+        <!-- O textarea foi substituído por este container para o Quill
+        <div id="txtResultado" style="height: 300px; background-color: rgb(255, 255, 255);">
+        </div>-->
+        <textarea id="txtResultado" class="form-control" rows="14" placeholder="O resultado da análise aparecerá aqui..."></textarea>
       </div>
     </div>
   </div>
@@ -326,11 +338,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   .docx-page * {
     background: transparent !important;
-  }
-  /* Ajustes para o editor Quill se integrar melhor ao Bootstrap */
-  .ql-toolbar.ql-snow {
-    border-top-left-radius: var(--bs-border-radius);
-    border-top-right-radius: var(--bs-border-radius);
   }
 </style>
 <!-- Overlay de carregamento -->

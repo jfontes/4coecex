@@ -8,8 +8,6 @@ from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm
 from acreprevidencia_api    import DadosAcreprevidencia, AcrePrevAPIError 
 from ia_handler             import GenerativeAI
-#from google    import Gemini
-from google.genai           import types
 import io, tempfile, os, mammoth, json
 from flask_login            import login_required
 from decorators             import permission_required
@@ -273,15 +271,12 @@ def processar_analise_inatividade(numero):
     contexto = request.form.get('contexto', '').strip()
     try:
         criterio = Criterio.query.get(criterio_id)
-        b = GenerativeAI.lerPDF(files)
         prompt = criterio.prompt + "\n\n"
         prompt += json.dumps(dados, indent=2, ensure_ascii=False) + "\n\n"
-        #parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
         if contexto:
             prompt += f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"
-            #parts.insert(0, types.Part(text=f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"))
         
-        ai = GenerativeAI().get_structured_analysis(b, criterio.prompt)
+        ai = GenerativeAI().get_structured_analysis(GenerativeAI.lerPDF(files), criterio.prompt)
         analiseInteligente = ai.get("Analise")
     except Exception as e:
         current_app.logger.error(f"Erro ao processar análise inteligente: {e}")
@@ -383,7 +378,6 @@ def baixar(numero):
     current_app.logger.debug(f"Solicitação de download para o processo {numero} no formato: {tipo}")
     try:
         proc = Processo.query.filter_by(processo=numero).first_or_404()
-
         dados = session.get('dados', {})
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', proc.classe.modelo_de_relatorio or 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)
