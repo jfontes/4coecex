@@ -17,10 +17,10 @@ RUN groupadd -r appuser && useradd -r -g appuser appuser
 WORKDIR /app
 
 # Copiar requirements primeiro para cache de dependências
-COPY requirements.txt .
+COPY requirements-production.txt .
 
 # Instalar dependências Python
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir --user -r requirements-production.txt
 
 # Stage final - imagem de produção
 FROM python:3.12-slim
