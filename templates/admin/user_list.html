@@ -18,6 +18,7 @@
                         <th>ID</th>
                         <th>Nome Completo</th>
                         <th>Nome de Utilizador</th>
+                        <th>Matrícula</th>
                         <th>Cargo</th>
                         <th>Perfil</th>
                         <th style="width: 15%;">Ações</th>
@@ -29,6 +30,7 @@
                         <td>{{ user.id }}</td>
                         <td>{{ user.nome }}</td>
                         <td>{{ user.username }}</td>
+                        <td>{{ user.matricula or '-' }}</td>
                         <td>{{ user.cargo.value }}</td>
                         <td><span class="badge bg-secondary">{{ user.role.name }}</span></td>
                         <td>
@@ -45,7 +47,7 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="6" class="text-center text-muted">Nenhum utilizador encontrado.</td>
+                        <td colspan="7" class="text-center text-muted">Nenhum utilizador encontrado.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -54,4 +56,3 @@
     </div>
 </div>
 {% endblock %}
-

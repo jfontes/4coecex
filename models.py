@@ -115,6 +115,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     nome = db.Column(db.String(150), nullable=False)
     cargo = db.Column(db.Enum(CargoEnum), nullable=False)
+    matricula = db.Column(db.Integer, nullable=True)
     
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
     role = db.relationship('Role', back_populates='users')

@@ -18,6 +18,7 @@ class UserForm(FlaskForm):
     nome = StringField('Nome Completo', validators=[DataRequired(), Length(max=150)], filters=[lambda x: x.upper() if x else x])
     username = StringField('Nome de Utilizador (para login)', validators=[DataRequired(), Length(max=64)])
     cargo = SelectField('Cargo', coerce=str, validators=[DataRequired(message="O cargo é obrigatório.")])
+    matricula = IntegerField('Matrícula', validators=[Optional(), NumberRange(min=0, message="A matrícula deve ser um número positivo.")])
     role = SelectField('Perfil de Acesso', coerce=int, validators=[DataRequired()])
     # Na criação, a senha é obrigatória. Na edição, se torna opcional.
     password = PasswordField('Senha', validators=[DataRequired(), Length(min=6, message='A senha deve ter pelo menos 6 caracteres.')])

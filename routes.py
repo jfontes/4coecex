@@ -191,6 +191,7 @@ def analise_inatividade(numero):
         dados_sessao = session.get('dados', {})
         dados_sessao['usuario'] = current_user.nome
         dados_sessao['cargo_usuario'] = current_user.cargo.value # .value para obter a string do Enum
+        dados_sessao['matricula_usuario'] = current_user.matricula # .value para obter a string do Enum
         session['dados'] = dados_sessao
 
     if proc.analises:

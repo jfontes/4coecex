@@ -79,6 +79,7 @@ def create_user():
             username=form.username.data,
             nome=form.nome.data,
             cargo=CargoEnum[form.cargo.data],
+            matricula=form.matricula.data,
             role_id=form.role.data
         )
         new_user.set_password(form.password.data)
@@ -99,6 +100,7 @@ def edit_user(user_id):
         user.username = form.username.data
         user.nome = form.nome.data
         user.cargo = CargoEnum[form.cargo.data]
+        user.matricula = form.matricula.data
         user.role_id = form.role.data
         if form.password.data:
             user.set_password(form.password.data)

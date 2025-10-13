@@ -31,14 +31,21 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
+                                {{ form.matricula.label(class="form-label") }}
+                                {{ form.matricula(class="form-control") }}
+                                {% for error in form.matricula.errors %}
+                                    <span class="text-danger small">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-4 mb-3">
                                 {{ form.cargo.label(class="form-label") }}
                                 {{ form.cargo(class="form-select") }}
                                 {% for error in form.cargo.errors %}
                                     <span class="text-danger small">{{ error }}</span>
                                 {% endfor %}
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-4 mb-3">
                                 {{ form.role.label(class="form-label") }}
                                 {{ form.role(class="form-select") }}
                                 {% for error in form.role.errors %}
@@ -80,4 +87,3 @@
     </div>
 </div>
 {% endblock %}
-
