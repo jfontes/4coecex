@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% block title %}Análise de inatividade – Processo {{ proc }}{% endblock %}
 
+{% block extra_head %}
+<style>
+  /* Estilo para a caixa de texto do modal */
+  #modalTextView {
+    min-height: 400px;
+    font-family: monospace;
+    font-size: 0.85rem;
+  }
+</style>
+{% endblock %}
+
 {% block extra_js %}
-<!-- Quill Rich Text Editor-->
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <script>
 (function(){
@@ -20,15 +26,16 @@
   const stat  = document.getElementById('analiseStatus');
   const contexto = document.getElementById('inputContexto');
   const out   = document.getElementById('txtResultado');
+  // --- LÓGICA DO POPUP "VER TEXTO" ---
+  const btnShowText = document.getElementById('btnShowText');
+  const modalTextarea = document.getElementById('modalTextView');
 
-  // Inicializa o editor Quill
-  //const quill = new Quill('#txtResultado', {
-  //  theme: 'snow',
-  //  placeholder: 'O resultado da análise aparecerá aqui...',
-  //  modules: {
-  //    toolbar: ['bold', 'italic', 'underline'],
-  //  }
-  //});
+  if (btnShowText) {
+    btnShowText.addEventListener('click', function() {
+      // Pega o conteúdo HTML do editor e coloca no textarea do popup
+      modalTextarea.value = document.getElementById('editor').innerHTML;
+    });
+  }
 
 // Função para atualizar o dropdown de critérios
   async function atualizarCriterios() {
@@ -62,7 +69,6 @@
 
     } catch (error) {
       console.error(error);
-      // Aqui você poderia mostrar uma mensagem de erro para o usuário
     }
   }
 
@@ -106,12 +112,6 @@
         throw new Error(data.msg || 'Falha ao processar arquivos.');
       }
 
-      // 4. Converter o Markdown para HTML e inserir no Quill
-      //if (data.texto) {
-      //  const htmlContent = marked.parse(data.texto);
-      //  quill.clipboard.dangerouslyPasteHTML(htmlContent);
-      //}
-      //quill.setText(data.texto || ''); // Usa a API do Quill para definir o texto
       out.value = data.texto || '';
       setStatus('Análise concluída.', false, false);
       btn2.disabled = false;
@@ -123,60 +123,6 @@
     }
   });
 })();
-</script>
-
-<script>
-// --- SCRIPT ROBUSTO PARA COPIAR HTML ---
-document.addEventListener('DOMContentLoaded', function() {
-  const btnCopiar = document.getElementById('btnCopiarHtml');
-  const editorHtml = document.getElementById('editor');
-
-  if (btnCopiar && editorHtml) {
-    btnCopiar.addEventListener('click', function() {
-      const originalText = btnCopiar.innerHTML;
-
-      // Função para dar feedback visual ao utilizador
-      function showFeedback(success) {
-        if (success) {
-          btnCopiar.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
-        } else {
-          alert('Falha ao copiar para a área de transferência. Tente manualmente (Ctrl+A, Ctrl+C).');
-        }
-        setTimeout(() => {
-          btnCopiar.innerHTML = originalText;
-        }, 2500);
-      }
-
-      // 1. Tenta usar a API moderna (requer HTTPS ou localhost)
-      if (navigator.clipboard && window.isSecureContext) {
-        const type = "text/html";
-        const blob = new Blob([editorHtml.innerHTML], { type });
-        const data = [new ClipboardItem({ [type]: blob })];
-
-        navigator.clipboard.write(data).then(
-          () => showFeedback(true),
-          () => showFeedback(false)
-        );
-      } else {
-        // 2. Fallback: Usa o método antigo que seleciona o conteúdo do elemento
-        try {
-          const range = document.createRange();
-          range.selectNode(editorHtml); // Seleciona a div 'editor' e todo o seu conteúdo
-          
-          window.getSelection().removeAllRanges(); // Limpa seleções anteriores
-          window.getSelection().addRange(range); // Adiciona o nosso range à seleção
-          
-          const successful = document.execCommand('copy'); // Executa o comando de cópia
-          showFeedback(successful);
-          
-          window.getSelection().removeAllRanges(); // Remove a seleção para não incomodar o utilizador
-        } catch (err) {
-          showFeedback(false);
-        }
-      }
-    });
-  }
-});
 </script>
 
 <script>
@@ -284,9 +230,6 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <a><img id="loadingGif" src="/static/ia2.gif" alt="Carregando..." style="float: right; z-index: 9999; width:67px; height:80px; display: none;"></a><br/>
         <label for="txtResultado" class="form-label" style="font-weight: bold;">Resultado da análise</label>
-        <!-- O textarea foi substituído por este container para o Quill
-        <div id="txtResultado" style="height: 300px; background-color: rgb(255, 255, 255);">
-        </div>-->
         <textarea id="txtResultado" class="form-control" rows="14" placeholder="O resultado da análise aparecerá aqui..."></textarea>
       </div>
     </div>
@@ -299,24 +242,43 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="card-body">
         <h6 class="mb-3">Documento (visualização somente leitura)
 
-        <button type="button" id="btnCopiarHtml" class="btn btn-outline-secondary btn-sm ms-2">
-          <i class="bi bi-clipboard"></i> Copiar
+        <button type="button" id="btnShowText" class="btn btn-outline-secondary btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#textContentModal">
+          <i class="bi bi-body-text"></i> HTML
         </button>
 
         <a id="btnBaixarDocx" href="{{ url_for('main.baixar', numero=proc, tipo='word') }}" class="btn btn-outline-secondary btn-sm ms-2" download>
-          Word
+          <i class="bi bi-file-earmark-word"></i> Word
         </a>
         <a id="btnBaixarPdf" href="{{ url_for('main.baixar', numero=proc, tipo='pdf') }}" class="btn btn-outline-secondary btn-sm ms-2" download>
-          PDF
+          <i class="bi bi-file-earmark-pdf"></i> PDF
         </a>
         <button id="btnSalvar" type="button" class="btn btn-outline-success btn-sm ms-2" data-url="{{ url_for('main.salvarAnalises', numero=proc) }}">
-            Salvar
+          <i class="bi bi-floppy"></i>  Salvar
         </button>
         <span id="salvarStatus"></span>
       </h6>
         <div id="editor" class="docx-page mx-auto" style="font-weight: normal;">
           {{ doc_html|safe }}
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ESTRUTURA DO POPUP (MODAL) -->
+<div class="modal fade" id="textContentModal" tabindex="-1" aria-labelledby="textModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="textModalLabel">Código HTML do Relatório</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted small">Pode copiar o texto abaixo (Ctrl+A, Ctrl+C).</p>
+        <textarea id="modalTextView" class="form-control" readonly rows="20"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
       </div>
     </div>
   </div>
