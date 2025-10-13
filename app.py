@@ -1,15 +1,16 @@
 import os
-from flask              import Flask, render_template
-from config             import *
-from extensions         import db, login_manager
-from models             import User
-from routes             import main_bp
-from admin_routes       import admin_bp
-from criterio_routes    import criterio_bp
-from classe_routes      import classe_bp
-from groupo_routes      import grupo_bp
-from commands           import register_commands
-from waitress           import serve
+from flask                  import Flask, render_template
+from config                 import *
+from extensions             import db, login_manager
+from models                 import User
+from routes                 import main_bp
+from admin_routes           import admin_bp
+from criterio_routes        import criterio_bp
+from classe_routes          import classe_bp
+from groupo_routes          import grupo_bp
+from tipo_documento_routes  import tipo_documento_bp
+from commands               import register_commands
+from waitress               import serve
 
 
 def create_app():
@@ -26,6 +27,8 @@ def create_app():
     app.register_blueprint(classe_bp)
     app.register_blueprint(grupo_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(tipo_documento_bp)
+
 
     # Registra comandos CLI (ex: flask init-db)
     register_commands(app)

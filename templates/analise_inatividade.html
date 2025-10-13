@@ -55,7 +55,7 @@
       criterios.forEach(criterio => {
         const option = document.createElement('option');
         option.value = criterio.id;
-        option.textContent = criterio.nome;
+        option.textContent = criterio.nome; // O texto da opção continua sendo apenas o nome do critério
         option.dataset.sugestao = criterio.sugestao_documento || '';
         selectCriterio.appendChild(option);
       });

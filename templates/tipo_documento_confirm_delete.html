@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Excluir Tipo de Documento{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Confirmar Exclusão</h5>
+                </div>
+                <div class="card-body">
+                    {% if criterio_associado %}
+                        <p class="text-danger fw-bold">Não é possível excluir este item!</p>
+                        <p>O tipo de documento <strong>"{{ obj.nome }}"</strong> está associado ao critério <strong>"{{ criterio_associado.nome }}"</strong> (e possivelmente a outros).</p>
+                        <p>Para excluí-lo, primeiro remova a associação em todos os critérios que o utilizam.</p>
+                        <div class="text-end">
+                            <a href="{{ url_for('tipo_documento.listar') }}" class="btn btn-secondary">Voltar</a>
+                        </div>
+                    {% else %}
+                        <p>Tem certeza que deseja excluir o tipo de documento <strong>#{{ obj.id }} – {{ obj.nome }}</strong>?</p>
+                        <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
+                        <form method="post" class="text-end">
+                            <a href="{{ url_for('tipo_documento.listar') }}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-danger">Sim, Excluir</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

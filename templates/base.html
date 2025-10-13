@@ -28,26 +28,37 @@
                   </a>
                 </li>
                 
-                {% if current_user.role.has_permission('criar_processos') %}
-                <li class="nav-item">
-                  <a class="nav-link text-dark" href="{{ url_for('main.novo_processo') }}">Novo processo</a>
+                <!-- Dropdown de Processo (visível se tiver permissão para pelo menos um item) -->
+                {% if current_user.can('criar_processos') or current_user.can('gerenciar_tipos_documento') %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownProcesso" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Processo
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdownProcesso">
+                    {% if current_user.can('criar_processos') %}
+                      <li><a class="dropdown-item" href="{{ url_for('main.novo_processo') }}">Novo Processo</a></li>
+                    {% endif %}
+                    {% if current_user.can('gerenciar_tipos_documento') %}
+                      <li><a class="dropdown-item" href="{{ url_for('tipo_documento.listar') }}">Tipos de Documento</a></li>
+                    {% endif %}
+                  </ul>
                 </li>
                 {% endif %}
 
                 <!-- Dropdown de Cadastros (visível se tiver permissão para pelo menos um item) -->
-                {% if current_user.role.has_permission('acessar_cadastro_criterios') or current_user.role.has_permission('acessar_cadastro_classes') or current_user.role.has_permission('acessar_cadastro_grupos') %}
+                {% if current_user.can('acessar_cadastro_criterios') or current_user.can('acessar_cadastro_classes') or current_user.can('acessar_cadastro_grupos') %}
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownCadastros" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Cadastros
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdownCadastros">
-                    {% if current_user.role.has_permission('acessar_cadastro_criterios') %}
+                    {% if current_user.can('acessar_cadastro_criterios') %}
                       <li><a class="dropdown-item" href="{{ url_for('criterio.listar') }}">Critérios</a></li>
                     {% endif %}
-                    {% if current_user.role.has_permission('acessar_cadastro_classes') %}
+                    {% if current_user.can('acessar_cadastro_classes') %}
                       <li><a class="dropdown-item" href="{{ url_for('classe.listar') }}">Classes</a></li>
                     {% endif %}
-                    {% if current_user.role.has_permission('acessar_cadastro_grupos') %}
+                    {% if current_user.can('acessar_cadastro_grupos') %}
                       <li><a class="dropdown-item" href="{{ url_for('grupo.listar') }}">Grupos de Critérios</a></li>
                     {% endif %}
                   </ul>
@@ -100,4 +111,3 @@
   {% block extra_js %}{% endblock %}
 </body>
 </html>
-

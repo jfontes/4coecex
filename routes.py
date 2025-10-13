@@ -258,7 +258,7 @@ def api_criterios_por_grupo(grupo_id):
         {
             "id": criterio.id,
             "nome": criterio.nome,
-            "sugestao_documento": criterio.sugestao_documento
+            "sugestao_documento": ", ".join([td.nome for td in criterio.tipos_documento])
         } 
         for criterio in criterios_ativos
     ]

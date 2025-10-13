@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from extensions import db
-from models import Criterio
+from models import Criterio, TipoDocumento
 from forms import CriterioForm
 from flask_login import login_required
 from decorators import permission_required
@@ -28,13 +28,21 @@ def listar():
 @permission_required('acessar_cadastro_criterios')
 def nova():
     form = CriterioForm()
+    # Pré-seleciona os tipos de documento se o formulário for reenviado com erro
+    if request.method == 'POST':
+        form.tipos_documento.data = [int(x) for x in form.tipos_documento.data]
+
     if form.validate_on_submit():
-        obj = Criterio(
-            nome=form.nome.data.strip(),
-            prompt=form.prompt.data.strip(),
-            tag=form.tag.data.strip(),
-            sugestao_documento=form.sugestao_documento.data.strip() if form.sugestao_documento.data else "Nenhuma sugestão.",
-        )
+        obj = Criterio()
+        # Remove o campo de relacionamento para que o populate_obj não tente preenchê-lo
+        del form.tipos_documento
+        form.populate_obj(obj) # Popula nome, prompt, tag, ativo
+        
+        # Limpa e adiciona os tipos de documento selecionados
+        obj.tipos_documento.clear()
+        # Busca os dados diretamente da requisição, pois o campo foi removido do form
+        documentos_selecionados = TipoDocumento.query.filter(TipoDocumento.id.in_(request.form.getlist('tipos_documento'))).all()
+        obj.tipos_documento.extend(documentos_selecionados)
         db.session.add(obj)
         db.session.commit()
         flash("Critério criado com sucesso!", "success")
@@ -48,8 +56,21 @@ def nova():
 def editar(criterio_id):
     obj = Criterio.query.get_or_404(criterio_id)
     form = CriterioForm(obj=obj)
+
+    if request.method == 'GET':
+        # Pré-seleciona os tipos de documento associados ao critério
+        form.tipos_documento.data = [td.id for td in obj.tipos_documento]
+
     if form.validate_on_submit():
+        # Remove o campo de relacionamento para que o populate_obj não tente preenchê-lo
+        del form.tipos_documento
         form.populate_obj(obj)
+
+        # Limpa e atualiza os tipos de documento selecionados
+        obj.tipos_documento.clear()
+        # Busca os dados diretamente da requisição, pois o campo foi removido do form
+        documentos_selecionados = TipoDocumento.query.filter(TipoDocumento.id.in_(request.form.getlist('tipos_documento'))).all()
+        obj.tipos_documento.extend(documentos_selecionados)
         db.session.commit()
         flash("Critério atualizado com sucesso!", "success")
         return redirect(url_for(".listar"))
