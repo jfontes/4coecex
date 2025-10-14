@@ -9,6 +9,7 @@ from criterio_routes        import criterio_bp
 from classe_routes          import classe_bp
 from groupo_routes          import grupo_bp
 from tipo_documento_routes  import tipo_documento_bp
+from documento_routes       import documento_bp
 from commands               import register_commands
 from waitress               import serve
 
@@ -28,7 +29,7 @@ def create_app():
     app.register_blueprint(grupo_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(tipo_documento_bp)
-
+    app.register_blueprint(documento_bp)
 
     # Registra comandos CLI (ex: flask init-db)
     register_commands(app)

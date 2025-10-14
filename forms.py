@@ -154,3 +154,18 @@ class CriterioForm(FlaskForm):
 class TipoDocumentoForm(FlaskForm):
     nome = StringField('Nome do Tipo de Documento', validators=[DataRequired(), Length(max=50)])
     submit = SubmitField('Salvar')
+
+class DocumentoForm(FlaskForm):
+    """Formulário para fazer upload de um documento."""
+    tipo_documento = SelectField('Tipo de Documento', coerce=int, validators=[DataRequired()])
+    arquivo_pdf = FileField('Arquivo PDF', validators=[
+        DataRequired(message="Selecione um arquivo."),
+        FileAllowed(['pdf'], 'Apenas arquivos PDF são permitidos!')
+    ])
+
+    def __init__(self, *args, **kwargs):
+        """Popula o select de tipos de documento dinamicamente."""
+        super(DocumentoForm, self).__init__(*args, **kwargs)
+        self.tipo_documento.choices = [
+            (t.id, t.nome) for t in TipoDocumento.query.order_by(TipoDocumento.nome).all()
+        ]

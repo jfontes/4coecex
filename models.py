@@ -40,6 +40,19 @@ class TipoDocumento(db.Model):
     def __repr__(self):
         return self.nome
 
+class Documento(db.Model):
+    __tablename__ = 'documento'
+    id = db.Column(db.Integer, primary_key=True)
+    nome_arquivo = db.Column(db.String(255), nullable=False)
+    processo_id = db.Column(db.Integer, db.ForeignKey('processo.id'), nullable=False)
+    tipo_documento_id = db.Column(db.Integer, db.ForeignKey('tipo_documento.id'), nullable=False)
+
+    processo = db.relationship('Processo', back_populates='documentos')
+    
+    # O backref cria automaticamente a propriedade 'documentos' na classe TipoDocumento.
+    tipo_documento = db.relationship('TipoDocumento', 
+                                     backref=db.backref('documentos', lazy='dynamic'))
+
 class Grupo(db.Model):
     __tablename__ = 'grupo'
     id = db.Column(db.Integer, primary_key=True)
@@ -122,6 +135,7 @@ class Processo(db.Model):
         backref=db.backref('processos', lazy='dynamic'),
         lazy='joined'
     )
+    documentos = db.relationship('Documento', back_populates='processo', lazy='dynamic', cascade="all, delete-orphan")
 
 roles_permissions = db.Table('roles_permissions',
     db.Column('role_id', db.Integer, db.ForeignKey('role.id'), primary_key=True),

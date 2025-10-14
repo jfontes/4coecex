@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Documentos do Processo {{ processo.processo }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Documentos do Processo {{ processo.processo }}</h1>
+        <a href="{{ url_for('main.editar', numero=processo.processo) }}" class="btn btn-secondary">Voltar ao Processo</a>
+    </div>
+    <p class="lead">Interessado: {{ processo.interessado }}</p>
+
+    <div class="row g-4">
+        <!-- Coluna da Esquerda: Upload de Novo Documento -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5>Anexar Novo Documento</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {{ form.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ form.tipo_documento.label(class="form-label") }}
+                            {{ form.tipo_documento(class="form-select") }}
+                            {% for error in form.tipo_documento.errors %}<span class="text-danger small">{{ error }}</span>{% endfor %}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.arquivo_pdf.label(class="form-label") }}
+                            {{ form.arquivo_pdf(class="form-control") }}
+                            {% for error in form.arquivo_pdf.errors %}<span class="text-danger small">{{ error }}</span>{% endfor %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna da Direita: Lista de Documentos Anexados -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5>Documentos Anexados</h5>
+                </div>
+                <div class="card-body">
+                    {% if documentos %}
+                    <ul class="list-group list-group-flush">
+                        {% for doc in documentos %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>{{ doc.tipo_documento.nome }}:</strong>
+                                <a href="{{ url_for('documento.ver', processo_id=processo.id, documento_id=doc.id) }}" target="_blank">{{ doc.nome_arquivo }}</a>
+                            </div>
+                            <form action="{{ url_for('documento.excluir', processo_id=processo.id, documento_id=doc.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este documento?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir"><i class="bi bi-trash"></i></button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <p class="text-muted">Nenhum documento anexado a este processo ainda.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

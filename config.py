@@ -12,6 +12,7 @@ if not OPENAI_API_KEY:
     raise ValueError("A variável de ambiente 'OPENAI_API_KEY' não está definida.")
     
 LIBREOFFICE_PATH = r"C:\Program Files\LibreOffice\program\soffice.exe"
+UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'uploads')
 
 # Monta o ODBC_CONNECT
 odbc_str = (

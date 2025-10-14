@@ -225,6 +225,11 @@ document.addEventListener('DOMContentLoaded', function() {
           <a href="{{ url_for('main.analise_inatividade', numero=proc.processo) }}" class="btn btn-warning me-2">Analisar</a>
           <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Nova busca</a>
         </div>
+        <div class="mt-4 pt-4 border-top">
+            <a href="{{ url_for('documento.gerenciar', processo_id=proc.id) }}" class="btn btn-info">
+                <i class="bi bi-file-earmark-pdf"></i> Gerenciar Documentos do Processo
+            </a>
+        </div>
         {% endif %}
         </div>
     </div>
