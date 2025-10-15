@@ -56,6 +56,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     select.innerHTML += `<option value="${id}">${tiposDocumentoNomes[index]}</option>`;
                 });
 
+                // Pré-seleciona o tipo de documento sugerido pelo backend
+                if (file.suggested_type_id) {
+                    select.value = file.suggested_type_id;
+                }
+
                 const removeBtn = document.createElement('button');
                 removeBtn.type = 'button';
                 removeBtn.className = 'btn btn-outline-danger btn-sm';

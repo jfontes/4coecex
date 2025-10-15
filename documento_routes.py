@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from flask_login import login_required
 from werkzeug.utils import secure_filename
 from extensions import db
+from thefuzz import process as fuzz_process
 from models import Processo, Documento, TipoDocumento, Criterio
 from forms import DocumentoForm
 
@@ -31,12 +32,28 @@ def upload_temporario(processo_id):
     temp_dir = os.path.join(current_app.config['UPLOAD_FOLDER'], 'temp', str(processo.processo))
     os.makedirs(temp_dir, exist_ok=True)
 
+    # Busca os tipos de documento para a comparação
+    tipos_documento = TipoDocumento.query.all()
+    nomes_tipos_map = {tipo.nome: tipo.id for tipo in tipos_documento}
+    opcoes_tipos = list(nomes_tipos_map.keys())
+
     uploaded_files = []
     for file in files:
         filename = secure_filename(file.filename)
         temp_path = os.path.join(temp_dir, filename)
         file.save(temp_path)
-        uploaded_files.append({'temp_path': temp_path, 'filename': filename})
+
+        # Lógica com thefuzz para encontrar a melhor correspondência
+        suggested_type_id = None
+        if opcoes_tipos:
+            # extrai o nome do arquivo sem a extensão para uma melhor correspondência
+            filename_sem_ext, _ = os.path.splitext(filename)
+            best_match = fuzz_process.extractOne(filename_sem_ext, opcoes_tipos)
+            # Usamos um score de 75 como limiar de confiança
+            if best_match and best_match[1] > 75:
+                suggested_type_id = nomes_tipos_map[best_match[0]]
+
+        uploaded_files.append({'temp_path': temp_path, 'filename': filename, 'suggested_type_id': suggested_type_id})
 
     # Armazena na sessão
     session_key = f'temp_uploads_{processo_id}'
@@ -44,7 +61,7 @@ def upload_temporario(processo_id):
     temp_uploads.extend(uploaded_files)
     session[session_key] = temp_uploads
 
-    return jsonify({'ok': True, 'files': [{'filename': f['filename']} for f in uploaded_files]})
+    return jsonify({'ok': True, 'files': [{'filename': f['filename'], 'suggested_type_id': f['suggested_type_id']} for f in uploaded_files]})
 
 @documento_bp.route('/remover-temporario', methods=['POST'])
 @login_required
