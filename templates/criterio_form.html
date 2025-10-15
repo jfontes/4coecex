@@ -20,8 +20,12 @@
           </div>
 
           <div class="mb-3">
-            {{ form.sugestao_documento.label(class="form-label") }}
-            {{ form.sugestao_documento(class="form-control") }}
+            {{ form.tipos_documento.label(class="form-label") }}
+            {{ form.tipos_documento(class="form-select", size=8) }}
+            <div class="form-text">Segure Ctrl (ou Cmd no Mac) para selecionar mais de um documento.</div>
+            {% for error in form.tipos_documento.errors %}
+                <span class="text-danger small">{{ error }}</span>
+            {% endfor %}
           </div>
 
           <div class="form-check mt-3">

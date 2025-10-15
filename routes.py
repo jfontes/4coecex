@@ -1,4 +1,5 @@
 from flask                  import Blueprint, session, render_template, request, jsonify, redirect, url_for, flash, send_file, current_app, abort
+from flask_login            import current_user, login_required
 from sqlalchemy.exc         import ProgrammingError, DataError
 from extensions             import db
 from tools                  import Tools
@@ -7,8 +8,7 @@ from documento_word         import PreencheDocumentoWord
 from ExportadorPDF          import ExportadorPDF
 from forms                  import BuscaForm, ProcessoForm
 from acreprevidencia_api    import DadosAcreprevidencia, AcrePrevAPIError 
-from gemini                 import Gemini
-from google.genai           import types
+from ia_handler             import GenerativeAI
 import io, tempfile, os, mammoth, json
 from flask_login            import login_required
 from decorators             import permission_required
@@ -183,11 +183,17 @@ def gerar_certidao(numero):
 def analise_inatividade(numero):
     proc = Processo.query.filter_by(processo=numero).first_or_404()
 
-    # 1. Preenche os dados básicos da sessão a partir do banco
+    # 1. Preenche os dados básicos de usuário e processo da sessão a partir do banco e autenticação
     session['analises'] = []
-    
     session['dados'] = Tools.PreencherDados(proc)
-    
+
+    if current_user.is_authenticated:
+        dados_sessao = session.get('dados', {})
+        dados_sessao['usuario'] = current_user.nome
+        dados_sessao['cargo_usuario'] = current_user.cargo.value # .value para obter a string do Enum
+        dados_sessao['matricula_usuario'] = current_user.matricula # .value para obter a string do Enum
+        session['dados'] = dados_sessao
+
     if proc.analises:
         session['dados'].update(proc.analises)
         analises_salvas = [{'tag': tag, 'texto': texto} for tag, texto in proc.analises.items()]
@@ -252,7 +258,7 @@ def api_criterios_por_grupo(grupo_id):
         {
             "id": criterio.id,
             "nome": criterio.nome,
-            "sugestao_documento": criterio.sugestao_documento
+            "sugestao_documento": ", ".join([td.nome for td in criterio.tipos_documento])
         } 
         for criterio in criterios_ativos
     ]
@@ -272,12 +278,12 @@ def processar_analise_inatividade(numero):
     contexto = request.form.get('contexto', '').strip()
     try:
         criterio = Criterio.query.get(criterio_id)
-        parts = Gemini().lerPDF(files)
+        prompt = criterio.prompt + "\n\n"
+        prompt += json.dumps(dados, indent=2, ensure_ascii=False) + "\n\n"
         if contexto:
-            parts.insert(0, types.Part(text=f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"))
+            prompt += f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"
         
-        parts.append(types.Part(text=json.dumps(dados, indent=2, ensure_ascii=False)))
-        ai = Gemini().getAnaliseEstruturada(parts, criterio.prompt)
+        ai = GenerativeAI().get_structured_analysis(GenerativeAI.lerPDF(files), criterio.prompt)
         analiseInteligente = ai.get("Analise")
     except Exception as e:
         current_app.logger.error(f"Erro ao processar análise inteligente: {e}")
@@ -379,7 +385,6 @@ def baixar(numero):
     current_app.logger.debug(f"Solicitação de download para o processo {numero} no formato: {tipo}")
     try:
         proc = Processo.query.filter_by(processo=numero).first_or_404()
-
         dados = session.get('dados', {})
         caminho_modelo = os.path.join(current_app.root_path, 'modelos', proc.classe.modelo_de_relatorio or 'modelo_relatorio.docx')
         doc = PreencheDocumentoWord(caminho_modelo)

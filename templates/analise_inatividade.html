@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 {% block title %}Análise de inatividade – Processo {{ proc }}{% endblock %}
 
+{% block extra_head %}
+<style>
+  /* Estilo para a caixa de texto do modal */
+  #modalTextView {
+    min-height: 400px;
+    font-family: monospace;
+    font-size: 0.85rem;
+  }
+</style>
+{% endblock %}
+
 {% block extra_js %}
+
 <script>
 (function(){
   const selectGrupo = document.getElementById('selectGrupo');
@@ -9,11 +21,21 @@
   const sugestaoDoc = document.getElementById('sugestaoDocumento');
   const bloco = document.getElementById('blocoAnalise');
   const files = document.getElementById('inputPDFs');
-  const btn   = document.getElementById('btnAnalisar');
-  const btn2   = document.getElementById('btnAdicionar');
-  const out   = document.getElementById('txtResultado');
+  const btn = document.getElementById('btnAnalisar');
+  const btn2 = document.getElementById('btnAdicionar');
   const stat  = document.getElementById('analiseStatus');
   const contexto = document.getElementById('inputContexto');
+  const out   = document.getElementById('txtResultado');
+  // --- LÓGICA DO POPUP "VER TEXTO" ---
+  const btnShowText = document.getElementById('btnShowText');
+  const modalTextarea = document.getElementById('modalTextView');
+
+  if (btnShowText) {
+    btnShowText.addEventListener('click', function() {
+      // Pega o conteúdo HTML do editor e coloca no textarea do popup
+      modalTextarea.value = document.getElementById('editor').innerHTML;
+    });
+  }
 
 // Função para atualizar o dropdown de critérios
   async function atualizarCriterios() {
@@ -40,14 +62,13 @@
       criterios.forEach(criterio => {
         const option = document.createElement('option');
         option.value = criterio.id;
-        option.textContent = criterio.nome;
+        option.textContent = criterio.nome; // O texto da opção continua sendo apenas o nome do critério
         option.dataset.sugestao = criterio.sugestao_documento || '';
         selectCriterio.appendChild(option);
       });
 
     } catch (error) {
       console.error(error);
-      // Aqui você poderia mostrar uma mensagem de erro para o usuário
     }
   }
 
@@ -105,95 +126,15 @@
 </script>
 
 <script>
-// --- SCRIPT PARA O BOTÃO COPIAR ---
-document.addEventListener('DOMContentLoaded', function() {
-  const btnCopiar = document.getElementById('btnCopiarHtml');
-  const editorHtml = document.getElementById('editor');
-
-  if (btnCopiar) {
-    btnCopiar.addEventListener('click', function() {
-      // Usa a API moderna do navegador para copiar o conteúdo HTML do editor
-      navigator.clipboard.writeText(editorHtml.innerHTML).then(function() {
-        // Feedback para o usuário que a cópia foi bem-sucedida
-        const originalText = btnCopiar.innerHTML;
-        btnCopiar.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
-        
-        // Volta ao texto original após 2 segundos
-        setTimeout(() => {
-          btnCopiar.innerHTML = originalText;
-        }, 2000);
-
-      }, function(err) {
-        // Feedback em caso de erro
-        console.error('Erro ao tentar copiar o conteúdo: ', err);
-        alert('Falha ao copiar para a área de transferência.');
-      });
-    });
-  }
-});
-</script>
-
-<script>
-// --- SCRIPT ROBUSTO PARA COPIAR HTML ---
-document.addEventListener('DOMContentLoaded', function() {
-  const btnCopiar = document.getElementById('btnCopiarHtml');
-  const editorHtml = document.getElementById('editor');
-
-  if (btnCopiar && editorHtml) {
-    btnCopiar.addEventListener('click', function() {
-      const originalText = btnCopiar.innerHTML;
-
-      // Função para dar feedback visual ao utilizador
-      function showFeedback(success) {
-        if (success) {
-          btnCopiar.innerHTML = '<i class="bi bi-check-lg"></i> Copiado!';
-        } else {
-          alert('Falha ao copiar para a área de transferência. Tente manualmente (Ctrl+A, Ctrl+C).');
-        }
-        setTimeout(() => {
-          btnCopiar.innerHTML = originalText;
-        }, 2500);
-      }
-
-      // 1. Tenta usar a API moderna (requer HTTPS ou localhost)
-      if (navigator.clipboard && window.isSecureContext) {
-        const type = "text/html";
-        const blob = new Blob([editorHtml.innerHTML], { type });
-        const data = [new ClipboardItem({ [type]: blob })];
-
-        navigator.clipboard.write(data).then(
-          () => showFeedback(true),
-          () => showFeedback(false)
-        );
-      } else {
-        // 2. Fallback: Usa o método antigo que seleciona o conteúdo do elemento
-        try {
-          const range = document.createRange();
-          range.selectNode(editorHtml); // Seleciona a div 'editor' e todo o seu conteúdo
-          
-          window.getSelection().removeAllRanges(); // Limpa seleções anteriores
-          window.getSelection().addRange(range); // Adiciona o nosso range à seleção
-          
-          const successful = document.execCommand('copy'); // Executa o comando de cópia
-          showFeedback(successful);
-          
-          window.getSelection().removeAllRanges(); // Remove a seleção para não incomodar o utilizador
-        } catch (err) {
-          showFeedback(false);
-        }
-      }
-    });
-  }
-});
-</script>
-
-<script>
 document.getElementById('btnAdicionar').addEventListener('click', async function(){
   try {
     const url = "{{ url_for('main.adicionar_no_relatorio', numero=proc) }}";
+    //const quill = Quill.find(document.getElementById('txtResultado'));
+    //const textoHtml = quill.root.innerHTML; // Pega o conteúdo como HTML
     const texto = document.getElementById('txtResultado').value;
     const fd = new FormData();
     fd.append('criterio_id', document.getElementById('selectCriterio').value);
+    //fd.append('analiseInteligente', textoHtml);
     fd.append('analiseInteligente', texto);
 
     const resp = await fetch(url, { method: 'POST', body: fd, credentials: 'same-origin' });
@@ -287,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
           </button>
           <span id="analiseStatus" class="text-muted small"></span>
         </div>
-        <a><img id="loadingGif" src="/static/ia2.gif" alt="Carregando..." style="float: right; z-index: 9999; width:67px; height:80px; display: none;"></a>
+        <a><img id="loadingGif" src="/static/ia2.gif" alt="Carregando..." style="float: right; z-index: 9999; width:67px; height:80px; display: none;"></a><br/>
         <label for="txtResultado" class="form-label" style="font-weight: bold;">Resultado da análise</label>
         <textarea id="txtResultado" class="form-control" rows="14" placeholder="O resultado da análise aparecerá aqui..."></textarea>
       </div>
@@ -301,24 +242,43 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="card-body">
         <h6 class="mb-3">Documento (visualização somente leitura)
 
-        <button type="button" id="btnCopiarHtml" class="btn btn-outline-secondary btn-sm ms-2">
-          <i class="bi bi-clipboard"></i> Copiar
+        <button type="button" id="btnShowText" class="btn btn-outline-secondary btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#textContentModal">
+          <i class="bi bi-body-text"></i> HTML
         </button>
 
         <a id="btnBaixarDocx" href="{{ url_for('main.baixar', numero=proc, tipo='word') }}" class="btn btn-outline-secondary btn-sm ms-2" download>
-          Word
+          <i class="bi bi-file-earmark-word"></i> Word
         </a>
         <a id="btnBaixarPdf" href="{{ url_for('main.baixar', numero=proc, tipo='pdf') }}" class="btn btn-outline-secondary btn-sm ms-2" download>
-          PDF
+          <i class="bi bi-file-earmark-pdf"></i> PDF
         </a>
         <button id="btnSalvar" type="button" class="btn btn-outline-success btn-sm ms-2" data-url="{{ url_for('main.salvarAnalises', numero=proc) }}">
-            Salvar
+          <i class="bi bi-floppy"></i>  Salvar
         </button>
         <span id="salvarStatus"></span>
       </h6>
         <div id="editor" class="docx-page mx-auto" style="font-weight: normal;">
           {{ doc_html|safe }}
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ESTRUTURA DO POPUP (MODAL) -->
+<div class="modal fade" id="textContentModal" tabindex="-1" aria-labelledby="textModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="textModalLabel">Código HTML do Relatório</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted small">Pode copiar o texto abaixo (Ctrl+A, Ctrl+C).</p>
+        <textarea id="modalTextView" class="form-control" readonly rows="20"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
       </div>
     </div>
   </div>

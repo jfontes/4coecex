@@ -2,7 +2,7 @@ from flask_wtf                 import FlaskForm
 from wtforms                   import (StringField, DecimalField, DateField, SelectMultipleField,
                                        IntegerField, TextAreaField, SubmitField, BooleanField, SelectField, PasswordField)
 from wtforms.validators        import DataRequired, Regexp, Optional, NumberRange, Length, EqualTo, ValidationError
-from models                    import OrgaoPrevidencia, Classe, User, Criterio, Role, CargoEnum
+from models                    import OrgaoPrevidencia, Classe, User, Criterio, Role, CargoEnum, TipoDocumento
 from wtforms_sqlalchemy.fields import QuerySelectField
 from flask_wtf.file            import FileField, FileAllowed
 from models                    import Criterio
@@ -18,6 +18,7 @@ class UserForm(FlaskForm):
     nome = StringField('Nome Completo', validators=[DataRequired(), Length(max=150)], filters=[lambda x: x.upper() if x else x])
     username = StringField('Nome de Utilizador (para login)', validators=[DataRequired(), Length(max=64)])
     cargo = SelectField('Cargo', coerce=str, validators=[DataRequired(message="O cargo é obrigatório.")])
+    matricula = IntegerField('Matrícula', validators=[Optional(), NumberRange(min=0, message="A matrícula deve ser um número positivo.")])
     role = SelectField('Perfil de Acesso', coerce=int, validators=[DataRequired()])
     # Na criação, a senha é obrigatória. Na edição, se torna opcional.
     password = PasswordField('Senha', validators=[DataRequired(), Length(min=6, message='A senha deve ter pelo menos 6 caracteres.')])
@@ -134,7 +135,22 @@ class ProcessoForm(FlaskForm):
 class CriterioForm(FlaskForm):
     nome = StringField("Nome", validators=[DataRequired()])
     prompt = TextAreaField("Prompt de análise IA", validators=[DataRequired()])
-    tag = StringField("Tag (marcador do arquivo no word)", validators=[DataRequired()])
-    sugestao_documento = StringField("Sugestão de documento", validators=[DataRequired()])
+    tag = StringField("Tag (marcador no Word)", validators=[DataRequired()])
+    tipos_documento = SelectMultipleField(
+        'Sugestão de Documentos',
+        coerce=int,
+        validators=[DataRequired(message="Selecione ao menos um tipo de documento.")]
+    )
     ativo = BooleanField("Ativo", default=True)
     submit = SubmitField("Salvar")
+
+    def __init__(self, *args, **kwargs):
+        """Popula as opções do campo 'tipos_documento' dinamicamente."""
+        super(CriterioForm, self).__init__(*args, **kwargs)
+        self.tipos_documento.choices = [
+            (td.id, td.nome) for td in TipoDocumento.query.order_by(TipoDocumento.nome).all()
+        ]
+
+class TipoDocumentoForm(FlaskForm):
+    nome = StringField('Nome do Tipo de Documento', validators=[DataRequired(), Length(max=50)])
+    submit = SubmitField('Salvar')

@@ -27,6 +27,19 @@ criterio_grupo = db.Table('criterio_grupo',
     db.Column('grupo_id', db.Integer, db.ForeignKey('grupo.id'), primary_key=True)
 )
 
+criterio_tipo_documento = db.Table('criterio_tipo_documento',
+    db.Column('criterio_id', db.Integer, db.ForeignKey('criterio.id'), primary_key=True),
+    db.Column('tipo_documento_id', db.Integer, db.ForeignKey('tipo_documento.id'), primary_key=True)
+)
+
+class TipoDocumento(db.Model):
+    __tablename__ = 'tipo_documento'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(50), nullable=False, unique=True)
+
+    def __repr__(self):
+        return self.nome
+
 class Grupo(db.Model):
     __tablename__ = 'grupo'
     id = db.Column(db.Integer, primary_key=True)
@@ -47,8 +60,15 @@ class Criterio(db.Model):
     nome = db.Column(db.String(150), nullable=False)
     prompt = db.Column(db.Text, nullable=False)
     tag = db.Column(db.String(50), nullable=False)
-    sugestao_documento = db.Column(db.String(150), nullable=True)
     ativo = db.Column(db.Boolean, nullable=False, default=True, server_default='1')
+    
+    tipos_documento = db.relationship(
+        'TipoDocumento', 
+        secondary=criterio_tipo_documento,
+        backref=db.backref('criterios', lazy='dynamic'),
+        lazy='subquery'
+    )
+
     grupos = db.relationship(
         'Grupo', 
         secondary=criterio_grupo, 
@@ -115,6 +135,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     nome = db.Column(db.String(150), nullable=False)
     cargo = db.Column(db.Enum(CargoEnum), nullable=False)
+    matricula = db.Column(db.Integer, nullable=True)
     
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
     role = db.relationship('Role', back_populates='users')
