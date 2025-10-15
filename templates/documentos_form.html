@@ -1,68 +1,186 @@
 {% extends 'base.html' %}
 {% block title %}Documentos do Processo {{ processo.processo }}{% endblock %}
+{% block extra_head %}
+<style>
+    #pending-files-list-container { display: none; }
+    .spinner-border-sm { width: 1rem; height: 1rem; border-width: .2em; }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('{{ form.arquivo_pdf.id }}');
+    const saveBtn = document.getElementById('btn-save-all');
+    const pendingFilesList = document.getElementById('pending-files-list');
+    const pendingFilesContainer = document.getElementById('pending-files-list-container');
+    const uploadStatus = document.getElementById('upload-status');
+    
+    const tiposDocumento = JSON.parse('{{ tipos_documento|map(attribute="id")|list|tojson|safe }}'.replace(/'/g, '"'));
+    const tiposDocumentoNomes = JSON.parse('{{ tipos_documento|map(attribute="nome")|list|tojson|safe }}'.replace(/'/g, '"'));
+
+    // Ação é disparada assim que o usuário seleciona os arquivos
+    fileInput.addEventListener('change', async () => {
+        if (fileInput.files.length === 0) {
+            return;
+        }
+
+        fileInput.disabled = true; // Desabilita o input durante o upload
+        uploadStatus.innerHTML = '<div class="spinner-border spinner-border-sm" role="status"></div> Enviando...';
+
+        const formData = new FormData();
+        for (const file of fileInput.files) {
+            formData.append('arquivos', file);
+        }
+        try {
+            const response = await fetch("{{ url_for('documento.upload_temporario', processo_id=processo.id) }}", {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            if (!response.ok) throw new Error(data.msg || 'Erro ao enviar arquivos.');
+
+            data.files.forEach(file => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.dataset.filename = file.filename;
+
+                const rightSide = document.createElement('div');
+                rightSide.className = 'd-flex align-items-center gap-2 w-50';
+
+                const select = document.createElement('select');
+                select.className = 'form-select form-select-sm';
+                select.innerHTML = '<option value="">Selecione o tipo...</option>';
+                tiposDocumento.forEach((id, index) => {
+                    select.innerHTML += `<option value="${id}">${tiposDocumentoNomes[index]}</option>`;
+                });
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'btn btn-outline-danger btn-sm';
+                removeBtn.title = 'Remover arquivo da lista';
+                removeBtn.innerHTML = '<i class="bi bi-x-lg"></i>';
+                removeBtn.addEventListener('click', async () => {
+                    const filename = li.dataset.filename;
+                    try {
+                        await fetch("{{ url_for('documento.remover_temporario', processo_id=processo.id) }}", {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ filename })
+                        });
+                        li.remove();
+                        if (pendingFilesList.children.length === 0) {
+                            pendingFilesContainer.style.display = 'none';
+                        }
+                    } catch (err) {
+                        alert('Erro ao remover o arquivo: ' + err.message);
+                    }
+                });
+
+                li.innerHTML = `<span><i class="bi bi-file-earmark-arrow-up text-primary"></i> ${file.filename}</span>`;
+                rightSide.appendChild(select);
+                rightSide.appendChild(removeBtn);
+                li.appendChild(rightSide);
+                pendingFilesList.appendChild(li);
+            });
+
+            pendingFilesContainer.style.display = 'block';
+            fileInput.value = ''; // Limpa o input
+
+        } catch (err) {
+            alert('Erro: ' + err.message);
+        } finally {
+            fileInput.disabled = false; // Reabilita o input
+            uploadStatus.innerHTML = '';
+        }
+    });
+
+    saveBtn.addEventListener('click', async () => {
+        const items = pendingFilesList.querySelectorAll('li');
+        const documentos = [];
+        let allValid = true;
+
+        items.forEach(item => {
+            const filename = item.dataset.filename;
+            const tipoId = item.querySelector('select').value;
+            if (!tipoId) {
+                allValid = false;
+            }
+            documentos.push({ filename, tipo_id: tipoId });
+        });
+
+        if (!allValid) {
+            alert('Por favor, classifique todos os documentos antes de salvar.');
+            return;
+        }
+
+        saveBtn.disabled = true;
+        try {
+            const response = await fetch("{{ url_for('documento.salvar_documentos', processo_id=processo.id) }}", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ documentos })
+            });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.msg || 'Erro ao salvar.');
+
+            alert(data.msg);
+            window.location.reload();
+        } catch (error) {
+            alert('Erro: ' + error.message);
+            saveBtn.disabled = false;
+        }
+    });
+});
+</script>
+{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1>Documentos do Processo {{ processo.processo }}</h1>
+        <h5>Documentos do Processo {{ processo.processo }}</h5>
         <a href="{{ url_for('main.editar', numero=processo.processo) }}" class="btn btn-secondary">Voltar ao Processo</a>
     </div>
-    <p class="lead">Interessado: {{ processo.interessado }}</p>
+    <!-- Seção de Upload de Arquivos -->
+    <div id="upload-section" class="card shadow-sm mb-4 border-primary">
+        <div class="card-header bg-primary text-white">
+            <h5><i class="bi bi-upload"></i> Selecione os arquivos</h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-2">
+                <input type="file" id="{{ form.arquivo_pdf.id }}" name="{{ form.arquivo_pdf.name }}" class="form-control" multiple accept=".pdf">
+                <div class="form-text">Selecione um ou mais arquivos PDF. O envio para classificação é automático.</div>
+            </div>
+            <span id="upload-status" class="ms-2"></span>
 
-    <div class="row g-4">
-        <!-- Coluna da Esquerda: Upload de Novo Documento -->
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h5>Anexar Novo Documento</h5>
-                </div>
-                <div class="card-body">
-                    <form method="POST" enctype="multipart/form-data" novalidate>
-                        {{ form.hidden_tag() }}
-                        <div class="mb-3">
-                            {{ form.tipo_documento.label(class="form-label") }}
-                            {{ form.tipo_documento(class="form-select") }}
-                            {% for error in form.tipo_documento.errors %}<span class="text-danger small">{{ error }}</span>{% endfor %}
-                        </div>
-                        <div class="mb-3">
-                            {{ form.arquivo_pdf.label(class="form-label") }}
-                            {{ form.arquivo_pdf(class="form-control") }}
-                            {% for error in form.arquivo_pdf.errors %}<span class="text-danger small">{{ error }}</span>{% endfor %}
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                    </form>
-                </div>
+            <div id="pending-files-list-container" class="mt-4">
+                <hr>
+                <p class="text-muted">Por favor, atribua um tipo para cada documento enviado antes de salvar.</p>
+                <ul id="pending-files-list" class="list-group list-group-flush mb-3"></ul>
+                <button type="button" id="btn-save-all" class="btn btn-success"><i class="bi bi-check-all"></i> Salvar documentos</button>
             </div>
         </div>
+    </div>
 
-        <!-- Coluna da Direita: Lista de Documentos Anexados -->
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header">
-                    <h5>Documentos Anexados</h5>
-                </div>
-                <div class="card-body">
-                    {% if documentos %}
-                    <ul class="list-group list-group-flush">
-                        {% for doc in documentos %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div>
-                                <strong>{{ doc.tipo_documento.nome }}:</strong>
-                                <a href="{{ url_for('documento.ver', processo_id=processo.id, documento_id=doc.id) }}" target="_blank">{{ doc.nome_arquivo }}</a>
-                            </div>
-                            <form action="{{ url_for('documento.excluir', processo_id=processo.id, documento_id=doc.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir este documento?');">
-                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir"><i class="bi bi-trash"></i></button>
-                            </form>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    {% else %}
-                    <p class="text-muted">Nenhum documento anexado a este processo ainda.</p>
-                    {% endif %}
-                </div>
-            </div>
+    <!-- Seção da Lista de Documentos Anexados -->
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5><i class="bi bi-collection"></i> Documentos Anexados</h5>
+        </div>
+        <div class="card-body">
+            {% if documentos %}
+            <ul class="list-group list-group-flush">
+                {% for doc in documentos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap py-3">
+                    {% include 'partials/_documento_item.html' %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-muted text-center">Nenhum documento anexado a este processo ainda.</p>
+            {% endif %}
         </div>
     </div>
 </div>
 {% endblock %}
-

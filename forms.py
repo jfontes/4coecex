@@ -157,7 +157,7 @@ class TipoDocumentoForm(FlaskForm):
 
 class DocumentoForm(FlaskForm):
     """Formulário para fazer upload de um documento."""
-    tipo_documento = SelectField('Tipo de Documento', coerce=int, validators=[DataRequired()])
+    tipo_documento = SelectField('Tipo de Documento', coerce=int, validators=[Optional()])
     arquivo_pdf = FileField('Arquivo PDF', validators=[
         DataRequired(message="Selecione um arquivo."),
         FileAllowed(['pdf'], 'Apenas arquivos PDF são permitidos!')
