@@ -17,6 +17,8 @@ build-image:
   image: docker:24.0.9
   services:
     - docker:24.0.9-dind
+  tags: # <-- ADICIONE ESSA LINHA
+    - deploy
   rules:
     - if: '$CI_COMMIT_BRANCH == "deploy"'
   script:
@@ -27,6 +29,8 @@ push-image:
   image: docker:24.0.9
   services:
     - docker:24.0.9-dind
+  tags: # <-- ADICIONE ESSA LINHA
+    - deploy  
   needs:
     - job: build-image
   rules:
@@ -41,6 +45,8 @@ deploy-prod:
   image: docker:24.0.9
   services:
     - docker:24.0.9-dind
+  tags: # <-- ADICIONE ESSA LINHA
+    - deploy
   needs:
     - job: push-image
   rules:
