@@ -1,5 +1,5 @@
 # Multi-stage build para otimizar tamanho da imagem
-FROM python:3.12-slim as builder
+FROM python:3.12-slim-bookworm as builder
 
 # Instalar dependências do sistema necessárias para build
 RUN apt-get update && apt-get install -y \
@@ -23,13 +23,14 @@ COPY requirements-production.txt .
 RUN pip install --no-cache-dir --user -r requirements-production.txt
 
 # Stage final - imagem de produção
-FROM python:3.12-slim
+FROM python:3.12-slim-bookworm
 
 # Instalar dependências runtime necessárias
 RUN apt-get update && apt-get install -y \
     # Para pyodbc e SQL Server
     curl \
     gnupg2 \
+    ca-certificates \
     apt-transport-https \
     # Para processamento de documentos
     libreoffice \
@@ -45,11 +46,11 @@ RUN apt-get update && apt-get install -y \
     # Para limpeza
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar Microsoft ODBC Driver para SQL Server
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg \
-    && echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/debian/11/prod bullseye main" > /etc/apt/sources.list.d/mssql-release.list \
+# Instalar Microsoft ODBC Driver para SQL Server (Debian 12 - bookworm)
+RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg \
+    && echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/debian/12/prod bookworm main" > /etc/apt/sources.list.d/mssql-release.list \
     && apt-get -o Acquire::Check-Valid-Until=false update \
-    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
     && rm -rf /var/lib/apt/lists/*
 
 # Criar usuário não-root
