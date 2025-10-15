@@ -6,6 +6,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(24).hex()
 
 # Gemini API Key
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
 
 # LibreOffice Path (configurado para container)
 LIBREOFFICE_PATH = os.environ.get('LIBREOFFICE_PATH', '/usr/lib/libreoffice/program/soffice')
