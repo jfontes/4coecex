@@ -284,7 +284,6 @@ def processar_analise_inatividade(numero):
             prompt += f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"
         
         ai = GenerativeAI().get_structured_analysis(files, prompt)
-        breakpoint()
         analiseInteligente = ai.get("Analise")
     except Exception as e:
         current_app.logger.error(f"Erro ao processar análise inteligente: {e}")
