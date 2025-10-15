@@ -173,6 +173,16 @@ document.addEventListener('DOMContentLoaded', function() {
         <h4 class="card-title text-center text-primary mb-4">
           {{ 'Cadastrar novo processo' if not proc else ('Editar Processo nº ' ~ proc.processo) }}
         </h4>
+        {% if proc %}
+        <div class="text-center mt-4">
+          <a id="btnCertidao" href="{{ url_for('main.gerar_certidao', numero=proc.processo) }}" class="btn btn-danger me-2">Gerar Certidão</a>
+          <a href="{{ url_for('main.analise_inatividade', numero=proc.processo) }}" class="btn btn-warning me-2">Analisar</a>
+          <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Nova busca</a>
+          <a href="{{ url_for('documento.gerenciar', processo_id=proc.id) }}" class="btn btn-info">
+              <i class="bi bi-file-earmark-pdf"></i> Documentos
+          </a>
+        </div>
+        {% endif %}
         <form method="post">
           {{ form.hidden_tag() }}
           {% if not proc and form.processo %}
