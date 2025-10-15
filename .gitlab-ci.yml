@@ -19,6 +19,8 @@ build-image:
     - docker:24.0.9-dind
   tags: # <-- ADICIONE ESSA LINHA
     - deploy
+  variables: # <-- ADICIONE ESTE BLOCO
+    DOCKER_HOST: tcp://docker:2375
   rules:
     - if: '$CI_COMMIT_BRANCH == "deploy"'
   script:
@@ -30,7 +32,9 @@ push-image:
   services:
     - docker:24.0.9-dind
   tags: # <-- ADICIONE ESSA LINHA
-    - deploy  
+    - deploy 
+  variables: # <-- ADICIONE ESTE BLOCO
+    DOCKER_HOST: tcp://docker:2375 
   needs:
     - job: build-image
   rules:
@@ -45,6 +49,8 @@ deploy-prod:
   image: docker:24.0.9
   services:
     - docker:24.0.9-dind
+  variables: # <-- ADICIONE ESTE BLOCO
+    DOCKER_HOST: tcp://docker:2375
   tags: # <-- ADICIONE ESSA LINHA
     - deploy
   needs:
