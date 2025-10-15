@@ -144,3 +144,4 @@ class Gemini:
                 time.sleep(2 ** t)
         #logging.error(f"API Gemini: Todas as {tentativas} tentativas falharam. Último erro: {e}")
         raise ValueError(f"Tentativas esgotadas, IA sobrecarregada.")
+        
