@@ -278,12 +278,13 @@ def processar_analise_inatividade(numero):
     contexto = request.form.get('contexto', '').strip()
     try:
         criterio = Criterio.query.get(criterio_id)
-        prompt = criterio.prompt + "\n\n"
+        prompt = criterio.prompt + "  METADADOS:"
         prompt += json.dumps(dados, indent=2, ensure_ascii=False) + "\n\n"
         if contexto:
             prompt += f"[OVERRIDE: Leve em consideração o seguinte contexto fornecido pelo usuário: '{contexto}'. IGNORE QUALQUER VALOR ANTERIOR.]"
         
-        ai = GenerativeAI().get_structured_analysis(GenerativeAI.lerPDF(files), criterio.prompt)
+        ai = GenerativeAI().get_structured_analysis(files, prompt)
+        breakpoint()
         analiseInteligente = ai.get("Analise")
     except Exception as e:
         current_app.logger.error(f"Erro ao processar análise inteligente: {e}")

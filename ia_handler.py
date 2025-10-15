@@ -26,7 +26,6 @@ class OpenAIHandler:
 
     def get_structured_analysis(self, b: List[bytes], prompt: str) -> dict:
         logging.warning(f"Executando fallback com o modelo OpenAI: {self.model}")
-
         uploaded_file_ids = []
         for pdf_bytes in b:
             file_object = self.client.files.create(
@@ -80,13 +79,12 @@ class GeminiHandler:
 
     def get_structured_analysis(self, b: List[bytes], prompt: str) -> dict:
         tentativas = 4
+        parts = []
+        for pdf_bytes in b:
+            parts.append(types.Part.from_bytes(data=pdf_bytes, mime_type="application/pdf"))
+
         for t in range(tentativas):
             logging.warning(f"------------------API Gemini: Iniciando tentativa {t+1}/{tentativas} com o modelo {self.model}.------------------")
-
-            parts = []
-            for pdf_bytes in b:
-                parts.append(types.Part.from_bytes(data=pdf_bytes, mime_type="application/pdf"))
-
             try:
                 resposta = self.client.models.generate_content(
                     model=self.model,
@@ -117,12 +115,13 @@ class GenerativeAI:
         self.openai_client = OpenAI(api_key=OPENAI_API_KEY)
         self.openai_handler = OpenAIHandler(self.openai_client, "gpt-4o-mini")
 
-    def get_structured_analysis(self, b: List[bytes], prompt: str) -> dict:
+    def get_structured_analysis(self, files: List, prompt: str) -> dict:
         """
         Tenta gerar uma análise estruturada usando os modelos Gemini.
         Se todos falharem, recorre à OpenAI como fallback.
         """
         # 1. Tentar com o handler do Gemini
+        b = GenerativeAI().lerPDF(files)
         try:
             result = self.gemini_handler.get_structured_analysis(b, prompt)
             logging.info(f"Sucesso com o modelo Gemini.")
@@ -151,6 +150,8 @@ class GenerativeAI:
                 with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp:
                     pdf.save(tmp.name)
                     # Usamos from_uri para que a biblioteca faça a gestão do ficheiro
+                    # Reposiciona o ponteiro para o início do arquivo antes de ler
+                    tmp.seek(0)
                     #parts.append(types.Part.from_bytes(data=tmp.read(), mime_type="application/pdf"))
                     b.append(tmp.read())
             except Exception as e:
