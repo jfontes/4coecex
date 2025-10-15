@@ -104,17 +104,28 @@ document.addEventListener('DOMContentLoaded', function() {
     saveBtn.addEventListener('click', async () => {
         const items = pendingFilesList.querySelectorAll('li');
         const documentos = [];
+        const tipoIds = new Set();
         let allValid = true;
+        let hasDuplicates = false;
 
         items.forEach(item => {
             const filename = item.dataset.filename;
             const tipoId = item.querySelector('select').value;
             if (!tipoId) {
                 allValid = false;
+                return; // Pula para o próximo item
             }
+            if (tipoIds.has(tipoId)) {
+                hasDuplicates = true;
+            }
+            tipoIds.add(tipoId);
             documentos.push({ filename, tipo_id: tipoId });
         });
 
+        if (hasDuplicates) {
+            alert('Não é possível enviar dois documentos do mesmo tipo. Verifique os tipos selecionados.');
+            return;
+        }
         if (!allValid) {
             alert('Por favor, classifique todos os documentos antes de salvar.');
             return;

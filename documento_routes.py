@@ -103,6 +103,21 @@ def salvar_documentos(processo_id):
     final_dir = os.path.join(current_app.config['UPLOAD_FOLDER'], str(processo.processo))
     os.makedirs(final_dir, exist_ok=True)
 
+    # --- INÍCIO DA VALIDAÇÃO ---
+    # 1. Pega os IDs dos tipos de documento que já existem no processo
+    tipos_existentes = {doc.tipo_documento_id for doc in processo.documentos}
+
+    # 2. Pega os IDs dos tipos que estão sendo enviados
+    tipos_enviados = [d.get('tipo_id') for d in documentos_para_salvar if d.get('tipo_id')]
+
+    # 3. Verifica se há duplicatas no próprio lote de envio
+    if len(tipos_enviados) != len(set(tipos_enviados)):
+        return jsonify({'ok': False, 'msg': 'Não é possível enviar dois documentos do mesmo tipo. Verifique os tipos selecionados no lote.'}), 400
+
+    # 4. Verifica se algum dos tipos enviados já existe no processo
+    if any(tipo_id in tipos_existentes for tipo_id in tipos_enviados):
+        return jsonify({'ok': False, 'msg': 'Não é possível enviar dois documentos do mesmo tipo. Um ou mais tipos selecionados já existem neste processo.'}), 400
+    # --- FIM DA VALIDAÇÃO ---
     try:
         for doc_data in documentos_para_salvar:
             filename = doc_data.get('filename')
