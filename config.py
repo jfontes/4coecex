@@ -1,9 +1,13 @@
 import os
 from urllib.parse import quote_plus
+from dotenv import load_dotenv
+
+# Carrega variáveis do arquivo .env (se existir)
+load_dotenv()
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(24).hex()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") # type: ignore
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") # type: ignore
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")  # type: ignore
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")  # type: ignore
 
 # Validação das chaves de API
 if not GEMINI_API_KEY:

@@ -1,0 +1,64 @@
+stages:
+  - build
+  - push
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  IMAGE_NAME: "$CI_REGISTRY_IMAGE/atos-app"
+  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+
+before_script:
+  - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+
+build-image:
+  stage: build
+  image: docker:24.0.9
+  services:
+    - docker:24.0.9-dind
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "deploy"'
+  script:
+    - docker build -t "$IMAGE_NAME:$IMAGE_TAG" -t "$IMAGE_NAME:latest" .
+
+push-image:
+  stage: push
+  image: docker:24.0.9
+  services:
+    - docker:24.0.9-dind
+  needs:
+    - job: build-image
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "deploy"'
+  script:
+    - docker push "$IMAGE_NAME:$IMAGE_TAG"
+    - docker push "$IMAGE_NAME:latest"
+
+# Deploy manual na branch deploy
+deploy-prod:
+  stage: deploy
+  image: docker:24.0.9
+  services:
+    - docker:24.0.9-dind
+  needs:
+    - job: push-image
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "deploy"'
+      when: manual
+      allow_failure: false
+  environment:
+    name: production
+  script:
+    - |
+      export DOCKER_HOST="ssh://$DEPLOY_SSH_USER@$DEPLOY_SSH_HOST"
+      export IMAGE_NAME="$IMAGE_NAME"
+      export GEMINI_API_KEY="$GEMINI_API_KEY"
+      export OPENAI_API_KEY="$OPENAI_API_KEY"
+
+      docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+      docker pull "$IMAGE_NAME:latest"
+
+      # Subir via docker compose
+      docker compose down || true
+      docker compose up -d
