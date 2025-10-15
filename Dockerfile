@@ -2,7 +2,7 @@
 FROM python:3.12-slim-bookworm as builder
 
 # Instalar dependências do sistema necessárias para build
-RUN apt-get update && apt-get install -y \
+RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y \
     build-essential \
     gcc \
     g++ \
@@ -26,7 +26,7 @@ RUN pip install --no-cache-dir --user -r requirements-production.txt
 FROM python:3.12-slim-bookworm
 
 # Instalar dependências runtime necessárias
-RUN apt-get update && apt-get install -y \
+RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y \
     # Para pyodbc e SQL Server
     curl \
     gnupg2 \

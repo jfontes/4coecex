@@ -16,12 +16,9 @@ from waitress               import serve
 def create_app():
     app = Flask(__name__)
     
-    # Usar configuração de produção se estiver em container
-    if os.environ.get('FLASK_ENV') == 'production' or os.path.exists('/.dockerenv'):
-        app.config.from_object('config_production')
-    else:
-        import config
-        app.config.from_object('config')
+    # Usar configuração padrão que lê variáveis de ambiente
+    import config
+    app.config.from_object('config')
 
     # inicializa o SQLAlchemy
     db.init_app(app)
