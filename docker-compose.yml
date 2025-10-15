@@ -1,7 +1,8 @@
-version: "3.9"
-
 services:
   app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: "${IMAGE_NAME}:latest"
     container_name: atos-application
     restart: unless-stopped
