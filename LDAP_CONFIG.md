@@ -1,5 +1,9 @@
 # Configuração do Active Directory / LDAP
 
+## ⚠️ IMPORTANTE - Apenas Autenticação LDAP
+
+O sistema foi configurado para usar **APENAS** autenticação via Active Directory. Não há fallback para banco de dados local.
+
 ## Variáveis de Ambiente
 
 Para configurar a autenticação via Active Directory, defina as seguintes variáveis de ambiente:
@@ -23,18 +27,59 @@ LDAP_USE_SSL=false
 
 ## Como Funciona
 
-1. **Autenticação**: O sistema primeiro tenta autenticar o usuário via Active Directory
+1. **Autenticação**: O sistema autentica o usuário via Active Directory
 2. **Criação de Usuário**: Se a autenticação for bem-sucedida e o usuário não existir no banco local, um novo usuário é criado automaticamente
-3. **Fallback**: Se a autenticação LDAP falhar, o sistema tenta autenticar via banco de dados local
+3. **Sem Fallback**: Se a autenticação LDAP falhar, o login falha (sem tentativa de banco local)
 
-## Instalação da Dependência
+## Instalação no Servidor RedHat
 
-Execute o comando abaixo para instalar a biblioteca LDAP3:
-
+### Opção 1: Script Automático
 ```bash
-pip install ldap3==2.9.1
+chmod +x install_ldap.sh
+./install_ldap.sh
 ```
 
-## Teste
+### Opção 2: Manual
+```bash
+# Instalar pip se necessário
+yum install -y python3-pip
+# ou
+dnf install -y python3-pip
 
-Para testar a autenticação, use as credenciais de um usuário válido do Active Directory no formulário de login.
+# Instalar ldap3
+pip3 install ldap3==2.9.1
+```
+
+## Teste de Produção
+
+### Teste Básico
+```bash
+python3 test_production_ldap.py
+```
+
+### Teste com Credenciais
+```bash
+python3 test_production_ldap.py joao.passos "Ongame123.@amelia...."
+```
+
+## Troubleshooting
+
+### Erro: "ModuleNotFoundError: No module named 'ldap3'"
+**Solução**: Execute o script de instalação:
+```bash
+./install_ldap.sh
+```
+
+### Erro: "pip: comando não encontrado"
+**Solução**: Instale pip primeiro:
+```bash
+yum install -y python3-pip
+# ou
+dnf install -y python3-pip
+```
+
+### Erro de Conectividade LDAP
+**Verifique**:
+- Servidor LDAP está acessível (172.20.12.86:389)
+- Firewall permite conexão na porta 389
+- Credenciais do usuário estão corretas no Active Directory

@@ -101,8 +101,7 @@ class AuthenticationManager:
     
     def login(self, username, password):
         """
-        Valida as credenciais do usuário.
-        Primeiro tenta autenticação via Active Directory, depois via banco de dados local.
+        Valida as credenciais do usuário APENAS via Active Directory.
         Retorna o objeto User em caso de sucesso, ou None em caso de falha.
         """
         # --- AUTENTICAÇÃO VIA ACTIVE DIRECTORY ---
@@ -129,10 +128,6 @@ class AuthenticationManager:
                 db.session.commit()
             
             return user
-        
-        # --- FALLBACK: AUTENTICAÇÃO VIA BANCO DE DADOS LOCAL ---
-        user = User.query.filter_by(username=username).first()
-        if user and user.check_password(password):
-            return user
 
+        # --- APENAS AUTENTICAÇÃO LDAP - SEM FALLBACK ---
         return None
