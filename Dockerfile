@@ -1,3 +1,6 @@
+# ATOS - Sistema de Análise Inteligente de Atos
+# Dockerfile otimizado para produção
+
 # Multi-stage build para otimizar tamanho da imagem
 FROM python:3.12-slim-bookworm as builder
 
@@ -20,11 +23,16 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Instalar dependências Python com otimizações de memória
-RUN pip install --no-cache-dir --user --no-deps -r requirements.txt || \
+RUN pip install --no-cache-dir --user --upgrade pip && \
     pip install --no-cache-dir --user -r requirements.txt
 
 # Stage final - imagem de produção
 FROM python:3.12-slim-bookworm
+
+# Metadados da imagem
+LABEL maintainer="TCE-AC <sistemas@tce.ac.gov.br>"
+LABEL description="ATOS - Sistema de Análise Inteligente de Atos"
+LABEL version="1.0.0"
 
 # Instalar dependências runtime necessárias em lotes menores
 RUN apt-get -o Acquire::Check-Valid-Until=false update && \
