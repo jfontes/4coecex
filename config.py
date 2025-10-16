@@ -33,6 +33,14 @@ SQLALCHEMY_DATABASE_URI = f"mssql+pyodbc:///?odbc_connect={ODBC_CONNECT}"
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+# Configurações do Active Directory / LDAP
+LDAP_DOMAIN = os.environ.get('LDAP_DOMAIN') or "tceac"
+LDAP_HOST = os.environ.get('LDAP_HOST') or "172.20.12.86"
+LDAP_PORT = int(os.environ.get('LDAP_PORT') or 389)
+LDAP_DN = os.environ.get('LDAP_DN') or "ou=TribunalContas,dc=tceac,dc=local"
+LDAP_ATTRIBUTE_FOR_USER = "sAMAccountName"
+LDAP_USE_SSL = os.environ.get('LDAP_USE_SSL', 'false').lower() == 'true'
+
 if not os.path.exists(LIBREOFFICE_PATH):
     # Você pode levantar um erro ou simplesmente imprimir um aviso
     print(f"AVISO: O caminho para o LibreOffice não foi encontrado em '{LIBREOFFICE_PATH}'. A conversão para PDF pode falhar.")
