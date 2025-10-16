@@ -2,6 +2,6 @@
 odbc_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
     "SERVER=DESKTOP-IUGBE2R;"
-    "DATABASE=certificador;"
+    "DATABASE=atos;"
     "Trusted_Connection=yes;"
 )

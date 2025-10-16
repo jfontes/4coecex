@@ -109,7 +109,8 @@ class GeminiHandler:
 # --- Classe Principal do Orquestrador ---
 class GenerativeAI:
     def __init__(self):
-        self.gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+        #self.gemini_client = genai.Client(api_key=GEMINI_API_KEY)
+        self.gemini_client = genai.Client(vertexai=True, project="studied-brand-475214-e3", location="us-central1")
         self.gemini_handler = GeminiHandler(self.gemini_client, "gemini-2.5-flash")
 
         self.openai_client = OpenAI(api_key=OPENAI_API_KEY)

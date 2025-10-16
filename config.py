@@ -17,11 +17,9 @@ UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'upload
 # Monta o ODBC_CONNECT
 odbc_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
-    "SERVER=172.20.12.219;"
+    "SERVER=DESKTOP-IUGBE2R;"
     "DATABASE=atos;"
-    "UID=sis.atos;"
-    "PWD=sisatos@TCEAC@2025;"
-    "Trusted_Connection=no;"
+    "Trusted_Connection=yes;"
 )
 
 ODBC_CONNECT = quote_plus(odbc_str)
