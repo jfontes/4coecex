@@ -19,39 +19,52 @@ WORKDIR /app
 # Copiar requirements primeiro para cache de dependências
 COPY requirements.txt .
 
-# Instalar dependências Python
-RUN pip install --no-cache-dir --user -r requirements.txt
+# Instalar dependências Python com otimizações de memória
+RUN pip install --no-cache-dir --user --no-deps -r requirements.txt || \
+    pip install --no-cache-dir --user -r requirements.txt
 
 # Stage final - imagem de produção
 FROM python:3.12-slim-bookworm
 
-# Instalar dependências runtime necessárias
-RUN apt-get -o Acquire::Check-Valid-Until=false update && apt-get install -y \
-    # Para pyodbc e SQL Server
+# Instalar dependências runtime necessárias em lotes menores
+RUN apt-get -o Acquire::Check-Valid-Until=false update && \
+    apt-get install -y --no-install-recommends \
     curl \
     gnupg2 \
     ca-certificates \
     apt-transport-https \
-    # Para processamento de documentos
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar dependências para processamento de documentos
+RUN apt-get -o Acquire::Check-Valid-Until=false update && \
+    apt-get install -y --no-install-recommends \
     libreoffice \
-    # Para OpenCV e processamento de imagem
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar dependências para OpenCV e processamento de imagem
+RUN apt-get -o Acquire::Check-Valid-Until=false update && \
+    apt-get install -y --no-install-recommends \
     libgl1-mesa-dri \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
     libxrender-dev \
     libgomp1 \
-    # Para PDF processing
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar dependências para PDF processing
+RUN apt-get -o Acquire::Check-Valid-Until=false update && \
+    apt-get install -y --no-install-recommends \
     poppler-utils \
-    # Para limpeza
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar Microsoft ODBC Driver para SQL Server (Debian 12 - bookworm)
 RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg \
     && echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/debian/12/prod bookworm main" > /etc/apt/sources.list.d/mssql-release.list \
     && apt-get -o Acquire::Check-Valid-Until=false update \
-    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
-    && rm -rf /var/lib/apt/lists/*
+    && ACCEPT_EULA=Y apt-get install -y --no-install-recommends msodbcsql17 \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
 # Criar usuário não-root
 RUN groupadd -r appuser && useradd -r -g appuser appuser
