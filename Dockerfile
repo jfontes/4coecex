@@ -35,7 +35,7 @@ LABEL description="ATOS - Sistema de Análise Inteligente de Atos"
 LABEL version="1.0.0"
 
 # Instalar dependências runtime necessárias em lotes menores
-RUN apt-get update && \
+RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update && \
     apt-get install -y --no-install-recommends \
     curl \
     gnupg2 \
@@ -44,13 +44,13 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar dependências para processamento de documentos
-RUN apt-get update && \
+RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update && \
     apt-get install -y --no-install-recommends \
     libreoffice \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar dependências para OpenCV e processamento de imagem
-RUN apt-get update && \
+RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update && \
     apt-get install -y --no-install-recommends \
     libgl1-mesa-dri \
     libglib2.0-0 \
@@ -61,7 +61,7 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Instalar dependências para PDF processing
-RUN apt-get update && \
+RUN apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update && \
     apt-get install -y --no-install-recommends \
     poppler-utils \
     && rm -rf /var/lib/apt/lists/*
@@ -69,7 +69,7 @@ RUN apt-get update && \
 # Instalar Microsoft ODBC Driver para SQL Server (Debian 12 - bookworm)
 RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg \
     && echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/debian/12/prod bookworm main" > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update \
+    && apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update \
     && ACCEPT_EULA=Y apt-get install -y --no-install-recommends msodbcsql17 \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
