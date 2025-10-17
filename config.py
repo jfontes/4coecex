@@ -2,12 +2,13 @@ import os
 from urllib.parse import quote_plus
 
 SECRET_KEY = os.environ.get('SECRET_KEY') or os.urandom(24).hex()
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") # type: ignore
+#GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") # type: ignore
+GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT") # type: ignore
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") # type: ignore
 
 # Validação das chaves de API
-if not GEMINI_API_KEY:
-    raise ValueError("A variável de ambiente 'GEMINI_API_KEY' não está definida.")
+if not GOOGLE_CLOUD_PROJECT:
+    raise ValueError("A variável de ambiente 'GOOGLE_CLOUD_PROJECT' não está definida.")
 if not OPENAI_API_KEY:
     raise ValueError("A variável de ambiente 'OPENAI_API_KEY' não está definida.")
     
@@ -17,9 +18,11 @@ UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'upload
 # Monta o ODBC_CONNECT
 odbc_str = (
     "DRIVER={ODBC Driver 17 for SQL Server};"
-    "SERVER=DESKTOP-IUGBE2R;"
+    "SERVER=172.20.12.219;"
     "DATABASE=atos;"
-    "Trusted_Connection=yes;"
+    "UID=sis.atos;"
+    "PWD=sisatos@TCEAC@2025;"
+    "Trusted_Connection=no;"
 )
 
 ODBC_CONNECT = quote_plus(odbc_str)
