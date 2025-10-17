@@ -14,6 +14,7 @@ class AuthenticationManager:
         Autentica o usuário via Active Directory/LDAP.
         Retorna True se as credenciais forem válidas, False caso contrário.
         """
+        #return True
         try:
             # Configura o servidor LDAP
             server = Server(

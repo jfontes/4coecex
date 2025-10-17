@@ -7,7 +7,7 @@ from google import genai
 from google.api_core import exceptions as google_exceptions
 from google.genai import types
 from openai import OpenAI, APIConnectionError, RateLimitError
-from config import GOOGLE_CLOUD_PROJECT, OPENAI_API_KEY
+from config import OPENAI_API_KEY, PROJECT_ID #GOOGLE_CLOUD_PROJECT 
 from pydantic import BaseModel, Field
 from typing import Optional
 
@@ -100,6 +100,7 @@ class GeminiHandler:
                 return r
             except Exception as e:
                 #Mudando o modelo para a próxima tentativa
+                logging.warning(f"ERRO: {e}")
                 self.model = "gemini-2.5-pro" if self.model == "gemini-2.5-flash" else "gemini-2.5-flash"
                 logging.warning(f"API Gemini: Alterando para o modelo {self.model} para a próxima tentativa")
                 time.sleep(2 ** t)
@@ -109,8 +110,8 @@ class GeminiHandler:
 # --- Classe Principal do Orquestrador ---
 class GenerativeAI:
     def __init__(self):
-        #self.gemini_client = genai.Client(api_key=GEMINI_API_KEY)
-        self.gemini_client = genai.Client(vertexai=True, project=GOOGLE_CLOUD_PROJECT, location="us-central1")
+        #self.gemini_client = genai.Client(vertexai=True, project=GOOGLE_CLOUD_PROJECT, location="us-central1")
+        self.gemini_client = genai.Client(vertexai=True, project=PROJECT_ID, location="us-central1")
         self.gemini_handler = GeminiHandler(self.gemini_client, "gemini-2.5-flash")
 
         self.openai_client = OpenAI(api_key=OPENAI_API_KEY)
@@ -129,13 +130,11 @@ class GenerativeAI:
             return result
         except Exception as e:
             # 2. Se falhar, usar o fallback da Gemini
-            logging.warning(f"ERRO: {e}")
             logging.warning(f"Ativando fallback para OpenAi.")
             try:
                 result = self.openai_handler.get_structured_analysis(b, prompt)
                 return result
             except Exception as e:
-                logging.warning(f"ERRO: {e}")
                 logging.critical(f"Fallback OpenAi também falhou.")
                 # Se ambos os serviços falharem, propaga uma exceção final
                 raise ValueError("Ambos os serviços de IA (Gemini e OpenAI) estão indisponíveis.") from e
