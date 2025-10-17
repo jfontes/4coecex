@@ -114,11 +114,12 @@ class AuthenticationManager:
                 ldap_info = self.get_ldap_user_info(username, password)
                 
                 # Cria um novo usuário no banco local
+                from models import CargoEnum
                 user = User(
                     username=username,
-                    name=ldap_info['display_name'] if ldap_info else username,
-                    email=ldap_info['email'] if ldap_info else None,
-                    is_active=True
+                    nome=ldap_info['display_name'] if ldap_info else username,
+                    cargo=CargoEnum.TECNICO,  # Valor padrão para novos usuários
+                    matricula=None
                 )
                 # Define uma senha aleatória (não será usada, pois a autenticação é via AD)
                 user.set_password("ldap_authenticated_user")
