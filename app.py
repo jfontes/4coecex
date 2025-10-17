@@ -16,6 +16,9 @@ from waitress               import serve
 
 def create_app():
     app = Flask(__name__)
+    
+    # Usar configuração padrão que lê variáveis de ambiente
+    import config
     app.config.from_object('config')
 
     # inicializa o SQLAlchemy
@@ -55,14 +58,21 @@ def not_found_error(error):
 def generic_error(error):
     return render_template('error.html', error_message=str(error)), 500
 
+# Health check endpoint para monitoramento
+@app.route('/health')
+def health_check():
+    return {'status': 'healthy', 'service': 'atos'}, 200
+
 if __name__ == '__main__':
     env = os.getenv('FLASK_ENV', 'development')
     if env == 'production':
-        # troque pelo IP que você quer expor
-        SERVE_HOST = '192.168.226.216'
+        # Produção: usando Waitress com acesso de rede
+        # Use 0.0.0.0 para permitir acesso do proxy reverso
+        SERVE_HOST = '0.0.0.0'
         SERVE_PORT = 5000
         serve(app, host=SERVE_HOST, port=SERVE_PORT, threads=8)
     else:
-        # desenvolvimento: Flask debug em localhost
-        app.run(host='127.0.0.1', port=80, debug=True)
+        # Desenvolvimento: Flask debug com acesso de rede
+        # Use 0.0.0.0 para permitir acesso de outros dispositivos na rede
+        app.run(host='0.0.0.0', port=5000, debug=True)
         

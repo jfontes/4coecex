@@ -1,0 +1,32 @@
+[Unit]
+Description=ATOS - Sistema de Análise Inteligente de Atos
+Requires=docker.service
+After=docker.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/atos
+ExecStart=/usr/local/bin/docker-compose up -d
+ExecStop=/usr/local/bin/docker-compose down
+ExecReload=/usr/local/bin/docker-compose restart
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=30
+
+# Configurações de segurança
+User=atos
+Group=atos
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/atos/logs /opt/atos/temp /opt/atos/backup
+
+# Configurações de recursos
+LimitNOFILE=65536
+LimitNPROC=4096
+
+[Install]
+WantedBy=multi-user.target

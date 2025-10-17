@@ -5,7 +5,15 @@ from decimal import Decimal
 
 class Tools:
     def DataAtual():
-        locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+        # Tenta aplicar locale em ordem de preferência, com fallbacks seguros
+        possiveis_locales = ['pt_BR.UTF-8', 'pt_BR.utf8', 'pt_BR', 'Portuguese_Brazil.1252']
+        for loc in possiveis_locales:
+            try:
+                locale.setlocale(locale.LC_TIME, loc)
+                break
+            except Exception:
+                continue
+        # Caso nenhum locale PT-BR esteja disponível, segue com o padrão do sistema
         data_atual = datetime.now()
         return data_atual.strftime('%d de %B de %Y')
 
